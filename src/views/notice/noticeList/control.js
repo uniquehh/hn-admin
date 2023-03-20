@@ -1,10 +1,3 @@
-// const cityOptions = [
-//   "南部县桂景大道北延线项目",
-//   "富顺县城乡冷链物流基础设施建设项目",
-//   "古蔺县仙谭酒厂饶厂公路项目",
-//   "二郎镇至太平镇财湾码头道路工程",
-// ];
-
 import request from "@/utils/request";
 export default {
   components: {

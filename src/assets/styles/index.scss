@@ -122,6 +122,9 @@ aside {
 //main-container全局样式
 .app-container {
   padding: 20px;
+  min-height: calc(100vh - 190px);
+  background-color: white;
+  box-sizing: unset;
 }
 
 .components-container {

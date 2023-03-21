@@ -1,12 +1,17 @@
 <template>
   <div :class="classObj" class="app-wrapper" :style="{'--current-color': theme}">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
+    <!-- 左侧侧边栏菜单组件 -->
     <sidebar v-if="!sidebar.hide" class="sidebar-container" />
+    <!-- 右侧主内容区域 -->
     <div :class="{hasTagsView:needTagsView,sidebarHide:sidebar.hide}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
+        <!-- 右侧顶部菜单记录-面包屑 -->
         <navbar />
+        <!-- 面包屑下方的横向导航菜单、历史激活菜单 -->
         <tags-view v-if="needTagsView" />
       </div>
+      <!-- 动态路由--组件主要内容区域 -->
       <app-main />
       <right-panel>
         <settings />

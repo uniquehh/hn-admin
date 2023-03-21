@@ -88,7 +88,7 @@
 
 <style lang="scss" scoped>
   .navbar {
-    height: 50px;
+    height: 60px;
     overflow: hidden;
     position: relative;
     background: #fff;

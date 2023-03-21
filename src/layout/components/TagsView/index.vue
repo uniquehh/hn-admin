@@ -1,6 +1,7 @@
 <template>
   <div id="tags-view-container" class="tags-view-container" v-show="this.$route.name!='Index'">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
+      <!-- :style="activeStyle(tag)" -->
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
@@ -9,11 +10,12 @@
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         tag="span"
         class="tags-view-item"
-        :style="activeStyle(tag)"
+        
         @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
         {{ tag.title }}
+        <span v-if="!isAffix(tag)" class="el-icon-refresh" @click.prevent.stop="" />
         <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
@@ -236,6 +238,8 @@ export default {
 .tags-view-container {
   height: 34px;
   width: 100%;
+  padding: 6px 0;
+  box-sizing: content-box;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
@@ -246,10 +250,9 @@ export default {
       cursor: pointer;
       height: 26px;
       line-height: 26px;
-      border: 1px solid #d8dce5;
       color: #495060;
       background: #fff;
-      padding: 0 8px;
+      padding: 0 20px;
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
@@ -260,18 +263,19 @@ export default {
         margin-right: 15px;
       }
       &.active {
-        background-color: #42b983;
-        color: #fff;
-        border-color: #42b983;
+        color: #1890FF;
+        position: relative;
         &::before {
           content: '';
-          background: #fff;
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          position: relative;
-          margin-right: 2px;
+          background: #1890FF;
+          // display: inline-block;
+          width: 96%;
+          height: 2px;
+          // border-radius: 50%;
+          position: absolute;
+          // margin-right: 2px;
+          bottom: -8px;
+          left: 0;
         }
       }
     }
@@ -304,6 +308,9 @@ export default {
 //reset element css of el-icon-close
 .tags-view-wrapper {
   .tags-view-item {
+    .el-icon-refresh{
+      margin-right: 5px;
+    }
     .el-icon-close {
       width: 16px;
       height: 16px;
@@ -313,7 +320,7 @@ export default {
       transition: all .3s cubic-bezier(.645, .045, .355, 1);
       transform-origin: 100% 50%;
       &:before {
-        transform: scale(.6);
+        transform: scale(.8);
         display: inline-block;
         vertical-align: -3px;
       }

@@ -23,16 +23,13 @@
 				<el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
 				<el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
 			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
+					v-hasPermi="['system:role:add']">新增
+				</el-button>
+			</el-form-item>
 		</el-form>
 
-		<el-row :gutter="10">
-			<el-form size="small" :inline="true">
-				<el-form-item>
-					<el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-						v-hasPermi="['system:role:add']">新增</el-button>
-				</el-form-item>
-			</el-form>
-		</el-row>
 		<!-- <el-row :gutter="10" class="mb8">
 			<el-col :span="1.5">
 				<el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
@@ -79,17 +76,17 @@
 							v-hasPermi="['system:role:edit']">编辑</el-button>
 						<el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
 							v-hasPermi="['system:role:remove']">删除</el-button>
-						<!--<el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:role:edit']">
-            <span class="el-dropdown-link">
-              <i class="el-icon-d-arrow-right el-icon&#45;&#45;right"></i>更多
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="handleDataScope" icon="el-icon-circle-check"
-                v-hasPermi="['system:role:edit']">数据权限</el-dropdown-item>
-              <el-dropdown-item command="handleAuthUser" icon="el-icon-user"
-                v-hasPermi="['system:role:edit']">分配用户</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>-->
+						<!-- <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:role:edit']">
+							<span class="el-dropdown-link">
+								<i class="el-icon-d-arrow-right el-icon&#45;&#45;right"></i>更多
+							</span>
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item command="handleDataScope" icon="el-icon-circle-check"
+									v-hasPermi="['system:role:edit']">数据权限</el-dropdown-item>
+								<el-dropdown-item command="handleAuthUser" icon="el-icon-user"
+									v-hasPermi="['system:role:edit']">分配用户</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown> -->
 					</template>
 				</el-table-column>
 			</el-table>
@@ -144,7 +141,7 @@
 			</div>
 		</el-dialog>
 
-		<!-- 分配角色数据权限对话框 -->
+		<!-- 操作-更多 分配角色数据权限对话框 -->
 		<el-dialog :title="title" :visible.sync="openDataScope" width="500px" append-to-body>
 			<el-form :model="form" label-width="80px">
 				<el-form-item label="角色名称">

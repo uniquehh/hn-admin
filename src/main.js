@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import Element from 'element-ui'
 import ElSelectTree from 'el-select-tree'
 import './assets/styles/element-variables.scss'
+import './assets/icons/iconfont/iconfont.css'
 
 // 适配
 import 'lib-flexible/flexible.js'

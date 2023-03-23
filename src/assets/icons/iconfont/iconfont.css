@@ -1,0 +1,71 @@
+@font-face {
+  font-family: "element-icons"; /* Project id 3390002 */
+  src: url('iconfont.woff2?t=1679478472400') format('woff2'),
+       url('iconfont.woff?t=1679478472400') format('woff'),
+       url('iconfont.ttf?t=1679478472400') format('truetype');
+}
+
+.element-icons {
+  font-family: "element-icons" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.el-icon-quxiaoquanping:before {
+  content: "\eb10";
+}
+
+.el-icon-yifu:before {
+  content: "\e666";
+}
+
+.el-icon-quanping:before {
+  content: "\e632";
+}
+
+.el-icon-suoping:before {
+  content: "\e603";
+}
+
+.el-icon-xingxing:before {
+  content: "\e60d";
+}
+
+.el-icon-jiantou:before {
+  content: "\e662";
+}
+
+.el-icon-xiajiantou:before {
+  content: "\e6cc";
+}
+
+.el-icon-xiangshangjiantou:before {
+  content: "\e65d";
+}
+
+.el-icon-xiangyoujiantou:before {
+  content: "\e65f";
+}
+
+.el-icon-weixin:before {
+  content: "\e600";
+}
+
+.el-icon-rocket:before {
+  content: "\e7d9";
+}
+
+.el-icon-app1:before {
+  content: "\e652";
+}
+
+.el-icon-IE:before {
+  content: "\e87a";
+}
+
+.el-icon-lianjie:before {
+  content: "\e626";
+}
+

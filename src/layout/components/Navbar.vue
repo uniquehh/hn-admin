@@ -6,11 +6,17 @@
     <top-nav id="topmenu-container" class="topmenu-container" v-if="topNav"/>
 
     <div class="right-menu">
-
+      <div class="avatar-icon-box">
+        <i class="el-icon-suoping" style="font-size: 18px;margin-right: 15px;" />
+        <i class="el-icon-yifu" style="font-size: 18px;margin-right: 15px;" />
+        <i class="el-icon-bell" style="font-size: 18px;margin-right: 15px;" />
+        <i :class=" fullscreen?'el-icon-quxiaoquanping':'el-icon-quanping'" @click="handleFullScreen" style="font-size: 18px;margin-right: 15px;" />
+      </div>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <div class="user-name">{{ name }}</div>
+          <i class="el-icon-arrow-down" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/user/profile">
@@ -35,39 +41,72 @@
   import Search from '@/components/HeaderSearch'
 
 
-  export default {
-    components: {
-      Breadcrumb,
-      TopNav,
-      Hamburger,
-      Screenfull,
-      SizeSelect,
-      Search
-    },
-    computed: {
-      ...mapGetters([
-        'sidebar',
-        'avatar',
-        'device'
-      ]),
-      setting: {
-        get() {
-          return this.$store.state.settings.showSettings
-        },
-        set(val) {
-          this.$store.dispatch('settings/changeSetting', {
-            key: 'showSettings',
-            value: val
-          })
-        }
+export default {
+  components: {
+    Breadcrumb,
+    TopNav,
+    Hamburger,
+    Screenfull,
+    SizeSelect,
+    Search
+  },
+  computed: {
+    ...mapGetters([
+      'sidebar',
+      'avatar',
+      'device',
+      'name'
+    ]),
+    setting: {
+      get() {
+        return this.$store.state.settings.showSettings
       },
-      topNav: {
-        get() {
-          return this.$store.state.settings.topNav
-        }
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'showSettings',
+          value: val
+        })
       }
     },
-    methods: {
+    topNav: {
+      get() {
+        return this.$store.state.settings.topNav
+      }
+    }
+  },
+  data() {
+    return {
+      fullscreen:false,//默认非全屏
+    }
+  },
+  methods: {
+      // 全屏
+      handleFullScreen() {
+        let element = document.documentElement;
+        if (this.fullscreen) {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+        } else {
+          if (element.requestFullscreen) {
+            element.requestFullscreen();
+          } else if (element.webkitRequestFullScreen) {
+            element.webkitRequestFullScreen();
+          } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+          } else if (element.msRequestFullscreen) {
+            // IE11
+            element.msRequestFullscreen();
+          }
+        }
+        this.fullscreen = !this.fullscreen;
+      },
       toggleSideBar() {
         this.$store.dispatch('app/toggleSideBar')
       },
@@ -120,11 +159,15 @@
       display: inline-block;
       vertical-align: top;
     }
-
+    .avatar-icon-box{
+      margin-top: 2px;
+      cursor: pointer;
+    }
     .right-menu {
       float: right;
       height: 100%;
-      line-height: 50px;
+      display: flex;
+      align-items: center;
 
       &:focus {
         outline: none;
@@ -150,27 +193,34 @@
 
       .avatar-container {
         margin-right: 30px;
-
         .avatar-wrapper {
-          margin-top: 5px;
-          position: relative;
+          height: 100%;
+          display: flex;
+          align-items: center;
 
           .user-avatar {
             cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 10px;
+          }
+          .user-name{
+            color: #303133;
+            font-size: 12px;
+            margin-right: 5px;
           }
 
-          .el-icon-caret-bottom {
+          .el-icon-arrow-down {
             cursor: pointer;
-            position: absolute;
-            right: -20px;
-            top: 25px;
-            font-size: 12px;
+            font-size: 18px;
+            margin-top: -2px;
           }
         }
       }
     }
   }
+.el-dropdown-menu{
+  top: 50px !important;
+}
 </style>

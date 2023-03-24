@@ -7,5 +7,5 @@
 <script setup>
 import { getCurrentInstance } from 'vue'
 let { proxy } = getCurrentInstance()
-// proxy.$axios('/asd/dfg', { a: 1, b: "" })
+// proxy.$axios('asd/fff', { a: 1, b: "" })
 </script>

@@ -28,8 +28,12 @@ axiosInstance.interceptors.response.use((res) => {
 }, (error) => {
   return Promise.reject(error);
 })
-
-export default function req (url,data = {},method = 'get') {
+export default function req(url, data = {}, method = 'get') {
+  if (url.includes('http')) {
+    axiosInstance.defaults.baseURL = ''
+  } else {
+    axiosInstance.defaults.baseURL = baseURL.APIURL
+  }
   method = method.toLowerCase();//统一将方法转换为小写字母
   if (method == 'post') {
     return axiosInstance.post(url, data)

@@ -1,5 +1,5 @@
 <template>
-  <section class="app-main">
+  <section class="app-main" :class="$route.name == 'Index'?'app-main2':''">
     <transition name="fade-transform" mode="out-in">
       <keep-alive :include="cachedViews">
         <router-view :key="key" />
@@ -25,11 +25,15 @@ export default {
 <style lang="scss" scoped>
 .app-main {
   /* 50= navbar  50  */
-  height: calc(100vh - 110px);
+  height: calc(100% - 110px);
   width: 100%;
   position: relative;
   overflow: auto;
-  padding: 20px;
+  padding: 10px 5px;
+}
+.app-main2 {
+  height: 100%;
+  padding: 0;
 }
 
 .fixed-header+.app-main {

@@ -122,9 +122,10 @@ export default {
 			  username: this.loginForm.username,
 			  password: encrypt(this.loginForm.password),//加密后密码,
 			  rememberMe: this.loginForm.rememberMe,
-			  code: this.loginForm.code,
-			  uuid: this.loginForm.uuid
-		  }).then(() => {
+			  // code: this.loginForm.code,
+			  // uuid: this.loginForm.uuid
+          }).then(() => {
+            console.log(this.loginForm,88999);
             this.$router.push({ path: this.redirect || "/" }).catch(()=>{});
           }).catch((e) => {
             console.log(e);

@@ -5,12 +5,15 @@ import store from './store'
 import myDirective from './util/myDirective.js'
 import baseURL from "./util/config.js"
 import myAxios from './util/myAxios'
+// import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
 const newApp = createApp(App)
 
 // 请求的基本接口前缀
 newApp.baseURL = baseURL.APIURL
 console.log(newApp)
+// newApp.use(ElementPlus)
 newApp.use(store)
 newApp.use(router)
 // 在vue实例上定义自定义指令

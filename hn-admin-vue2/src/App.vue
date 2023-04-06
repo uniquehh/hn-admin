@@ -1,16 +1,10 @@
 <template>
-  <div class="page">
-    <router-view v-slot="{Component}">
-      <component :is="Component"></component>
-    </router-view>
+  <div id="app">
+    <router-view/>
   </div>
 </template>
-<script>
 
-
-</script>
-
-<style>
+<style lang="scss">
 /* 主题颜色 #4E72ED */
 *{margin: 0;padding: 0;}
 /* .page{
@@ -18,10 +12,10 @@
 } */
 .el-menu-item:hover{
   background-color: #007ACC !important;
+  color: white !important;
 }
-.el-sub-menu__title:hover{
+.el-submenu__title:hover{
   background-color: #007ACC !important;
+  color: white !important;
 }
-
-
 </style>

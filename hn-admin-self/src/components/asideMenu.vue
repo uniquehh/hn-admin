@@ -6,11 +6,12 @@
     </div>
     <div class="hn-menus-box">
       <el-menu
-        default-active="1"
+        default-active="/"
         :collapse="isCollapse"
         text-color="#81ADCC"
         active-text-color="#fff"
         background-color="#252526"
+        router
       >
         <template v-for="(item) in menus" :key="item.id">
           <!-- 有子菜单才渲染 -->
@@ -19,13 +20,13 @@
               <el-icon><location /></el-icon>
               <span :title="item.title">{{ item.title }}</span>
             </template>
-            <el-menu-item v-for="(items) in item.child" :key="items.id" :index="items.id">
+            <el-menu-item v-for="(items) in item.child" :key="items.id" :index="items.path">
               <el-icon><icon-menu /></el-icon>
               <span :title="items.title">{{ items.title }}</span>
             </el-menu-item>
           </el-sub-menu>
           <!-- 无子菜单才渲染 -->
-          <el-menu-item :index="item.id" v-else>
+          <el-menu-item :index="item.path" v-else>
             <el-icon><icon-menu /></el-icon>
             <span :title="item.title">{{ item.title }}</span>
           </el-menu-item>
@@ -44,32 +45,16 @@ import {
   Setting,
 } from '@element-plus/icons-vue'
 
-const isCollapse = ref(true)
+const isCollapse = ref(false)
 let menus = ref([
-  {id:"1",title:"菜单1"},
-  {id:"2",title:"菜飒啊啊啊试试大道段试试飒单2",child:[{id:"2-1",title:"菜单2的子菜单啊啊啊啊啊啊单"}]},
-  {id:"3",title:"菜单3"},
-  {id:"4",title:"菜单4",child:[{id:"3-1",title:"菜单4的子菜单"}]},
-  {id:"5",title:"菜单5",child:[{id:"4-1",title:"菜单5的子菜单"}]},
-  {id:"6",title:"菜杀杀杀杀杀杀杀杀杀单6"},
-  {id:"7",title:"菜单6"},
-  {id:"8",title:"菜单6"},
-  {id:"9",title:"菜单6"},
-  {id:"10",title:"菜单6"},
-  {id:"11",title:"菜单6"},
-  {id:"12",title:"菜单6"},
-  {id:"13",title:"菜单6"},
-  {id:"14",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单6"},
-  {id:"6",title:"菜单888"},
+  {id:"1",title:"菜单1",path:'/login'},
+  {id:"2",title:"菜飒啊啊啊试试大道段试试飒单2", path: '',child:[{id:"2-1",title:"菜单2的子菜单啊啊啊啊啊啊单", path: '' }]},
+  {id:"3",title:"菜单3", path: '' },
+  {id:"4",title:"菜单4", path: '',child:[{id:"3-1",title:"菜单4的子菜单", path: '' }]},
+  {id:"5",title:"菜单5", path: '',child:[{id:"4-1",title:"菜单5的子菜单", path: '' }]},
+  {id:"6",title:"菜杀杀杀杀杀杀杀杀杀单6", path: '' },
+  { id: "7", title: "菜单6", path: ''  },
+  {id:"6",title:"菜单888", path: '' },
 ])
 
 function handleOpen(key, keyPath) {
@@ -98,11 +83,11 @@ function handleClose(key, keyPath){
 }
 .hn-menus-box{
   margin-right: -17px;
-  overflow-y: auto;
+  overflow-y: scroll;
   max-height: calc(100vh - 60px);
 }
 .el-menu{
-  max-width: 260px;
+  max-width: 200px;
 }
 
 /* .el-menu-item{
@@ -110,7 +95,7 @@ function handleClose(key, keyPath){
 } */
 .el-menu-item span{
   display: inline-block;
-  max-width: 150px;
+  /* max-width: 180px; */
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -119,9 +104,8 @@ function handleClose(key, keyPath){
 }
 .el-sub-menu__title span {
   display: inline-block;
-  max-width: 150px;
+  /* max-width: 180px; */
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-right: 20px;
 }
 </style>

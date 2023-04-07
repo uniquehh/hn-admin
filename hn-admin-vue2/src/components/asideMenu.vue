@@ -8,11 +8,11 @@
       <el-menu
         class="new-el-menu--sidebar"
         default-active="/"
-        collapse-transition="true"
+        :collapse-transition="true"
         :collapse="isCollapse"
-        text-color="#81ADCC"
+        text-color="#F6F6F6"
         active-text-color="#ffffff"
-        background-color="#363F68"
+        background-color="#202124"
         router
       >
         <template v-for="(item) in menus">
@@ -39,13 +39,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      isCollapse: false,
       menus: [
         { id: "1", title: "菜单1", path: '/login' },
-        { id: "2", title: "菜飒啊啊啊试试大道段试试飒单2", path: '', child: [{ id: "2-1", title: "菜单2的子菜单啊啊啊啊啊啊单", path: '' }] },
+        {
+          id: "2", title: "系统管理", path: '', child: [
+            { id: "2-1", title: "医院用户管理", path: '/system/yiYuanUserAdmin' },
+            { id: "2-2", title: "权限管理", path: '/system/powerAdmin' },
+            { id: "2-3", title: "数据字典", path: '/system/dataDict' },
+            { id: "2-4", title: "员工管理", path: '/system/staffAdmin' },
+        ] },
         { id: "3", title: "菜单3", path: '' },
         { id: "4", title: "菜单4", path: '', child: [{ id: "3-1", title: "菜单4的子菜单", path: '' }] },
         { id: "5", title: "菜单5", path: '', child: [{ id: "4-1", title: "菜单5的子菜单", path: '' }] },
@@ -54,6 +60,12 @@ export default {
         { id: "8", title: "菜单888", path: '' },
       ],
     }
+  },
+  computed: {
+    ...mapState('asidMenu',['isCollapse']),
+  },
+  mounted() {
+    console.log()
   },
   methods: {
     
@@ -97,9 +109,6 @@ export default {
   max-width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-right: 10px;
-}
-.el-menu-item .el-icon{
   margin-right: 10px;
 }
 .el-submenu__title span {

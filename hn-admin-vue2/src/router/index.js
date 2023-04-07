@@ -8,7 +8,29 @@ const routes = [
   {
     path: '/',
     name: 'index',
-    component: index
+    component: index,
+    children: [
+      {
+        path: '/system/yiYuanUserAdmin',
+        name: 'yiYuanUserAdmin',
+        component: () => import('../views/system/yiYuanUserAdmin.vue')
+      },
+      {
+        path: '/system/powerAdmin',
+        name: 'powerAdmin',
+        component: () => import('../views/system/powerAdmin.vue')
+      },
+      {
+        path: '/system/dataDict',
+        name: 'dataDict',
+        component: () => import('../views/system/dataDict.vue')
+      },
+      {
+        path: '/system/staffAdmin',
+        name: 'staffAdmin',
+        component: () => import('../views/system/staffAdmin.vue')
+      }
+    ]
   },
   {
     path: '/login',

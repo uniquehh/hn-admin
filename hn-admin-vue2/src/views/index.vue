@@ -14,7 +14,9 @@
           <topNavMenus></topNavMenus>
         </div>
         <div class="hn-cont-box">
-
+          <div class="hn-cont-main">
+            <router-view></router-view>
+          </div>
         </div>
 
 
@@ -32,13 +34,13 @@ import topNavMenus from '@/components/topNavMenus.vue';
 
 
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .hn-index-box{
   display: flex;
 }
 /* 左侧菜单容器 */
 .hn-index-aside{
-  background-color: #363F68;
+  background-color: #202124;
   height: 100vh;
 }
 /* 右侧内容区域 */
@@ -47,4 +49,13 @@ import topNavMenus from '@/components/topNavMenus.vue';
   height: 100vh;
   background-color: #F6F6F6;
 }
+.hn-cont-box{
+  padding: 10px;
+}
+.hn-cont-main{
+  height: calc(100vh - 108px);
+  overflow: auto;
+  background-color: white;
+}
+
 </style>

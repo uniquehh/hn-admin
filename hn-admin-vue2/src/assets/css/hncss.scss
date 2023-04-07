@@ -1,0 +1,58 @@
+/* 权限管理页面样式 */
+.hn-power-main{
+  display: flex;
+  height: 100%;
+  background-color: #f6f6f6;
+}
+.hn-power-left{
+  background-color: white;
+  width: 200px;
+  margin-right: 15px;
+  border-radius: 5px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+}
+.hn-power-right{
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  flex: 1 1 auto;
+  min-width: 800px;
+}
+.hn-powerlh-item{
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 10px;
+}
+.hn-powerlhi-icon{
+  font-size: 16px;
+  color: #409EFF;
+  font-weight: bold;
+}
+.hn-powerlc-item{
+  padding: 10px 5px;
+  cursor: pointer;
+  &:hover{
+    background-color: #DEECF9;
+  }
+}
+.hn-powerlc-itemcurr{
+  background-color: #DEECF9;
+}
+
+.hn-powerrc-item{
+
+}
+.hn-powerrci-parent{
+  padding: 20px 5px 10px 5px;
+}
+.hn-powerrci-child{
+  display: inline-block;
+  padding: 0 5px 5px 5px;
+  width: 200px;
+  box-sizing: border-box;
+}

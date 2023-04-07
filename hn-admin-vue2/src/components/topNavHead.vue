@@ -1,25 +1,117 @@
 <template>
   <div class="hn-topnav-head">
-    
+    <div class="hn-head-left" @click="stSetCollapse(!isCollapse)">
+      <i class="el-icon-s-fold" v-show="!isCollapse" style="font-size: 18px;" />
+      <i class="el-icon-s-unfold" v-show="isCollapse" style="font-size: 18px;" />
+    </div>
+    <div class="hn-head-right">
+      <div class="hn-avatar-icons">
+        <i class="el-icon-suoping" style="font-size: 18px;margin-right: 15px;" />
+        <i class="el-icon-yifu" style="font-size: 18px;margin-right: 15px;" />
+        <i class="el-icon-bell" style="font-size: 18px;margin-right: 15px;" />
+        <i :class="fullscreen ? 'el-icon-quxiaoquanping' : 'el-icon-quanping'" @click="handleFullScreen" style="font-size: 18px;margin-right: 15px;" />
+      </div>
+
+      <el-dropdown class="hn-avatar-box" trigger="click">
+          <div class="hn-avatar-wrapper">
+            <img src="../assets/logo.png" class="hn-user-avatar">
+            <div class="hn-user-name">sss</div>
+            <i class="el-icon-arrow-down" />
+          </div>
+          <el-dropdown-menu slot="dropdown">
+            <router-link to="/">
+              <el-dropdown-item>个人中心</el-dropdown-item>
+            </router-link>
+            <el-dropdown-item divided @click.native="logout">
+              <span>退出登录</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState,mapMutations } from 'vuex'
 export default {
   data() {
     return {
-
+      fullscreen:false,//是否全屏
     }
   },
-  methods: {
+  computed: {
+    ...mapState('asidMenu', ['isCollapse']),
+    ...mapState('user', ['userInfo']),
+  },
+  mounted() {
     
+  },
+  methods: {
+    // 获取左侧菜单store模块
+    ...mapMutations('asidMenu',['stSetCollapse']),
+    // 获取用户store模块
+    ...mapMutations('user', ['stSetUserInfo','stSetIsLogin']),
+    logout() { },
+    // 全屏
+    handleFullScreen() {
+      let element = document.documentElement;
+      if (this.fullscreen) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
+      } else {
+        if (element.requestFullscreen) {
+          element.requestFullscreen();
+        } else if (element.webkitRequestFullScreen) {
+          element.webkitRequestFullScreen();
+        } else if (element.mozRequestFullScreen) {
+          element.mozRequestFullScreen();
+        } else if (element.msRequestFullscreen) {
+          // IE11
+          element.msRequestFullscreen();
+        }
+      }
+      this.fullscreen = !this.fullscreen;
+    },
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .hn-topnav-head{
   background-color: white;
   display: flex;
+  justify-content: space-between;
+  padding: 10px 20px 10px 10px;
+}
+.hn-head-left{
+  cursor: pointer;
+}
+.hn-user-avatar{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.hn-head-left{
+  display: flex;
+  align-items: center;
+}
+.hn-head-right{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.hn-avatar-wrapper{
+  display: flex;
+  align-items: center;
+}
+.hn-user-name{
+  margin: 0 10px;
 }
 </style>

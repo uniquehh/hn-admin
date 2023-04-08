@@ -35,6 +35,8 @@ export default {
 <style lang="scss" scoped>
 .hn-topnav-menus{
   background-color: white;
+  width: 1780px;
+  overflow-x: auto;
 }
 .el-menu--horizontal{
   border-top: 1px solid #e6e6e6;

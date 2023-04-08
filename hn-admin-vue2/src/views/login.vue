@@ -8,8 +8,8 @@
         <div class="hn-login-main">
           <div class="hn-login-cont">
             <div class="hn-login-title">
-              <h4 style="margin-bottom: 10px;">欢迎登录</h4>
-              <h4 style="margin-bottom: 30px;">欢迎登录XX数字化信息管理平台</h4>
+              <h3 style="margin-bottom: 10px;">欢迎登录</h3>
+              <h3 style="margin-bottom: 30px;">欢迎登录XX数字化信息管理平台</h3>
             </div>
             <div class="hn-login-user">
               <el-input
@@ -28,7 +28,7 @@
                 type="password"
               />
             </div>
-            <el-button style="width: 100%;" color="#4E72ED">登录</el-button>
+            <el-button style="width: 100%;" type="primary" >登录</el-button>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@ export default {
 }
 
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .hn-login-bgbox{
   width: 100%;
   height: 100vh;
@@ -85,6 +85,9 @@ export default {
 }
 .hn-login-user,.hn-login-pass{
   width: 240px;
+  ::v-deep .el-input{
+    width: 100% !important;
+  }
 }
 .hn-login-pass{
   margin-bottom: 30px;

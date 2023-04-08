@@ -34,4 +34,10 @@
 .hn-menus-box i{
   color: #fff !important;
 }
+.el-pagination__jump{
+  margin-left: 0px !important;
+}
+.el-table th.el-table__cell{
+  background-color: #FAFAFA !important;
+}
 </style>

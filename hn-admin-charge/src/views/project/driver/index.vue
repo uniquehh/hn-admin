@@ -166,8 +166,13 @@
       </div>
     </el-dialog>
 
-    <pagination v-if="total > 0" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize"
-      @pagination="driverList" />
+    <pagination 
+    v-if="total > 0" 
+    :total="total" 
+    :page.sync="queryParams.page" 
+    :limit.sync="queryParams.pageSize"
+    @pagination="driverList" 
+    />
   </div>
 </template>
 

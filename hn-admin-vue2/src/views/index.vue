@@ -47,6 +47,7 @@ import topNavMenus from '@/components/topNavMenus.vue';
 .hn-index-main{
   flex: 1;
   height: 100vh;
+  width: calc(100% - 200px); //使得内部内容宽度超出后出现滚动条
   background-color: #F6F6F6;
 }
 .hn-cont-box{
@@ -56,6 +57,10 @@ import topNavMenus from '@/components/topNavMenus.vue';
   height: calc(100vh - 108px);
   overflow: auto;
   background-color: white;
+  border-radius: 5px;
+}
+.hn-topnav-box{
+  width: 100%; 
 }
 
 </style>

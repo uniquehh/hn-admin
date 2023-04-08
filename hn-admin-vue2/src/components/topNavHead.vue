@@ -1,8 +1,11 @@
 <template>
   <div class="hn-topnav-head">
-    <div class="hn-head-left" @click="stSetCollapse(!isCollapse)">
-      <i class="el-icon-s-fold" v-show="!isCollapse" style="font-size: 18px;" />
-      <i class="el-icon-s-unfold" v-show="isCollapse" style="font-size: 18px;" />
+    <div class="hn-head-left">
+      <div class="hn-headl-icons" @click="stSetCollapse(!isCollapse)">
+        <i class="el-icon-s-fold" v-show="!isCollapse" style="font-size: 18px;" />
+        <i class="el-icon-s-unfold" v-show="isCollapse" style="font-size: 18px;" />
+      </div>
+      <mianBaoXie></mianBaoXie>
     </div>
     <div class="hn-head-right">
       <div class="hn-avatar-icons">
@@ -15,7 +18,7 @@
       <el-dropdown class="hn-avatar-box" trigger="click">
           <div class="hn-avatar-wrapper">
             <img src="../assets/logo.png" class="hn-user-avatar">
-            <div class="hn-user-name">sss</div>
+            <div class="hn-user-name">姓名</div>
             <i class="el-icon-arrow-down" />
           </div>
           <el-dropdown-menu slot="dropdown">
@@ -33,7 +36,9 @@
 
 <script>
 import { mapState,mapMutations } from 'vuex'
+import mianBaoXie from './mianBaoXie.vue'
 export default {
+  components:{mianBaoXie},
   data() {
     return {
       fullscreen:false,//是否全屏
@@ -91,20 +96,24 @@ export default {
   padding: 10px 20px 10px 10px;
 }
 .hn-head-left{
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.hn-headl-icons{
   cursor: pointer;
+  margin-right: 20px;
+  font-size: 0;
 }
 .hn-user-avatar{
   width: 30px;
   height: 30px;
   border-radius: 50%;
 }
-.hn-head-left{
-  display: flex;
-  align-items: center;
-}
 .hn-head-right{
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   cursor: pointer;
 }
 .hn-avatar-wrapper{
@@ -114,4 +123,7 @@ export default {
 .hn-user-name{
   margin: 0 10px;
 }
+// .hn-user-name,.el-icon-arrow-down{
+//   transform: translateY(-2px);
+// }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="hn-aside-menu">
     <div class="hn-aside-title">
-      <img @click="isCollapse=!isCollapse" src="../assets/logo.png" alt="">
+      <img src="../assets/logo.png" alt="">
       <span v-show="!isCollapse">管理系统</span>
     </div>
     <div class="hn-menus-box">

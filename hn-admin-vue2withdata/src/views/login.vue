@@ -28,7 +28,7 @@
                 type="password"
               />
             </div>
-            <el-button style="width: 100%;" type="primary" >登录</el-button>
+            <el-button style="width: 100%;" type="primary" @click="login">登录</el-button>
           </div>
         </div>
       </div>
@@ -53,6 +53,11 @@ export default {
     // login
     login(){
       let pass = this.$md5(this.password)
+      let dto = {
+        account:this.userName,
+        password:pass,
+      }
+      this.request('/auth/login',dto,'post')
     }
   },
 }

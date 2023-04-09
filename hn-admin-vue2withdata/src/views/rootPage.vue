@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="hn-index-box">
+    <div class="hn-index-box" v-show="isLogin">
       <!-- 左侧菜单区域 -->
       <div class="hn-index-aside">
         <asideMenu></asideMenu>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapState,mapMutations } from 'vuex'
 import asideMenu from '@/components/asideMenu.vue';
 import topNavHead from '@/components/topNavHead.vue';
 import topNavMenus from '@/components/topNavMenus.vue';
@@ -36,6 +37,9 @@ export default {
     return {
 
     }
+  },
+  computed: {
+    ...mapState('user', ['userInfo','isLogin']),
   },
   mounted() {
     console.log(this.$route)

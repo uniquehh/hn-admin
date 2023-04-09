@@ -1,14 +1,20 @@
 import axios from 'axios'
-import baseURL from './config'
+import urlConfig from './config'
 
 let axiosInstance = axios.create({
-  baseURL: baseURL.APIURL,
+  baseURL: urlConfig.preApi, // urlConfig.preApi 接口前缀--代理后会重写去除
   timeout: 6000,
   headers: {'Content-Type': 'application/json;charset=utf-8'}
 })
 
 // 请求拦截器
 axiosInstance.interceptors.request.use((config) => {
+  console.log(config)
+  // 接口地址
+  // if(!config.url.includes("http")){
+  //   config.url = urlConfig.apiUrl + config.url
+  // }
+
   // 每个请求都携带token
   if (sessionStorage.getItem('token')) {
     config.headers['token'] = sessionStorage.getItem('token')
@@ -28,12 +34,9 @@ axiosInstance.interceptors.response.use((res) => {
 }, (error) => {
   return Promise.reject(error);
 })
+
+
 export default function requset(url, data = {}, method = 'get') {
-  if (url.includes('http')) {
-    axiosInstance.defaults.baseURL = ''
-  } else {
-    axiosInstance.defaults.baseURL = baseURL.APIURL
-  }
   method = method.toLowerCase();//统一将方法转换为小写字母
   if (method == 'post') {
     return axiosInstance.post(url, data)

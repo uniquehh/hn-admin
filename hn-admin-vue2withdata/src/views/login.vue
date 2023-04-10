@@ -57,7 +57,10 @@ export default {
         account:this.userName,
         password:pass,
       }
-      this.request('/auth/login',dto,'post')
+      this.request('/auth/login', dto, 'post')
+      // this.stSetUserInfo({ name: "zahsng" })
+      // this.stSetIsLogin(true)
+      // this.$router.replace({path:'/index'})
     }
   },
 }

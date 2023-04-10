@@ -28,8 +28,10 @@ Vue.component('pagination',pagination)
 
 Vue.use(ElementUI);
 
-new Vue({
+const vm = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+export default vm

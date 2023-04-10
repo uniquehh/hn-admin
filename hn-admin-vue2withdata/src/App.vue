@@ -15,15 +15,18 @@ export default {
   computed: {
     ...mapState('user', ['userInfo','isLogin']),
   },
-  mounted() {
+  created() {
     let topmenu = JSON.parse(sessionStorage.getItem("topMenus"))
     let current = sessionStorage.getItem("currentPath")
-    if(!topmenu&&!current&&this.isLogin){
+    if (!topmenu && !current && this.isLogin) {
       // 页面首次加载默认跳转到首页
-      this.$router.push({path:'/index'})
-    }else{
-      this.$router.push({path:'/login'})
+      this.$router.replace({ path: '/index' })
+    } else {
+      this.$router.replace({ path: '/login' })
     }
+  },
+  mounted() {
+    
   },
   unmounted() {
     // 关闭页面后清除顶部菜单缓存数据--下次进入页面自动跳转首页

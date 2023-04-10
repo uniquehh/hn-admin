@@ -20,9 +20,9 @@ export default {
     let current = sessionStorage.getItem("currentPath")
     if(!topmenu&&!current&&this.isLogin){
       // 页面首次加载默认跳转到首页
-      this.$router.push({path:'/index'})
+      this.$router.replace({path:'/index'})
     }else{
-      this.$router.push({path:'/login'})
+      this.$router.replace({path:'/login'})
     }
   },
   unmounted() {

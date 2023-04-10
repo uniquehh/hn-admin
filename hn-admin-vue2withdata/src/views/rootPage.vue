@@ -39,10 +39,19 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['userInfo','isLogin']),
+    ...mapState('user', ['isLogin']),
+  },
+  created() {
+    if (this.isLogin) {
+      // 页面首次加载默认跳转到首页
+      this.$router.push({ path: '/index' })
+    } else {
+      this.$router.push({ path: '/login' })
+    }
+    console.log(this.$router)
   },
   mounted() {
-    console.log(this.$route)
+
   },
   methods: {
 

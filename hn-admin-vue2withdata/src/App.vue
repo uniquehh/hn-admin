@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState,mapMutations } from 'vuex'
+// import { mapState,mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -13,17 +13,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['userInfo','isLogin']),
-  },
-  created() {
-    let topmenu = JSON.parse(sessionStorage.getItem("topMenus"))
-    let current = sessionStorage.getItem("currentPath")
-    if (!topmenu && !current && this.isLogin) {
-      // 页面首次加载默认跳转到首页
-      this.$router.replace({ path: '/index' })
-    } else {
-      this.$router.replace({ path: '/login' })
-    }
+    // ...mapState('user', ['userInfo','isLogin']),
   },
   mounted() {
     

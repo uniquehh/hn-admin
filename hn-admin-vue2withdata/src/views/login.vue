@@ -48,6 +48,15 @@ export default {
   computed: {
     ...mapState('user', ['userInfo','isLogin']),
   },
+  mounted() {
+    // if (this.$route.query.logout) {
+      // window.addEventListener("popstate", function (e) {
+      //   const historyLength = window.history.length;
+      //   console.log(window.history)
+      //   window.history.go(-(historyLength));
+      // }, false);
+    // }
+  },
   methods: {
     ...mapMutations('user',['stSetUserInfo','stSetIsLogin']),
     // login
@@ -57,10 +66,11 @@ export default {
         account:this.userName,
         password:pass,
       }
-      this.request('/auth/login', dto, 'post')
-      // this.stSetUserInfo({ name: "zahsng" })
-      // this.stSetIsLogin(true)
-      // this.$router.replace({path:'/index'})
+      // this.request('/auth/login', dto, 'post')
+
+      this.stSetUserInfo({ name: "zahsng" })
+      this.stSetIsLogin(true)
+      this.$router.replace({path:'/'})
     }
   },
 }

@@ -13,9 +13,10 @@ const methods = {
     // sessionStorage.removeItem('mianBaos')
     // sessionStorage.removeItem('isLogin')
     sessionStorage.clear()
+    location.href = '/'
     // vm.$store.commit('stSetUserInfo',{})
-    window.location.reload()//刷新页面重置vuex的值
-    vm.$router.replace({ path: '/login' }) //replace跳转防止用户返回
+    // window.location.reload()//刷新页面重置vuex的值
+    // vm.$router.replace({ path: '/login',query:{logout:true} })
   },
   // 请求数据
   request,

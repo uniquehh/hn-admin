@@ -34,11 +34,15 @@ export default {
     },
     // 关闭顶部激活的历史菜单
     closeTopMenu(ind){
-      // 若关闭的菜单是当前激活的菜单，则跳转他的前面一个菜单，并更新当前激活的菜单
-      if(this.menus[ind].path == this.current){
+      // 若关闭的菜单是当前激活的菜单且是菜单的最后一个，则跳转他的前面一个菜单，并更新当前激活的菜单
+      if(this.menus[ind].path == this.current&&(ind==this.menus.length-1)){
         this.$router.push({path:this.menus[ind-1].path})
         this.stSetTopCurrent(this.menus[ind-1].path)
         this.handleMianBao(ind-1)
+      } else {
+        this.$router.push({ path: this.menus[ind + 1].path })
+        this.stSetTopCurrent(this.menus[ind + 1].path)
+        this.handleMianBao(ind + 1)
       }
       // 若关闭的菜单不是当前激活的菜单，则正常更新菜单数据即可
       this.menus.splice(ind,1)

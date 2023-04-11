@@ -20,6 +20,8 @@ const methods = {
   },
   // 请求数据
   request,
+  // 提示框
+  
   
 }
 

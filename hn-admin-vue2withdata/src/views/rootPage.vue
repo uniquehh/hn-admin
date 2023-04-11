@@ -42,13 +42,12 @@ export default {
     ...mapState('user', ['isLogin']),
   },
   created() {
-    if (this.isLogin) {
-      // 页面首次加载默认跳转到首页
-      this.$router.push({ path: '/index' })
-    } else {
-      this.$router.push({ path: '/login' })
-    }
-    console.log(this.$router)
+    // if (this.isLogin) {
+    //   // 页面首次加载默认跳转到首页
+    //   this.$router.replace({ path: '/index' })
+    // } else {
+    //   this.$router.replace({ path: '/login' })
+    // }
   },
   mounted() {
 

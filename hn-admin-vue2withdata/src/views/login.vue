@@ -11,24 +11,28 @@
               <h3 style="margin-bottom: 10px;">欢迎登录</h3>
               <h3 style="margin-bottom: 30px;">欢迎登录XX数字化信息管理平台</h3>
             </div>
-            <div class="hn-login-user">
-              <el-input
-                placeholder="请输入账号"
-                prefix-icon="el-icon-user"
-                v-model="userName"
-                type="text"
-              />
-            </div>
-            <div class="hn-login-pass">
-              <el-input
-                placeholder="请输入密码"
-                prefix-icon="el-icon-lock"
-                v-model="password"
-                show-password
-                type="password"
-              />
-            </div>
-            <el-button style="width: 100%;" type="primary" @click="login">登录</el-button>
+            <el-form :model="loginForm" :rules="loginRules" ref="lgForm">
+              <el-form-item prop="userName">
+                <el-input
+                  placeholder="请输入账号"
+                  prefix-icon="el-icon-user"
+                  v-model="loginForm.userName"
+                  type="text"
+                />
+              </el-form-item>
+              <el-form-item class="hn-login-pass" prop="password">
+                <el-input
+                  placeholder="请输入密码"
+                  prefix-icon="el-icon-lock"
+                  v-model="loginForm.password"
+                  show-password
+                  type="password"
+                />
+              </el-form-item>
+              <el-form-item>
+                <el-button style="width: 100%;" type="primary" @click="submitForm">登录</el-button>
+              </el-form-item>
+            </el-form>
           </div>
         </div>
       </div>
@@ -41,37 +45,49 @@ import { mapState,mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      password: "",
-      userName: "",
+      loginForm: {
+        userName: "",
+        password: "",
+      },
+      loginRules: {
+        userName: [
+          { required: true, message: '请输入账号', trigger: 'blur' },
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+        ],
+      }
     }
   },
   computed: {
     ...mapState('user', ['userInfo','isLogin']),
   },
   mounted() {
-    // if (this.$route.query.logout) {
-      // window.addEventListener("popstate", function (e) {
-      //   const historyLength = window.history.length;
-      //   console.log(window.history)
-      //   window.history.go(-(historyLength));
-      // }, false);
-    // }
+
   },
   methods: {
     ...mapMutations('user',['stSetUserInfo','stSetIsLogin']),
     // login
-    login(){
-      let pass = this.$md5(this.password)
-      let dto = {
-        account:this.userName,
-        password:pass,
-      }
-      // this.request('/auth/login', dto, 'post')
+    submitForm() {
+      this.$refs.lgForm.validate((valid) => {
+        if (valid) {
+          let pass = this.$md5(this.loginForm.password)
+          let res = this.request('/auth/login', {
+            account: this.loginForm.userName,
+            password: pass,
+          }, 'post')
+          console.log(res)
 
-      this.stSetUserInfo({ name: "zahsng" })
-      this.stSetIsLogin(true)
-      this.$router.replace({path:'/'})
-    }
+          // this.stSetUserInfo({ name: "zahsng" })
+          // this.stSetIsLogin(true)
+          // this.$router.replace({path:'/index'})
+        } else {
+          return false;
+        }
+      });
+    },
+
+
   },
 }
 

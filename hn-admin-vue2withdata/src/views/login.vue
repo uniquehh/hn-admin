@@ -71,16 +71,20 @@ export default {
     submitForm() {
       this.$refs.lgForm.validate((valid) => {
         if (valid) {
-          let pass = this.$md5(this.loginForm.password)
-          let res = this.request('/auth/login', {
+          this.request('/auth/login', {
             account: this.loginForm.userName,
-            password: pass,
-          }, 'post')
-          console.log(res)
+            password: this.$md5(this.loginForm.password),
+          }, 'post').then((res) => {
+            this.stSetUserInfo(res.data)
+            this.hasPowerAsideMenus()
+            this.stSetIsLogin(true)
+            this.hnRouterRep("/index")
+          })
 
           // this.stSetUserInfo({ name: "zahsng" })
           // this.stSetIsLogin(true)
-          // this.$router.replace({path:'/index'})
+          // this.$router.replace({ path: '/index' })
+          
         } else {
           return false;
         }
@@ -96,7 +100,7 @@ export default {
 .hn-login-bgbox{
   width: 100%;
   height: 100vh;
-  background: url("@/assets/img/loginbg1.jpg") no-repeat center;
+  background: url("../assets/img/loginbg1.jpg") no-repeat center;
   background-size: cover;
 }
 .hn-login-form{

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// import { mapState,mapMutations } from 'vuex'
+import { mapState,mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -14,23 +14,29 @@ export default {
   },
   computed: {
     // ...mapState('user', ['userInfo','isLogin']),
+    ...mapState('topMenu', ['topMenus', 'current']),
   },
   mounted() {
     
   },
-  unmounted() {
-    // 关闭页面后清除顶部菜单缓存数据--下次进入页面自动跳转首页
+  updated() { 
+    // console.log(this.$route)
+    this.stSetTopCurrent(this.$route.fullPath)
+    this.handleMianBao(this.$route.fullPath)
+  },
+  beforeDestroy() {
+    // 关闭页面前清除顶部菜单缓存数据--下次进入页面自动跳转首页
     this.removeTopMenuStorage()
   },
   methods: {
-    // ...mapMutations('topMenu',['stSetTopMenus','stSetTopCurrent']),
+    ...mapMutations('topMenu', ['stSetTopMenus', 'stSetTopCurrent']),
   }
 }
 </script>
 
 <style lang="scss">
 /* 主题颜色 #409EFF */
-@import './assets/css/hncss.scss';
+@import '@/assets/css/hncss.scss';
 *{margin: 0;padding: 0;text-decoration: none;}
 #app{
   overflow: hidden;

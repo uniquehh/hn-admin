@@ -42,15 +42,10 @@ export default {
     ...mapState('user', ['isLogin']),
   },
   created() {
-    // if (this.isLogin) {
-    //   // 页面首次加载默认跳转到首页
-    //   this.$router.replace({ path: '/index' })
-    // } else {
-    //   this.$router.replace({ path: '/login' })
-    // }
+
   },
   mounted() {
-
+    
   },
   methods: {
 

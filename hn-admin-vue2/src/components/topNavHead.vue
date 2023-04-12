@@ -15,7 +15,7 @@
         <i :class="fullscreen ? 'el-icon-quxiaoquanping' : 'el-icon-quanping'" @click="handleFullScreen" style="font-size: 18px;margin-right: 15px;" />
       </div>
       <div class="hn-avatar-wrapper">
-        <img src="../assets/logo.png" class="hn-user-avatar">
+        <img src="../assets/img/defAvatar.png" class="hn-user-avatar">
         <div class="hn-user-name">姓名</div>
       </div>
       <el-dropdown class="hn-avatar-box" trigger="click">
@@ -44,7 +44,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('asidMenu', ['isCollapse']),
+    ...mapState('asideMenu', ['isCollapse']),
     ...mapState('user', ['userInfo']),
   },
   mounted() {
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     // 获取左侧菜单store模块
-    ...mapMutations('asidMenu',['stSetCollapse']),
+    ...mapMutations('asideMenu',['stSetCollapse']),
     // 获取用户store模块
     ...mapMutations('user', ['stSetUserInfo','stSetIsLogin']),
     logout() { },

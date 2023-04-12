@@ -1,7 +1,7 @@
 <template>
   <div class="hn-aside-menu">
-    <div class="hn-aside-title">
-      <img src="../assets/logo.png" alt="">
+    <div class="hn-aside-title" @click="hnRouterPush('/index')">
+      <img src="../assets/img/defAvatar.png" alt="">
       <span v-show="!isCollapse">管理系统</span>
     </div>
     <div class="hn-menus-box">
@@ -14,26 +14,27 @@
         active-text-color="#ffffff"
         background-color="#202124"
         router
-        @select="selectMenu"
-        @open="menuItemClick"
+        @select="handleAsideMenu"
       >
-        <template v-for="(item,index) in asideMenus">
-          <!-- 有子菜单才渲染 -->
-            <el-submenu :key="item.id + 'smenu'" :index="item.id" v-if="item.child.length">
+        <template v-for="(item) in asideMenus">
+          <!-- 有子菜单才渲染dom -->
+            <el-submenu :key="item.path + 'smenu'" :index="item.path" v-if="item.child.length>0 && item.hasPower">
               <template #title>
                 <i class="el-icon-location"></i>
                 <span :title="item.name">{{ item.name }}</span>
               </template>
-              <el-menu-item v-for="(items,indexs) in item.child" :key="items.id" 
-                :index="items.path"
-                @click="menuItemClick(index,indexs)"
-              >
-                <i class="el-icon-location"></i>
-                <span :title="items.name">{{ items.name }}</span>
-              </el-menu-item>
+              <template v-for="(items) in item.child">
+                <el-menu-item v-if="items.hasPower" :key="items.path" 
+                  :index="items.path"
+                  @click="handleMianBao(items.path)"
+                >
+                  <i class="el-icon-location"></i>
+                  <span :title="items.name">{{ items.name }}</span>
+                </el-menu-item>
+              </template>
             </el-submenu>
-            <!-- 无子菜单才渲染 -->
-            <el-menu-item :key="item.id + 'menu'" :index="item.path" @click="menuItemClick(index,null)" v-else>
+            <!-- 无子菜单才渲染的dom -->
+            <el-menu-item v-if="!item.child.length&&item.hasPower" :key="item.path + 'menu'" :index="item.path" @click="handleMianBao(item.path)">
               <i class="el-icon-location"></i>
               <span :title="item.name">{{ item.name }}</span>
             </el-menu-item>
@@ -52,8 +53,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('asidMenu',['isCollapse','asideMenus']),
-    ...mapState('topMenu',['menus','current']),
+    ...mapState('asideMenu',['isCollapse','asideMenus']),
+    ...mapState('topMenu',['topMenus','current']),
   },
   mounted() {
 
@@ -63,36 +64,29 @@ export default {
     ...mapMutations('topMenu',['stSetTopMenus','stSetTopCurrent']),
     // 面包屑
     ...mapMutations('mianBaoXie',['stSetMianBaos']),
-    selectMenu(index){
-      // 存储更新当前激活的path
-      this.stSetTopCurrent(index)
-      // 判断历史菜单记录中是否已经有了该菜单数据
-      let temp = this.menus.find(item=>item.path==index)
-      if(temp)return;
-      // 对比path，找到新激活的菜单数据
-      this.asideMenus.forEach(item=>{
-        if(item.child.length){
-          item.child.forEach(items=>{
-            if(items.path==index){
-              this.menus.push(items)
-            }
-          })
-        }else{
-          if(item.path==index){
-            this.menus.push(item)
-          }
-        }
-      })
-      // 把处理好的数据用store存储在topmenu中
-      this.stSetTopMenus(this.menus)
-    },
-    // 处理面包屑数据
-    menuItemClick(pind,cind){
-      let temp = []
-      temp.push(this.asideMenus[pind])
-      if(cind!=null)temp.push(this.asideMenus[pind].child[cind]);
-      this.stSetMianBaos(temp)
-    },
+    // handleAsideMenu(path){ // 此处的path是点击侧边菜单传来el-menu-item的index属性
+    //   // 存储更新当前激活的path
+    //   this.stSetTopCurrent(path)
+    //   // 判断历史菜单记录中是否已经有了该菜单数据
+    //   let temp = this.menus.find(item=>item.path==path)
+    //   if(temp)return;
+    //   // 对比path，找到新激活的菜单数据
+    //   this.asideMenus.forEach(item=>{
+    //     if(item.child.length){
+    //       item.child.forEach(items=>{
+    //         if(items.path==path){
+    //           this.menus.push(items)
+    //         }
+    //       })
+    //     }else{
+    //       if(item.path==path){
+    //         this.menus.push(item)
+    //       }
+    //     }
+    //   })
+    //   // 把处理好的数据用store存储在topmenu中
+    //   this.stSetTopMenus(this.menus)
+    // },
 
 
   }

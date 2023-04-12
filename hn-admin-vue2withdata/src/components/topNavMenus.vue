@@ -1,11 +1,11 @@
 <template>
   <div class="hn-topnav-menus">
     <el-menu :default-active="current" class="el-menu-demo" mode="horizontal" 
-      @select="handleSelect"
+      @select="handleTopMenu"
       router  
     >
-      <el-menu-item class="hn-hmenu-item" v-for="(item,index) in menus" :key="item.path" 
-        :index="item.path" @click="handleMianBao(index)">
+      <el-menu-item class="hn-hmenu-item" v-for="(item,index) in topMenus" :key="item.path" 
+        :index="item.path" @click="handleMianBao(item.path)">
         <span style="margin-right: 5px;">{{ item.name }}</span>
         <i @click.stop="closeTopMenu(index)" v-show="item.path!='/index'" style="font-size: 14px;" class="el-icon-close"></i>
       </el-menu-item>
@@ -22,52 +22,32 @@ export default {
     }
   },
   computed:{
-    ...mapState('topMenu',['menus','current']),
-    ...mapState('asidMenu',['asideMenus']),
+    ...mapState('topMenu',['topMenus','current']),
+    ...mapState('asideMenu',['asideMenus']),
   },
   methods: {
     ...mapMutations('topMenu',['stSetTopMenus','stSetTopCurrent']),
     ...mapMutations('mianBaoXie',['stSetMianBaos']),
     // topmenu点击跳转路由并存储当前激活的路由
-    handleSelect(path) {
+    handleTopMenu(path) {
       this.stSetTopCurrent(path)
     },
     // 关闭顶部激活的历史菜单
     closeTopMenu(ind) {
       // 若关闭的菜单是当前激活的菜单，则跳转他的前面一个菜单，并更新当前激活的菜单
-      if (this.menus[ind].path == this.current && (ind == this.menus.length - 1)) {
-        this.$router.push({ path: this.menus[ind - 1].path })
-        this.stSetTopCurrent(this.menus[ind - 1].path)
-        this.handleMianBao(ind - 1)
-      } else if (this.menus[ind].path == this.current && (ind != this.menus.length - 1)) {
-        this.$router.push({ path: this.menus[ind + 1].path })
-        this.stSetTopCurrent(this.menus[ind + 1].path)
-        this.handleMianBao(ind + 1)
+      if (this.topMenus[ind].path == this.current && (ind == this.topMenus.length - 1)) {
+        this.$router.push({ path: this.topMenus[ind - 1].path })
+        this.stSetTopCurrent(this.topMenus[ind - 1].path)
+        this.handleMianBao(this.current)
+      } else if (this.topMenus[ind].path == this.current && (ind != this.topMenus.length - 1)) {
+        this.$router.push({ path: this.topMenus[ind + 1].path })
+        this.stSetTopCurrent(this.topMenus[ind + 1].path)
+        this.handleMianBao(this.current)
       }
       // 若关闭的菜单不是当前激活的菜单，则正常更新菜单数据即可
-      this.menus.splice(ind,1)
-      this.stSetTopMenus(this.menus)
+      this.topMenus.splice(ind,1)
+      this.stSetTopMenus(this.topMenus)
     },
-    handleMianBao(ind){
-      // 处理面包屑数据
-      let mbtemp = []
-      this.asideMenus.forEach(item=>{
-        if(item.child.length){
-          item.child.forEach(items=>{
-            if(this.menus[ind].id==items.id){
-              mbtemp.push(item)
-              mbtemp.push(items)
-            }
-          })
-        }else{
-          if(this.menus[ind].id==item.id){
-            mbtemp.push(item)
-          }
-        }
-      })
-      this.stSetMianBaos(mbtemp)
-    },
-
   }
 }
 </script>

@@ -9,30 +9,48 @@ const routes = [
     path: '/',
     name: 'rootPage',
     component: rootPage,
+    meta: {
+      isPublic:true
+    },
     children: [
       {
         path: '/index',
         name: 'index',
+        meta: {
+          isPublic:true
+        },
         component: () => import('../views/index.vue')
       },
       {
         path: '/system/yiYuanUserAdmin',
         name: 'yiYuanUserAdmin',
+        meta: {
+          isPublic:false
+        },
         component: () => import('../views/system/yiYuanUserAdmin.vue')
       },
       {
         path: '/system/powerAdmin',
         name: 'powerAdmin',
+        meta: {
+          isPublic:false
+        },
         component: () => import('../views/system/powerAdmin.vue')
       },
       {
         path: '/system/dataDict',
         name: 'dataDict',
+        meta: {
+          isPublic:false
+        },
         component: () => import('../views/system/dataDict.vue')
       },
       {
         path: '/system/staffAdmin',
         name: 'staffAdmin',
+        meta: {
+          isPublic:false
+        },
         component: () => import('../views/system/staffAdmin.vue')
       }
     ]
@@ -40,6 +58,9 @@ const routes = [
   {
     path: '/login',
     name: 'login',
+    meta: {
+      isPublic:true
+    },
     component: () => import('../views/login.vue')
   }
 ]
@@ -51,17 +72,19 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  let isLogin = window.sessionStorage.getItem('isLogin')
-  console.log(isLogin,to,from)
+  let isLogin = window.localStorage.getItem('isLogin')
+  // console.log(isLogin,to,from)
 
   if (isLogin) {
-    // if(to.path==='/login'){
-    //   // next(false)
-    //   return
-    // }else{
-    //   next();
-    // }
-    next();
+    if(to.path==='/login'&&from.path!='/'){
+      next({path:from.path,replace:true})
+    }else if(to.path==='/login'&&from.path=='/'){
+      next({path:'/index',replace:true});
+    }else if(to.path==='/'){
+      next({path:'/index',replace:true});
+    }else {
+      next()
+    }
   } else {
     if(to.path==='/login'){
       next({replace:true});

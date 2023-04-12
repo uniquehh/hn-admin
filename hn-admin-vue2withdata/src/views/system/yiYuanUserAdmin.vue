@@ -6,16 +6,19 @@
         <el-button size="small" icon="el-icon-plus" type="primary">新增企业</el-button>
       </div>
       <div class="hn-yiyml-search">
-        <el-cascader
-          :options="options"
-          :props="{ checkStrictly: true }"
-          clearable
-          placeholder="行政区域"
-          class="hn-yiymls-cas"
-          size="small"
-        >
-        </el-cascader>
-        <el-input size="small" class="hn-yiymls-inp" prefix-icon="el-icon-search" clearable placeholder="企业名称"></el-input>
+        <div class="hn-yiymls-cas">
+          <el-cascader
+            :options="options"
+            :props="{ checkStrictly: true }"
+            clearable
+            placeholder="行政区域"
+            size="small"
+          >
+          </el-cascader>
+        </div>
+        <div class="hn-yiymls-inp">
+          <el-input size="small" prefix-icon="el-icon-search" clearable placeholder="企业名称"></el-input>
+        </div>
       </div>
       <div class="hn-yiyml-table">
         <el-table :data="qyTableData" style="width: 100%">

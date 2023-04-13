@@ -56,7 +56,7 @@ export default {
     }
   },
   mounted() {
-    
+    console.log(7777)
   },
   created() {
     this.handleMenus()

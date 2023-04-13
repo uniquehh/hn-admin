@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-import urlConfig from './config'
+const urlConfig = require('./src/util/config')
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {

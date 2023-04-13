@@ -1,5 +1,5 @@
 import axios from 'axios'
-import urlConfig from './config'
+const urlConfig = require("./config")
 import methods from './methods' 
 
 

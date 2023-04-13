@@ -15,6 +15,7 @@
               <el-form-item prop="userName">
                 <el-input
                   placeholder="请输入账号"
+                  class="hn-login-uninp"
                   prefix-icon="el-icon-user"
                   v-model="loginForm.userName"
                   type="text"
@@ -24,6 +25,7 @@
                 <el-input
                   placeholder="请输入密码"
                   prefix-icon="el-icon-lock"
+                  class="hn-login-upass"
                   v-model="loginForm.password"
                   show-password
                   type="password"
@@ -136,6 +138,9 @@ export default {
 }
 .hn-login-pass{
   margin-bottom: 30px;
+}
+.hn-login-uninp{
+  width: 100% !important;
 }
 
 </style>

@@ -147,7 +147,14 @@ const methods = {
     // console.log(userInfo.roleVo.menuNames.includes(sign),sign)
     return userInfo.roleVo.menuNames.includes(sign)
   },
-
+  // 获取所有菜单数据
+  getMenusAll() {
+    return methods.request('/authority/getAllMenuList')
+  },
+  // 获取所有角色数据
+  getRolesAll() {
+    return methods.request('/authority/getAllRoleList')
+  },
   
 }
 

@@ -5,19 +5,35 @@ Vue.use(Vuex)
 // 本地设置的菜单数据--sign字段和后端约定，用于与后端返回的菜单数据做对比处理
 // needPower 字段表示是否需要权限,true表明需要做权限判断-不需要权限则默认有权限
 // hasPower 表示当前是否有该菜单的权限，默认false-没有权限
+// var asideMenus = [
+//   {
+//     id: "0", name: "首页", path: '/index',needPower:false,hasPower:true,sign:"INDEX",child: []
+//   },
+//   {
+//     id: "1", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER", child: [
+//       { id: "1-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER", child: [] },
+//       { id: "1-2", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER", child: [] },
+//       { id: "1-3", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER", child: [] },
+//       { id: "1-4", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER", child: [] },
+//     ]
+//   },
+// ]
+
 var asideMenus = [
   {
     id: "0", name: "首页", path: '/index',needPower:false,hasPower:true,sign:"INDEX",child: []
   },
   {
-    id: "1", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER", child: [
-      { id: "1-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER", child: [] },
-      { id: "1-2", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER", child: [] },
-      { id: "1-3", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER", child: [] },
-      { id: "1-4", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER", child: [] },
+    id: "1", name: "系统管理", path: '/system/index',needPower:true,hasPower:true,sign:"SYSTEM_MANAGER", child: [
+      { id: "1-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:true,sign:"HOSPITAL_MANAGER", child: [] },
+      { id: "1-2", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:true,sign:"AUTHORITY_MANAGER", child: [] },
+      { id: "1-3", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:true,sign:"DICT_MANAGER", child: [] },
+      { id: "1-4", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:true,sign:"USER_MANAGER", child: [] },
     ] 
   },
 ]
+
+
 // localStorage无法存储复杂数据类型，所以存储和取出都要转化为json字符串和对象
 export default new Vuex.Store({
   modules: {

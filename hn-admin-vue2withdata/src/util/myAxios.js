@@ -1,5 +1,5 @@
 import axios from 'axios'
-import urlConfig from './config'
+const urlConfig = require('./config')
 import methods from './methods' 
 
 
@@ -21,8 +21,9 @@ axiosInstance.interceptors.request.use((config) => {
   }
 
   // 每个请求都携带token
-  if (localStorage.getItem('token')) {
-    config.headers['token'] = localStorage.getItem('token')
+  // console.log(config)
+  if (localStorage.getItem('userInfo')) {
+    config.headers['token'] = JSON.parse(localStorage.getItem('userInfo')).token
   }
 
   if (config.method == 'post') {

@@ -6,7 +6,7 @@
         <asideMenu></asideMenu>
       </div>
       <!-- 右侧内容区域 -->
-      <div class="hn-index-main" v-show="$route.name!='index'">
+      <div class="hn-index-main" v-if="$route.name!='index'">
         <div class="hn-topnav-box">
           <!-- 顶部导航功能区域 -->
           <topNavHead></topNavHead>
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="hn-index-main" v-show="$route.name=='index'">
+      <div class="hn-index-main" v-if="$route.name=='index'">
         <router-view></router-view>
       </div>
     </div>

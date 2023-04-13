@@ -16,7 +16,7 @@ export default {
     ...mapState('user', ['userInfo', 'isLogin']),
   },
   mounted() {
-    // console.log(this.userInfo,789)
+    console.log(this.userInfo,789)
   },
   methods: {
 

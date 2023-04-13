@@ -35,55 +35,58 @@
           </template>
         </el-table-column>
       </el-table>
-      <pagination 
-        v-show="total > 0" 
-        :total="total" 
-        :page="queryParams.page" 
-        :limit="queryParams.pageSize"
-        @pagination="getListData" 
-      />
+      <!-- @pagination="" 组件使用组件时需要再父组件使用该emit事件才能取到值 -->
+      <pagination v-show="total > 0" :total="total" :page="queryParams.page" @pagination="pagingChange"
+        :limit="queryParams.pageSize" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props:{
-    dict:{
+  props: {
+    data: {
       type: Array,
       default() {
         return []
       }
+    },
+    paging: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
+  },
+  watch: {
+    data: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        console.log(val)
+        if (val) {
+          this.tableData = val
+        }
+      },
+    },
+    paging: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        if (val) {
+          Object.assign(this.queryParams, val)
+        }
+      },
+    },
+
   },
   data() {
     return {
-      tableData: [{
-        name: '2016-05-02',
-        type: '王小虎',
-        form: '上海市普陀区金沙江路 1518 弄',
-        useing: '上海市普陀区金沙江路 1518 弄',
-        ban: false,
-        edit: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        name: '2016-05-02',
-        type: '王小虎',
-        form: '上海市普陀区金沙江路 1518 弄',
-        useing: '上海市普陀区金沙江路 1518 弄',
-        ban: false,
-        edit: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        name: '2016-05-02',
-        type: '王小虎',
-        form: '上海市普陀区金沙江路 1518 弄',
-        useing: '上海市普陀区金沙江路 1518 弄',
-        ban: false,
-        edit: '上海市普陀区金沙江路 1518 弄'
-      }],
-      total:100,
-      queryParams:{
-        page:1,
-        pageSize:20,
+      tableData: [],
+      total: 100,
+      queryParams: {
+        page: 1,
+        pageSize: 20,
       }
     }
   },
@@ -91,24 +94,26 @@ export default {
 
   },
   methods: {
-    getListData(e){
-
+    pagingChange(e) {
+      this.$emit("pagingParent", e)
     },
   }
 }
 </script>
 
 <style scoped lang="scss">
-.hn-dtdict-table{
-  ::v-deep .el-table .cell{
+.hn-dtdict-table {
+  ::v-deep .el-table .cell {
     display: flex;
     align-items: center;
   }
-  ::v-deep .el-switch__core{
+
+  ::v-deep .el-switch__core {
     margin-right: 5px;
   }
 }
-.hn-dict-search{
+
+.hn-dict-search {
   margin-bottom: 10px;
 }
 </style>

@@ -97,13 +97,14 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-.hn-login-bgbox{
+.hn-login-bgbox {
   width: 100%;
   height: 100vh;
   background: url("../assets/img/loginbg1.jpg") no-repeat center;
   background-size: cover;
 }
-.hn-login-form{
+
+.hn-login-form {
   background-color: #4E72ED;
   /* opacity: 0.8; */
   border-radius: 5px;
@@ -114,28 +115,37 @@ export default {
   top: 200px;
   right: 250px;
 }
-.hn-login-main{
-  background-color: rgba(255, 255, 255,1);
+
+.hn-login-main {
+  background-color: rgba(255, 255, 255, 1);
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   padding-top: 60px;
   padding-bottom: 80px;
 }
-.hn-login-cont{
+
+.hn-login-cont {
   width: 240px;
   margin: 0 auto;
 }
-.hn-login-user{
+
+.hn-login-user {
   margin-bottom: 15px;
 }
-.hn-login-user,.hn-login-pass{
+
+.hn-login-user,
+.hn-login-pass {
   width: 240px;
-  ::v-deep .el-input{
+
+  ::v-deep .el-input {
     width: 100% !important;
   }
 }
-.hn-login-pass{
+
+.hn-login-pass {
   margin-bottom: 30px;
 }
 
-</style>
+.hn-login-uninp {
+  width: 100% !important;
+}</style>

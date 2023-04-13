@@ -64,29 +64,6 @@ export default {
     ...mapMutations('topMenu',['stSetTopMenus','stSetTopCurrent']),
     // 面包屑
     ...mapMutations('mianBaoXie',['stSetMianBaos']),
-    // handleAsideMenu(path){ // 此处的path是点击侧边菜单传来el-menu-item的index属性
-    //   // 存储更新当前激活的path
-    //   this.stSetTopCurrent(path)
-    //   // 判断历史菜单记录中是否已经有了该菜单数据
-    //   let temp = this.menus.find(item=>item.path==path)
-    //   if(temp)return;
-    //   // 对比path，找到新激活的菜单数据
-    //   this.asideMenus.forEach(item=>{
-    //     if(item.child.length){
-    //       item.child.forEach(items=>{
-    //         if(items.path==path){
-    //           this.menus.push(items)
-    //         }
-    //       })
-    //     }else{
-    //       if(item.path==path){
-    //         this.menus.push(item)
-    //       }
-    //     }
-    //   })
-    //   // 把处理好的数据用store存储在topmenu中
-    //   this.stSetTopMenus(this.menus)
-    // },
 
 
   }

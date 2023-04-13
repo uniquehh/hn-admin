@@ -115,5 +115,9 @@ export default {
   padding: 10px 0;
   display: flex;
   justify-content: flex-end;
+  ::v-deep .el-pagination .el-select .el-input{
+    width: 100px !important;
+  }
 }
+
 </style>

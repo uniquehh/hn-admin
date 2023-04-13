@@ -40,10 +40,23 @@
 }
 .hn-powerlc-item{
   padding: 10px 5px;
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
   &:hover{
     background-color: #DEECF9;
   }
+}
+.curr-bg1{
+  background-color: #DEECF9;
+}
+.curr-text1{
+  color: #409EFF;
+}
+.hn-powerlci-icon{
+  font-size: 16px;
+  color: rgba(230, 24, 24, 0.7);
+  font-weight: bold;
 }
 .hn-powerlc-itemcurr{
   background-color: #DEECF9;

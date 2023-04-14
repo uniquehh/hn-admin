@@ -20,7 +20,7 @@
           <!-- 有子菜单才渲染dom -->
             <el-submenu :key="item.path + 'smenu'" :index="item.path" v-if="item.child.length>0 && item.hasPower">
               <template #title>
-                <i class="el-icon-location"></i>
+                <i :class="item.icon"></i>
                 <span :title="item.name">{{ item.name }}</span>
               </template>
               <template v-for="(items) in item.child">
@@ -28,14 +28,14 @@
                   :index="items.path"
                   @click="handleMianBao(items.path)"
                 >
-                  <i class="el-icon-location"></i>
+                  <i :class="items.icon"></i>
                   <span :title="items.name">{{ items.name }}</span>
                 </el-menu-item>
               </template>
             </el-submenu>
             <!-- 无子菜单才渲染的dom -->
             <el-menu-item v-if="!item.child.length&&item.hasPower" :key="item.path + 'menu'" :index="item.path" @click="handleMianBao(item.path)">
-              <i class="el-icon-location"></i>
+              <i :class="item.icon"></i>
               <span :title="item.name">{{ item.name }}</span>
             </el-menu-item>
         </template>

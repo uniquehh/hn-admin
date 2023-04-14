@@ -1,10 +1,108 @@
 {
   "id": "3390002",
-  "name": "列表布局",
+  "name": "hn-admin-v2",
   "font_family": "element-icons",
   "css_prefix_text": "el-icon-",
   "description": "",
   "glyphs": [
+    {
+      "icon_id": "3978413",
+      "name": "权限设置",
+      "font_class": "quanxianshezhi",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "5022485",
+      "name": "账号管理",
+      "font_class": "zhanghaoguanli",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "6217497",
+      "name": "首页",
+      "font_class": "oA",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "8288897",
+      "name": "医院",
+      "font_class": "yiyuan",
+      "unicode": "e859",
+      "unicode_decimal": 59481
+    },
+    {
+      "icon_id": "8802668",
+      "name": "权限",
+      "font_class": "quanxian",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "10056222",
+      "name": "医院",
+      "font_class": "yiyuan1",
+      "unicode": "e6fd",
+      "unicode_decimal": 59133
+    },
+    {
+      "icon_id": "18592271",
+      "name": "字典管理",
+      "font_class": "zidianguanli",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "2076286",
+      "name": " 订单 已成功",
+      "font_class": "dingdanyichenggong",
+      "unicode": "e899",
+      "unicode_decimal": 59545
+    },
+    {
+      "icon_id": "2667538",
+      "name": "客户",
+      "font_class": "kehu",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "9369731",
+      "name": "钱包",
+      "font_class": "qianbao",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "1376051",
+      "name": "领取客户",
+      "font_class": "lingqukehu",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "1831597",
+      "name": "管理客户",
+      "font_class": "guanlikehu",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "3909810",
+      "name": "个人客户",
+      "font_class": "navicon-grkh",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "7215994",
+      "name": "客户管理",
+      "font_class": "kehuguanli",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
     {
       "icon_id": "5387604",
       "name": "取消全屏",

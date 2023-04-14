@@ -6,8 +6,8 @@
           <div class="hn-dictsl-text">字典类型</div>
         </div>
         <div class="hn-dicts-right">
-          <el-button size="small" icon="el-icon-upload">导出全部</el-button>
-          <el-button size="small" type="primary">添加数据字典</el-button>
+          <el-button  icon="el-icon-upload">导出全部</el-button>
+          <el-button  type="primary">添加数据字典</el-button>
         </div>
       </div>
     </div>
@@ -30,8 +30,8 @@
         </el-table-column>
         <el-table-column prop="edit" label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="small">删除</el-button>
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button type="text" >删除</el-button>
+            <el-button type="text" >编辑</el-button>
           </template>
         </el-table-column>
       </el-table>

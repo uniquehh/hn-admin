@@ -4,17 +4,20 @@
       <div class="hn-powerl-head">
         <div class="hn-powerlh-item">
           <div class="hn-powerlhi-text">所属角色</div>
-          <i class="hn-powerlhi-icon el-icon-circle-plus-outline"></i>
+          <i @click="openARDialog" class="hn-powerlhi-icon el-icon-circle-plus-outline"></i>
         </div>
       </div>
       <div class="hn-powerl-cont">
         <div class="hn-powerlc-item" 
           :class="item.id == checkedRoleId ? 'curr-bg1' : ''"
-          v-for="(item) in roles" 
+          v-for="(item,index) in roles" 
           :key="item.id" 
           @click="getRoleMenuIds(item.id)">
           <div>{{ item.roleAlias }}</div>
-          <i class="hn-powerlci-icon el-icon-remove-outline"></i>
+          <div class="hn-powerlci-icons">
+            <i @click.stop="openERDialog(index)" v-show="item.roleLevel != 0" class="hn-powerlhi-icon el-icon-edit"></i>
+            <i @click.stop="deleteRole(item.id)" v-show="item.roleLevel!=0" class="hn-powerlci-icon el-icon-remove-outline"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -22,7 +25,7 @@
       <div class="hn-powerr-head">
         <div class="hn-powerrh-text">权限列表</div>
         <div class="hn-powerrh-bcbtn">
-          <el-button type="primary" size="medium">保存</el-button>
+          <el-button type="primary" @click="setRolePower">保存</el-button>
         </div>
       </div>
       <div class="hn-powerr-cont">
@@ -42,6 +45,24 @@
         </div>
       </div>
     </div>
+    <!-- 添加角色的弹窗 -->
+    <el-dialog :title="addOrEdit" width="400px" :visible.sync="showARDialog">
+      <el-form :model="addRoleForm"  :rules="addRoleFormRules" ref="addRoleForm">
+        <el-form-item label="角色名称" prop="roleAlias" required>
+          <el-input v-model="addRoleForm.roleAlias" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="角色等级" prop="roleLevel" required>
+          <el-select v-model="addRoleForm.roleLevel" placeholder="请选择角色等级">
+            <el-option v-for="(role) in roleLevels" :key="role.value" :label="role.label" :value="role.value"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button  @click="showARDialog = false">取 消</el-button>
+        <el-button  type="primary" @click="aRoleDialogConfirm">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -53,7 +74,29 @@ export default {
       roles:[],//所有角色
       menusAll: [],//所有菜单
       menus: [],//根据所有菜单处理好父子级关系的菜单
-      checkedRoleId:"",//当前选中的角色id
+      checkedRoleId: "",//当前选中的角色id
+      showARDialog: false,//是否显示添加角色的弹窗
+      addOrEdit: "",//新增或编辑角色的弹窗标题
+      currRoleId:"",//当前操作的角色id
+      addRoleForm: {
+        roleAlias:"",
+        roleLevel:"",
+        roleName:"",
+      },
+      addRoleFormRules: {
+        roleAlias: [
+          { required: true, message: '请输入角色名称', trigger: 'blur' },
+        ],
+        roleLevel: [
+          { required: true, message: '请选择角色等级', trigger: 'blur' },
+        ],
+      },
+      roleLevels: [
+        { value: 1, label: "部门负责人", roleName :"ROLE_DEP"},
+        { value: 2, label: "小组负责人", roleName: "ROLE_GROUP" },
+        { value: 3, label: "普通员工", roleName: "ROLE_EMPLOYEE" },
+        { value: 4, label: "医院用户", roleName: "ROLE_HOSPITAL" },
+      ]
     }
   },
   mounted() {
@@ -63,6 +106,103 @@ export default {
     this.asyncTryCatch()
   },
   methods: {
+    // 编辑角色
+    editRole() {
+      this.addRoleForm.roleName = this.roleLevels[this.addRoleForm.roleLevel - 1].roleName
+      this.request("/authority/updateRole", {
+        ...this.addRoleForm,
+        id:this.currRoleId,
+      }, 'put').then((res) => {
+        if (res.code == 0) {
+          this.showARDialog = false
+          this.roles.find((item) => {
+            if (item.id == this.currRoleId) {
+              item.roleAlias = this.addRoleForm.roleAlias
+            }
+          })
+          this.hnMsg()
+        }
+      })
+    },
+    // 添加角色
+    addRole() {
+      this.addRoleForm.roleName = this.roleLevels[this.addRoleForm.roleLevel - 1].roleName
+      console.log(this.addRoleForm)
+      this.request('/authority/addRole', this.addRoleForm, "post").then((res) => {
+        if (res.code == 0) {
+          this.showARDialog = false
+          this.getRolesAll().then((ress) => {
+            this.roles = ress.data
+          })
+          this.hnMsg()
+        }
+      })
+    },
+    // 重置角色弹窗表单数据
+    resetRoleForm() {
+      this.addRoleForm.roleAlias = ""
+      this.addRoleForm.roleLevel = ""
+      this.addRoleForm.roleName = ""
+    },
+    // 打开编辑角色弹窗
+    openERDialog(ind) {
+      this.showARDialog = true
+      this.addOrEdit = "编辑角色"
+      this.addRoleForm.roleAlias = this.roles[ind].roleAlias
+      this.addRoleForm.roleLevel = this.roles[ind].roleLevel
+      this.currRoleId = this.roles[ind].id
+    },
+    // 打开添加角色弹窗
+    openARDialog() {
+      this.resetRoleForm()
+      this.showARDialog = true
+      this.addOrEdit = "添加角色"
+      this.$nextTick(() => { //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
+        this.$refs.addRoleForm.clearValidate()
+      })
+    },
+    // 添加/编辑角色弹窗确定
+    aRoleDialogConfirm() {
+      this.$refs.addRoleForm.validate((valid) => {
+        if (valid) {
+          this.addOrEdit=='添加角色'?this.addRole():this.editRole()
+        } else {
+          return false;
+        }
+      })
+    },
+    // 删除角色
+    deleteRole(id) {
+      this.hnMsgBox().then(() => {
+        console.log(id)
+        this.request('/authority/deleteRole', {
+          roleId: id,
+        }, 'delete').then((res) => {
+          if (res.code == 0) {
+            this.getRolesAll().then((ress) => {
+              this.roles = ress.data
+              if (this.checkedRoleId == id) {
+                this.checkedRoleId = ress.data[0].id
+                this.getRoleMenuIds(this.checkedRoleId)
+              }
+            })
+            this.hnMsg()
+          }
+        })
+      })
+    },
+    // 设置角色权限
+    setRolePower() {
+      this.request('/authority/setRolePermission', {
+        menuIds:this.checkedMenuIds.join(','),
+        roleId:this.checkedRoleId,
+      }, 'put').then((res) => {
+        if (res.code == 0) {
+          this.getRoleMenuIds(this.checkedRoleId)
+          this.hnMsg()
+        }
+      })
+    },
     // 统一处理数据的容器
     async asyncTryCatch() {
       try {
@@ -84,15 +224,21 @@ export default {
     checkHasPower() {
       console.log(this.checkedMenuIds,7)
       this.menus.forEach((item) => {
-        this.checkedMenuIds.forEach((ids) => {
-          if (item.id == ids) {
-            item.checked = true
+        if (this.checkedMenuIds.find(ids => ids == item.id)) {
+          item.checked = true
+        } else {
+          item.checked = false
+        }
+      })
+
+      this.menus.forEach((item) => {
+        item.child.forEach((items) => {
+          if (this.checkedMenuIds.find(ids => ids == items.id)) {
+            item.checked = true //有子菜单权限，则父级菜单自动有权限
+            items.checked = true
+          } else {
+            items.checked = false
           }
-          item.child.forEach((itemss) => {
-            if (itemss.id == ids) {
-              itemss.checked = true
-            }
-          })
         })
       })
       console.log(this.menus)
@@ -108,14 +254,6 @@ export default {
           this.checkHasPower()
         }
       })
-    },
-    // 删除角色
-    deleteRole() {
-      this.request('/authority/deleteRole', {}, "delete")
-    },
-    // 新增角色
-    addRole() {
-      this.request('/authority/addRole', {}, "post")
     },
     // 根据一级菜单选中状态改变子菜单选中状态
     pcheckClick(check,ind){
@@ -141,7 +279,7 @@ export default {
       let allchecked = [...pcheckeds,...ccheckeds]
       // 将选中的菜单的id数据存储在checkedMenuIds中
       this.checkedMenuIds = []
-      allchecked.forEach(item => this.checkedMenuIds.push(item.id))
+      allchecked.forEach(item => this.checkedMenuIds.push(Number(item.id)))
       console.log(this.checkedMenuIds)
     },
     // 处理菜单数据
@@ -164,5 +302,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.el-dialog__body{
+  display: flex;
+  justify-content: center;
+  .el-input{
+    width: 100% !important;
+  }
+  .el-select{
+    width: 100% !important;
+  }
+}
 </style>

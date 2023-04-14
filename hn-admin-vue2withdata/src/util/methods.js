@@ -171,6 +171,15 @@ const methods = {
       })
     })
   },
+  // 是否为空
+  isEmpty(str) {
+    if (str == '' || str == null || str == undefined || JSON.stringify(str) == '[]' || JSON.stringify(str) == '{}') {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
   
 }
 

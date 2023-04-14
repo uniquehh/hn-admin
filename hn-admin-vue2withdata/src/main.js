@@ -26,7 +26,7 @@ Object.keys(methods).forEach((item) => {
 // 注册全局组件
 Vue.component('pagination',pagination)
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, { size: 'small' });
 
 const vm = new Vue({
   router,

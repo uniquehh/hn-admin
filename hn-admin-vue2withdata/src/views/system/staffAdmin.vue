@@ -4,8 +4,8 @@
       <div class="hn-yiymr-head">
         <!-- <div class="hn-yiymrh-text">xxx公司</div> -->
         <div class="hn-yiymrh-shbox">
-          <el-input prefix-icon="el-icon-search" size="small" placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
-          <el-button size="small" icon="el-icon-plus" type="primary">新增员工</el-button>
+          <el-input prefix-icon="el-icon-search"  placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
+          <el-button  icon="el-icon-plus" type="primary">新增员工</el-button>
         </div>
       </div>
       <div class="hn-yiymr-table">
@@ -28,9 +28,9 @@
           <el-table-column label="操作" width="180">
             <template slot-scope="scope">
               <div style="display: flex;flex-wrap: wrap;">
-                <el-button type="text" size="small">修改</el-button>
-                <el-button type="text" size="small">重置密码</el-button>
-                <el-button type="text" size="small">关联公司</el-button>
+                <el-button type="text" >修改</el-button>
+                <el-button type="text" >重置密码</el-button>
+                <el-button type="text" >关联公司</el-button>
               </div>
             </template>
           </el-table-column>

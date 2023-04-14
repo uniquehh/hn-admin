@@ -2,12 +2,13 @@ import methods from './methods';
 
 export class Paging {
 	_path = "";
-	_page = 0;
+	_page = 1;
 	_total = 0;
-	_pageSize = 10;
+	_limit = 20;
 	_noMore = false;
 	_list = [];
 	_params = {};
+	_keyword = "";
 	
 	constructor(path,params = {}){
 		this._path = path
@@ -15,15 +16,13 @@ export class Paging {
 	}
 	
   exec() {
-    // if(this._noMore)return;
-    // this._page++
-    // let obj = { page: this._page, pageSize: this._pageSize }
-		return methods.request(this._path, this._params).then((res) => {
+    let obj = { page: this._page, limit: this._limit }
+		return methods.request(this._path, Object.assign(obj,this._params)).then((res) => {
 			console.log(res,7535777777)
-      // if(res.data.code==1){
-      //   if (res.data.data.length > 0 &&this._page==1) this._total = res.data.total;
-      //   this._list = res.data.data;
-      // }
+      if(res.code==0){
+        if (res.data.length > 0 &&this._page==1) this._total = res.total;
+        this._list = res.data;
+      }
     })
 
 

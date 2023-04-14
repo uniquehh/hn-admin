@@ -2,11 +2,11 @@
   <div id="app">
     <router-view/>
     <!-- 按钮模板 -->
-    <!-- <el-button size="small" icon="el-icon-upload">导出全部</el-button> -->
-    <!-- <el-button size="small" icon="el-icon-plus" type="primary">新增企业</el-button> -->
-    <!-- <el-button size="small">重置</el-button> -->
-    <!-- <el-button size="small" type="primary">搜索</el-button> -->
-    <!-- <el-button size="small" icon="el-icon-search" type="primary">搜索</el-button> -->
+    <!-- <el-button  icon="el-icon-upload">导出全部</el-button> -->
+    <!-- <el-button  icon="el-icon-plus" type="primary">新增企业</el-button> -->
+    <!-- <el-button >重置</el-button> -->
+    <!-- <el-button  type="primary">搜索</el-button> -->
+    <!-- <el-button  icon="el-icon-search" type="primary">搜索</el-button> -->
   </div>
 </template>
 
@@ -75,8 +75,5 @@ export default {
 }
 .el-table th.el-table__cell{
   background-color: #FAFAFA !important;
-}
-.el-input{
-  width: unset !important;
 }
 </style>

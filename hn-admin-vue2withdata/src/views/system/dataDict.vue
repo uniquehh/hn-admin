@@ -1,31 +1,25 @@
 <template>
   <div class="hn-dtdict-main">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName" @tab-click="tabsChange">
       <div class="hn-dict-search">
         <div class="hn-dicts-left">
           <div class="hn-dictsl-text">字典名称：</div>
-          <el-input size="small" class="hn-dictsl-inp"></el-input>
+          <el-input  class="hn-dictsl-inp"></el-input>
         </div>
         <div class="hn-dicts-right">
-          <el-button size="small">重置</el-button>
-          <el-button size="small" type="primary">搜索</el-button>
+          <el-button >重置</el-button>
+          <el-button  type="primary">搜索</el-button>
         </div>
       </div>
-      <el-tab-pane label="用户管理" name="first">
-        <dictTable v-if="activeName == 'first'" :key="activeName" :data="dictData._list" :paging="paging"
-          @pagingParent="pagingChange"></dictTable>
-      </el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">
-        <dictTable v-if="activeName == 'second'" :key="activeName" :data="dictData._list" :paging="paging"
-          @pagingParent="pagingChange"></dictTable>
-      </el-tab-pane>
-      <el-tab-pane label="角色管理" name="third">
-        <dictTable v-if="activeName == 'third'" :key="activeName" :data="dictData._list" :paging="paging"
-          @pagingParent="pagingChange"></dictTable>
-      </el-tab-pane>
-      <el-tab-pane label="定时任务补偿" name="fourth">
-        <dictTable v-if="activeName == 'fourth'" :key="activeName" :data="dictData._list" :paging="paging"
-          @pagingParent="pagingChange"></dictTable>
+      <el-tab-pane v-for="(item) in dictType" :key="item.dictType" :label="item.label" :name="item.dictType">
+        <dictTable 
+          v-if="activeName == item.dictType" 
+          :key="activeName" 
+          :data="item.list._list" 
+          :paging="paging"
+          @pagingParent="pagingChange"
+        ></dictTable>
+
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -38,40 +32,56 @@ export default {
   components: { dictTable },
   data() {
     return {
-      dictData: new Paging('/abc', { page: 1, pageSize: 20, keyword: "" }),
-      activeName: 'first',
+      dictType: [ //字典类型
+        {
+          dictType: "CUSTOMER_SOURCE",
+          label: "客户来源",
+          list: new Paging('/dict/getDictPage', { dictName: "",order:"id DESC" },'post'),//字典数据
+        },
+      ],
+      activeName: 'CUSTOMER_SOURCE',
       paging: {
         page: 1,
         pageSize: 20,
       }
     }
   },
+  computed: {
+    currDTInd() {
+      return this.dictType.findIndex(item=> item.dictType == this.activeName)
+    }
+  },
+  created() {
+    this.getDictData()
+  },
   mounted() {
 
   },
   methods: {
+    // 获取数据字典分页数据
+    getDictData() {
+      this.dictType[this.currDTInd].list._params.dictType = this.activeName
+      this.dictType[this.currDTInd].list.exec()
+    },
     // 初始化分页、关键词数据
-    resetPaging() {
-      this.dictData._params.page = 1
-      this.dictData._params.pageSize = 20
+    resetPaging(ind) {
+      this.dictType[ind].list._page = 1
+      this.dictType[ind].list._limit = 20
     },
     // 重置按钮
     resetBtnEvent() {
 
     },
-    pagingChange(e) {
-      console.log(e.page, e.limit)
-      this.dictData._params.page = e.page
-      this.dictData._params.pageSize = e.limit
-      console.log(this.dictData)
+    pagingChange(e,ind) {
+      // this.dictType[ind].list._params.page = e.page
+      // this.dictType[ind].list._params.pageSize = e.limit
+      // console.log(this.dictType[ind])
 
     },
-    handleClick(tab) {
-      this.resetPaging()
-      console.log(this.dictData)
+    tabsChange(tab) {
+      // this.resetPaging(tab.index)
       console.log(this.activeName)
       console.log(tab.index, tab.name)
-      if (this.activeName == 'first') { }
     }
   }
 }

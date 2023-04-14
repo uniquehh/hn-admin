@@ -2,8 +2,8 @@
   <div class="hn-yiy-main">
     <div class="hn-power-left">
       <div class="hn-yiyml-head">
-        <el-button size="small" icon="el-icon-upload">导出全部</el-button>
-        <el-button size="small" icon="el-icon-plus" type="primary">新增企业</el-button>
+        <el-button  icon="el-icon-upload">导出全部</el-button>
+        <el-button  icon="el-icon-plus" type="primary">新增企业</el-button>
       </div>
       <div class="hn-yiyml-search">
         <div class="hn-yiymls-cas">
@@ -12,12 +12,12 @@
             :props="{ checkStrictly: true }"
             clearable
             placeholder="行政区域"
-            size="small"
+            
           >
           </el-cascader>
         </div>
         <div class="hn-yiymls-inp">
-          <el-input size="small" prefix-icon="el-icon-search" clearable placeholder="企业名称"></el-input>
+          <el-input  prefix-icon="el-icon-search" clearable placeholder="企业名称"></el-input>
         </div>
       </div>
       <div class="hn-yiyml-table">
@@ -28,8 +28,8 @@
           </el-table-column>
           <el-table-column prop="edit" label="操作">
             <template slot-scope="scope">
-              <el-button style="color: red;" type="text" size="small">删除</el-button>
-              <el-button type="text" size="small">修改</el-button>
+              <el-button style="color: red;" type="text" >删除</el-button>
+              <el-button type="text" >修改</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -47,8 +47,8 @@
       <div class="hn-yiymr-head">
         <div class="hn-yiymrh-text">xxx公司</div>
         <div class="hn-yiymrh-shbox">
-          <el-input prefix-icon="el-icon-search" size="small" placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
-          <el-button size="small" icon="el-icon-plus" type="primary">新增用户</el-button>
+          <el-input prefix-icon="el-icon-search" placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
+          <el-button icon="el-icon-plus" type="primary">新增用户</el-button>
         </div>
       </div>
       <div class="hn-yiymr-table">
@@ -71,9 +71,9 @@
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
               <div style="display: flex;flex-wrap: wrap;">
-                <el-button type="text" size="small">修改</el-button>
-                <el-button type="text" size="small">重置密码</el-button>
-                <el-button type="text" size="small">关联公司</el-button>
+                <el-button type="text" >修改</el-button>
+                <el-button type="text" >重置密码</el-button>
+                <el-button type="text" >关联公司</el-button>
               </div>
             </template>
           </el-table-column>

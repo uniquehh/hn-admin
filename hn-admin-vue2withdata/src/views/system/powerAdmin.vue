@@ -60,52 +60,42 @@ export default {
     
   },
   created() {
-    this.getRolesAll().then(res => {
-      if (res.code == 0) {
-        this.checkedRoleId = res.data[0].id
-        this.roles = res.data
-        this.getRoleMenuIds(res.data[0].id)
-      }
-    })
-    this.getMenusAll().then(res => {
-      if (res.code == 0) {
-        this.menusAll = res.data
-        this.handleMenus()
-      }
-    })
-    
+    this.asyncTryCatch()
   },
   methods: {
+    // 统一处理数据的容器
+    async asyncTryCatch() {
+      try {
+        let res1 = await this.getRolesAll()
+        this.roles = res1.code == 0 ? res1.data : []
+        this.checkedRoleId = res1.code == 0 ? res1.data[0].id : ""
+        let res2 = await this.getMenusAll()
+        this.menusAll = res2.code == 0 ? res2.data : []
+        this.handleMenus()
+        this.checkedRoleId ? this.getRoleMenuIds(this.checkedRoleId) :''
+      } catch (error) {
+        console.log(error,"trycatch")
+        this.checkedMenuIds = []
+        this.roles = []
+        this.menusAll = []
+      }
+    },
     // 回显当前角色拥有的菜单权限
     checkHasPower() {
-      for (let i = 0; i < this.checkedMenuIds.length; i++){
-        for (let j = 0; j < this.menus.length; j++) {
-          if (this.checkedMenuIds[i] == this.menus[j].id) {
-            this.menus[j].checked = true
-            for (let k = 0; k < this.menus[j].child.length; k++) {
-              if (this.checkedMenuIds[i] == this.menus[j].child[k].id) {
-                this.menus[j].child[k].checked = true
-              }
-            }
+      console.log(this.checkedMenuIds,7)
+      this.menus.forEach((item) => {
+        this.checkedMenuIds.forEach((ids) => {
+          if (item.id == ids) {
+            item.checked = true
           }
-        }
-      }
-
-
-      // console.log(this.checkedMenuIds,7)
-      // this.menus.forEach((item) => {
-      //   this.checkedMenuIds.forEach((items) => {
-      //     if (item.id == items) {
-      //       item.checked = true
-      //       item.child.forEach((itemss) => {
-      //         if (itemss.id == items) {
-      //           itemss.checked = true
-      //         }
-      //       })
-      //     }
-      //   })
-      // })
-      // console.log(this.menus)
+          item.child.forEach((itemss) => {
+            if (itemss.id == ids) {
+              itemss.checked = true
+            }
+          })
+        })
+      })
+      console.log(this.menus)
     },
     // 获取角色菜单id集合
     getRoleMenuIds(id) {

@@ -24,7 +24,7 @@ const methods = {
   // 请求数据
   request,
   // 提示框
-  hnMsgBox(text = "确定执行此操作吗？", type = "danger") {
+  hnMsgBox(text = "操作后无法恢复，确定执行此操作吗？", type = "danger") {
     return MessageBox.confirm(text, "提示", {
       confirmButtonText: "确定",
       cancelButtonText: "取消",
@@ -149,11 +149,27 @@ const methods = {
   },
   // 获取所有菜单数据
   getMenusAll() {
-    return methods.request('/authority/getAllMenuList')
+    return new Promise((rs,rj) => {
+      methods.request('/authority/getAllMenuList').then((res) => {
+        if (res.code == 0) {
+          rs(res)
+        } else {
+          rj(res)
+        }
+      })
+    })
   },
   // 获取所有角色数据
   getRolesAll() {
-    return methods.request('/authority/getAllRoleList')
+    return new Promise((rs,rj) => {
+      methods.request('/authority/getAllRoleList').then((res) => {
+        if (res.code == 0) {
+          rs(res)
+        } else {
+          rj(res)
+        }
+      })
+    })
   },
   
 }

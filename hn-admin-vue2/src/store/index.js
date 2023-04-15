@@ -31,6 +31,9 @@ var asideMenus = [
       { id: "1-4", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:true,sign:"USER_MANAGER", child: [] },
     ] 
   },
+  {
+    id: "2", name: "我的客户", path: '/myCustomer',needPower:false,hasPower:true,sign:"CUSTOMER",child: []
+  },
 ]
 
 

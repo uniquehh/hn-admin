@@ -10,16 +10,19 @@ const methods = {
   },
   // 退出登录
   loginOut(){
-    methods.removeTopMenuStorage()
-    localStorage
-    // localStorage.removeItem('userInfo')
-    // localStorage.removeItem('mianBaos')
-    // localStorage.removeItem('isLogin')
-    localStorage.clear()
-    // location.href = '/'
-    // vm.$store.commit('stSetUserInfo',{})
-    window.location.reload()//刷新页面重置vuex的值
-    vm.$router.replace({ path: '/login',query:{logout:true} })
+    methods.request("/auth/logout",{},'post').then((res)=>{
+      if(res.code==0){
+        methods.removeTopMenuStorage()
+        // localStorage.removeItem('userInfo')
+        // localStorage.removeItem('mianBaos')
+        // localStorage.removeItem('isLogin')
+        localStorage.clear()
+        // location.href = '/'
+        // vm.$store.commit('stSetUserInfo',{})
+        window.location.reload()//刷新页面重置vuex的值
+        vm.$router.replace({ path: '/login',query:{logout:true} })
+      }
+    })
   },
   // 请求数据
   request,

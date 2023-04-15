@@ -150,3 +150,23 @@
     justify-content: unset;
   }
 }
+
+// 我的客户页面样式
+.hn-myctomer-main{
+  padding: 30px;
+}
+.hn-mctm-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hn-mctmh-left,.hn-mctmh-right{
+  flex-shrink: 0;
+}
+.hn-mctmhl-text{
+  color: #666;
+  margin-left: 10px;
+}
+.hn-mctmhr-icon{
+  margin-left: 10px;
+}

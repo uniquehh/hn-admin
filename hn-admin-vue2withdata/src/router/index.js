@@ -52,6 +52,14 @@ const routes = [
           isPublic:false
         },
         component: () => import('../views/system/staffAdmin.vue')
+      },
+      {
+        path: '/myCustomer',
+        name: 'myCustomer',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/customer/myCustomer.vue')
       }
     ]
   },

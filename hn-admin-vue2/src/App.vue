@@ -2,11 +2,31 @@
   <div id="app">
     <router-view />
     <!-- 按钮模板 -->
-    <!-- <el-button size="small" icon="el-icon-upload">导出全部</el-button> -->
-    <!-- <el-button size="small" icon="el-icon-plus" type="primary">新增企业</el-button> -->
-    <!-- <el-button size="small">重置</el-button> -->
-    <!-- <el-button size="small" type="primary">搜索</el-button> -->
-    <!-- <el-button size="small" icon="el-icon-search" type="primary">搜索</el-button> -->
+    <!-- <el-button icon="el-icon-upload">导出全部</el-button> -->
+    <!-- <el-button icon="el-icon-plus" type="primary">新增企业</el-button> -->
+    <!-- <el-button>重置</el-button> -->
+    <!-- <el-button type="primary">搜索</el-button> -->
+    <!-- <el-button icon="el-icon-search" type="primary">搜索</el-button> -->
+    <!-- <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select> -->
+  <!-- 日期选择 suffix-icon -->
+  <!-- <el-input
+    placeholder="请选择日期"
+    prefix-icon="el-icon-date"
+    v-model="input1">
+  </el-input> -->
+  <!-- 搜索框 -->
+  <!-- <el-input
+    placeholder="请输入内容"
+    prefix-icon="el-icon-search"
+    v-model="input2">
+  </el-input> -->
   </div>
 </template>
 

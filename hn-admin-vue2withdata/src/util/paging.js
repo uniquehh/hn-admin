@@ -9,15 +9,17 @@ export class Paging {
 	_list = [];
 	_params = {};
 	_keyword = "";
+	_method = "";
 	
-	constructor(path,params = {}){
+	constructor(path,params = {},method){
 		this._path = path
 		this._params = params
+		this._method = method?method:'get'
 	}
 	
   exec() {
     let obj = { page: this._page, limit: this._limit }
-		return methods.request(this._path, Object.assign(obj,this._params)).then((res) => {
+		return methods.request(this._path, Object.assign(obj,this._params),this._method).then((res) => {
 			console.log(res,7535777777)
       if(res.code==0){
         if (res.data.length > 0 &&this._page==1) this._total = res.total;

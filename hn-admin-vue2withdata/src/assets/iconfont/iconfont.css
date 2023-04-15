@@ -1,8 +1,8 @@
 @font-face {
   font-family: "element-icons"; /* Project id 3390002 */
-  src: url('iconfont.woff2?t=1681469333218') format('woff2'),
-       url('iconfont.woff?t=1681469333218') format('woff'),
-       url('iconfont.ttf?t=1681469333218') format('truetype');
+  src: url('iconfont.woff2?t=1681523784775') format('woff2'),
+       url('iconfont.woff?t=1681523784775') format('woff'),
+       url('iconfont.ttf?t=1681523784775') format('truetype');
 }
 
 .element-icons {
@@ -11,6 +11,38 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.el-icon-duanxin:before {
+  content: "\e647";
+}
+
+.el-icon-gou:before {
+  content: "\e881";
+}
+
+.el-icon-customer:before {
+  content: "\e618";
+}
+
+.el-icon-24gl-phoneLoudspeaker:before {
+  content: "\e94f";
+}
+
+.el-icon-dibudaohanglan-:before {
+  content: "\e633";
+}
+
+.el-icon-jiudian:before {
+  content: "\e642";
+}
+
+.el-icon-tijiao:before {
+  content: "\e75b";
+}
+
+.el-icon-shujuzidian-jianying:before {
+  content: "\e705";
 }
 
 .el-icon-quanxianshezhi:before {

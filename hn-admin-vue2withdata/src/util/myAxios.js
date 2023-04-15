@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use((config) => {
   }
 
   // 每个请求都携带token
-  console.log(config)
+  // console.log(config)
   if (localStorage.getItem('userInfo')) {
     config.headers['token'] = JSON.parse(localStorage.getItem('userInfo')).token
   }
@@ -55,7 +55,7 @@ axiosInstance.interceptors.response.use((res) => {
 export default function requset(url, data = {}, method = 'get',ct='json') {
   method = method.toLowerCase();//统一将方法转换为小写字母
   // 删除空参数
-  if(typeof data == Object)for (let key in data) if (data[key] === '') delete data[key];
+  if(typeof data == 'object')for (let key in data) if (data[key] === '') delete data[key];
   axiosInstance.defaults.headers['Content-Type'] = ct=='json'?'application/json;charset=utf-8':'application/x-www-form-urlencoded;charset:utf-8'
   if (method == 'post') {
     return axiosInstance.post(url, data)

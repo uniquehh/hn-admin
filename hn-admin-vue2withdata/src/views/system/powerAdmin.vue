@@ -115,11 +115,8 @@ export default {
       }, 'put').then((res) => {
         if (res.code == 0) {
           this.showARDialog = false
-          this.roles.find((item) => {
-            if (item.id == this.currRoleId) {
-              item.roleAlias = this.addRoleForm.roleAlias
-            }
-          })
+          let ind = this.roles.findIndex(item=>item.id==this.currRoleId)
+          this.roles[ind].roleAlias = this.addRoleForm.roleAlias
           this.hnMsg()
         }
       })
@@ -179,13 +176,12 @@ export default {
           roleId: id,
         }, 'delete').then((res) => {
           if (res.code == 0) {
-            this.getRolesAll().then((ress) => {
-              this.roles = ress.data
-              if (this.checkedRoleId == id) {
-                this.checkedRoleId = ress.data[0].id
-                this.getRoleMenuIds(this.checkedRoleId)
-              }
-            })
+            let ind = this.roles.findIndex(item=>item.id==id)
+            this.roles.splice(ind,1)
+            if (this.checkedRoleId == id) {
+              this.checkedRoleId = this.roles[0].id
+              this.getRoleMenuIds(this.checkedRoleId)
+            }
             this.hnMsg()
           }
         })
@@ -196,7 +192,7 @@ export default {
       this.request('/authority/setRolePermission', {
         menuIds:this.checkedMenuIds.join(','),
         roleId:this.checkedRoleId,
-      }, 'put').then((res) => {
+      }, 'put','form').then((res) => {
         if (res.code == 0) {
           this.getRoleMenuIds(this.checkedRoleId)
           this.hnMsg()

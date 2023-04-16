@@ -16,7 +16,11 @@ export default {
     ...mapState('user', ['userInfo', 'isLogin']),
   },
   mounted() {
-    console.log(this.userInfo,789)
+    // 若本地缓存没有全国区域数据，则请求接口获取
+    let chinaArea = JSON.parse(window.localStorage.getItem('chinaArea'))
+    if (this.isEmpty(chinaArea)) {
+      this.getChinaAreaList()
+    }
   },
   methods: {
 

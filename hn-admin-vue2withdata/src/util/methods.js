@@ -182,6 +182,27 @@ const methods = {
       return false;
     }
   },
+  // 获取全国省市区数据
+  getChinaAreaList(par={}){
+    // level-0 表示查询省级数据，level-1表示市级--默认查省级
+    let obj = {level:"0"}
+    par = Object.assign(obj,par)
+    return new Promise((rs,rj) => {
+      methods.request('/chinaArea/getChinaAreaList',par,'post').then((res) => {
+        if (res.code == 0) {
+          if(par.level=='0'){ //只存省级数据
+            res.data.forEach(item=>{
+              item.child = []
+            })
+            window.localStorage.setItem('chinaArea',JSON.stringify(res.data))
+          }
+          rs(res.data)
+        } else {
+          rj(res)
+        }
+      })
+    }) 
+  },
 
   
 }

@@ -198,7 +198,7 @@
 // 用户管理弹窗样式
 .hn-fitem-box{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   input::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
   }
@@ -208,4 +208,10 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+}
+
+// 医院管理表格内容
+.hn-yiymlt-name{
+  color: #409EFF;
+  cursor: pointer;
 }

@@ -6,7 +6,7 @@
         <div class="hn-yiymrh-shbox">
           <el-input prefix-icon="el-icon-search" @change="inputSearch" v-model="list._params.searchValue" placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
           <el-button icon="el-icon-plus" type="primary" @click="opUserDialog('add')">新增用户</el-button>
-          <el-button icon="el-icon-delete" type="danger" @click="deleteUser">批量删除</el-button>
+          <el-button icon="el-icon-delete" type="danger" @click="deleteUser(null)">批量删除</el-button>
         </div>
       </div>
       <div class="hn-yiymr-table">
@@ -30,25 +30,25 @@
           </el-table-column>
           <el-table-column label="角色权限">
             <template slot-scope="scope">
-              <span>{{ scope.row.roleVo.roleAlias }}</span>
+              <span v-if="scope.row.roleVo">{{ scope.row.roleVo.roleAlias }}</span>
             </template>
           </el-table-column>
           <el-table-column label="禁止登录">
             <template slot-scope="scope">
-              <el-switch :value="!scope.row.userBlock" @change="handLoginStatus(scope.row)"></el-switch>
+              <el-switch :value="scope.row.userBlock" @change="handLoginStatus(scope.row)"></el-switch>
             </template>
           </el-table-column>
           <el-table-column label="禁止接单">
             <template slot-scope="scope">
-              <el-switch :value="!scope.row.whetherReceive"></el-switch>
+              <el-switch :value="scope.row.whetherReceive"></el-switch>
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <el-button type="text" @click="deleteUser(scope.row.id)" style="color: red;">删除</el-button>
               <el-button type="text" @click="opUserDialog('edit',scope.row)">修改</el-button>
-              <el-button type="text">重置密码</el-button>
-              <el-button type="text">关联公司</el-button>
+              <el-button type="text" @click="resetUserPass(scope.row)">重置密码</el-button>
+              <!-- <el-button type="text">关联公司</el-button> -->
             </template>
           </el-table-column>
         </el-table>
@@ -164,16 +164,29 @@ export default {
 
   },
   methods: {
+    // 重置用户密码
+    resetUserPass(row){
+      this.currUserId = row.id
+      this.hnMsgBox("您确定要执行此操作吗？").then(()=>{
+        this.request("/user/resetPassword",{
+          userId:row.id
+        },'put','form').then((res)=>{
+          if(res.code==0){
+            this.hnMsg()
+          }
+        })
+      })
+    },
     // 是否禁止登录
     handLoginStatus(row){
       this.currUserId = row.id
       this.hnMsgBox("您确定要执行此操作吗？").then(()=>{
-        this.request("/user/isBlockUser",{ //0-未禁止，1-已禁止
-          userBlock:row.userBlock==0?true:false,
+        this.request("/user/isBlockUser",{ //false-未禁止，true-禁止
+          userBlock:!row.userBlock,
           userId:row.id
         },'put','form').then((res)=>{
           if(res.code==0){
-            this.list._list[this.currUserIndex].userBlock = row.userBlock==0?1:0
+            this.list._list[this.currUserIndex].userBlock = !row.userBlock
             this.hnMsg()
           }
         })
@@ -198,7 +211,7 @@ export default {
     },
     // 表格数据选中事件
     handleSelectionChange(rows) {
-      console.log(rows)
+      console.log(rows,123)
       this.selectedRowIds = []
       rows.forEach((item)=>{
         this.selectedRowIds.push(item.id)

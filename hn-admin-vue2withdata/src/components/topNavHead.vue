@@ -15,15 +15,18 @@
         <i :class="fullscreen ? 'el-icon-quxiaoquanping' : 'el-icon-quanping'" @click="handleFullScreen" style="font-size: 18px;margin-right: 15px;" />
       </div>
       <div class="hn-avatar-wrapper">
-        <img :src="userInfo.headImg? userInfo.headImg :require('../assets/img/defAvatar.png')" class="hn-user-avatar">
+        <img :src="userInfo.headImg? userInfo.headImg :require('../assets/img/defAvatar.png')">
         <div class="hn-user-name">{{ userInfo.realName }}</div>
       </div>
       <el-dropdown class="hn-avatar-box" trigger="click">
         <i class="el-icon-arrow-down" />
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
-            <el-dropdown-item>个人中心</el-dropdown-item>
+            <el-dropdown-item @click="personalClick">个人中心</el-dropdown-item>
           </router-link>
+          <el-dropdown-item divided @click="stSetPsonDialog(true)" v-show="$route.name == 'personal'">
+            <span>修改密码</span>
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="loginOut()">
             <span>退出登录</span>
           </el-dropdown-item>
@@ -52,7 +55,9 @@ export default {
   },
   methods: {
     // 获取左侧菜单store模块
-    ...mapMutations('asideMenu',['stSetCollapse']),
+    ...mapMutations('asideMenu', ['stSetCollapse']),
+    // 打开修改密码弹窗
+    ...mapMutations('personal', ['stSetPsonDialog']),
     // 获取用户store模块
     ...mapMutations('user', ['stSetUserInfo','stSetIsLogin']),
     logout() { },
@@ -82,6 +87,13 @@ export default {
         }
       }
       this.fullscreen = !this.fullscreen;
+    },
+    // 个人中心点击事件
+    personalClick() {
+      // 处理面包屑和顶部菜单
+      this.handleAsideMenu('/personal')
+      this.handleMianBao('/personal')
+      this.hnRouterPush('/personal')
     },
   }
 }

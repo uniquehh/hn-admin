@@ -60,6 +60,14 @@ const routes = [
           isPublic:false
         },
         component: () => import('../views/customer/myCustomer.vue')
+      },
+      {
+        path: '/personal',
+        name: 'personal',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/user/personal.vue')
       }
     ]
   },

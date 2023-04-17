@@ -3,7 +3,7 @@
     <div class="hn-power-left">
       <div class="hn-powerl-head">
         <div class="hn-powerlh-item">
-          <div class="hn-powerlhi-text">所属角色</div>
+          <div class="hn-powerlhi-text">角色权限</div>
           <i @click="openARDialog" class="hn-powerlhi-icon el-icon-circle-plus-outline"></i>
         </div>
       </div>

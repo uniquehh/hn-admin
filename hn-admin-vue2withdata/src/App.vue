@@ -53,6 +53,12 @@ export default {
   word-break: break-all;
   word-wrap: break-word;
 }
+// 公共头像样式
+.pbgimg{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .el-menu-item:hover{
   background-color: #409EFF !important;
   color: white !important;

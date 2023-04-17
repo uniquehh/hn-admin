@@ -18,7 +18,7 @@
       >
         <template v-for="(item) in asideMenus">
           <!-- 有子菜单才渲染dom -->
-            <el-submenu :key="item.path + 'smenu'" :index="item.path" v-if="item.child.length>0 && item.hasPower">
+            <el-submenu :key="item.path + 'smenu'" :index="item.path" v-if="item.child.length>0 && item.hasPower&& showAside">
               <template #title>
                 <i :class="item.icon"></i>
                 <span :title="item.name">{{ item.name }}</span>
@@ -34,7 +34,7 @@
               </template>
             </el-submenu>
             <!-- 无子菜单才渲染的dom -->
-            <el-menu-item v-if="!item.child.length&&item.hasPower" :key="item.path + 'menu'" :index="item.path" @click="handleMianBao(item.path)">
+            <el-menu-item v-if="!item.child.length&&item.hasPower&&showAside" :key="item.path + 'menu'" :index="item.path" @click="handleMianBao(item.path)">
               <i :class="item.icon"></i>
               <span :title="item.name">{{ item.name }}</span>
             </el-menu-item>

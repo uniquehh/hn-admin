@@ -215,3 +215,119 @@
   color: #409EFF;
   cursor: pointer;
 }
+
+// 个人中心页面样式
+.hn-user-head{
+  background-color: white;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.hn-userh-img{
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  margin-right: 20px;
+  position: relative;
+}
+.hn-userhi-icon{
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F2F1F6;
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+}
+.el-icon-camera{
+  color: #409EFF;
+}
+// .hn-userh-info{
+
+// }
+.hn-userhi-name{
+  color: #333;
+  font-weight: bold;
+}
+.hn-userhi-tip{
+  color: #666;
+  font-size: 12px;
+}
+
+.hn-user-info{
+  padding: 30px;
+  background-color: white;
+}
+.hn-userhi-edit{
+  font-size: 12px;
+  color: #409EFF;
+  margin-left: 20px;
+}
+.hn-useri-tr{
+  font-size: 12px;
+  margin-top: 30px;
+}
+
+// 客户详情样式
+.hn-custim-left{
+  width: 460px;
+  background-color: white;
+}
+.hn-custiml-telhis{
+  padding: 20px;
+}
+.hn-custimlt-head{
+  font-size: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.hn-custimlth-text{
+  margin-left: 20px;
+}
+.hn-custimlt-item{
+  padding-top: 20px;
+}
+.hn-custimlti-left{
+  width: 10px;
+  height: 10px;
+  background-color: #666;
+  border-radius: 50%;
+  float: left;
+}
+.hn-custimlti-right{
+  margin-left: 30px;
+}
+.hn-custimltir-time{
+  font-size: 12px;
+  color: #666;
+}
+.hn-custimltir-user{
+  font-size: 12px;
+  color: #666;
+}
+.hn-custimltiru-img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.hn-custimltir-info{
+  word-wrap: break-word;
+}
+
+.hn-custiml-movecut{
+  padding: 20px;
+}
+
+
+.hn-custim-center{
+  width: calc(100% - 920px);
+  background-color: white;
+}
+.hn-custim-right{
+  width: 460px;
+  background-color: white;
+}

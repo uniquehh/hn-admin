@@ -7,18 +7,21 @@ Vue.use(Vuex)
 // hasPower 表示当前是否有该菜单的权限，默认false-没有权限
 var asideMenus = [
   {
-    id: "0", name: "首页", path: '/index',needPower:false,hasPower:true,sign:"INDEX",icon:"el-icon-s-home",child: []
+    id: "0", name: "首页", path: '/index',needPower:false,hasPower:true,sign:"INDEX",icon:"el-icon-s-home",showAside:true,child: []
   },
   {
-    id: "1", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools", child: [
-      { id: "1-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER",icon:"el-icon-yiyuan1", child: [] },
-      { id: "1-2", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian", child: [] },
+    id: "1", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools",showAside:true, child: [
+      { id: "1-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER",icon:"el-icon-yiyuan1",showAside:true, child: [] },
+      { id: "1-2", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian",showAside:true, child: [] },
       { id: "1-3", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER",icon:"el-icon-shujuzidian-jianying", child: [] },
-      { id: "1-4", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER",icon:"el-icon-guanlikehu", child: [] },
+      { id: "1-4", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER",icon:"el-icon-guanlikehu",showAside:true, child: [] },
     ] 
   },
   {
-    id: "2", name: "我的客户", path: '/myCustomer',needPower:false,hasPower:true,sign:"CUSTOMER",icon:"el-icon-kehu",child: []
+    id: "2", name: "我的客户", path: '/myCustomer',needPower:false,hasPower:true,sign:"CUSTOMER",icon:"el-icon-kehu",showAside:true,child: []
+  },
+  {
+    id: "3", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
   },
 ]
 // localStorage无法存储复杂数据类型，所以存储和取出都要转化为json字符串和对象
@@ -90,6 +93,17 @@ export default new Vuex.Store({
         stSetMianBaos(state,val) {
           state.mianBaos = val
           localStorage.setItem("mianBaos",JSON.stringify(val))
+        },
+      },
+    },
+    personal: {
+      namespaced: true,
+      state: {
+        showDialog:false,
+      },
+      mutations: {
+        stSetPsonDialog(state,val) {
+          state.showDialog = val
         },
       },
     },

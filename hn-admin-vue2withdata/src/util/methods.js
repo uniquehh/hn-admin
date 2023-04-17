@@ -203,6 +203,21 @@ const methods = {
       })
     }) 
   },
+  // 隐藏部分内容以星号*代替
+  replaceStart(str, start, end, isEmail = false, isFixed = 0) {
+    if (isEmail) {
+      var em = str.split('@');
+      str = em[0];
+    }
+    var s = str.substr(0, start);
+    var e = str.substr(str.length - end, str.length - 1);
+    var d = '*******************************'.substr(0, isFixed ? isFixed : str.length - start - end);
+    if (isEmail) {
+      return s + d + e + '@' + em[1];
+    }
+    return s + d + e;
+  },
+
 
   
 }

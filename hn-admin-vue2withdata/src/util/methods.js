@@ -48,7 +48,10 @@ const methods = {
     return MessageBox.confirm(text, "提示", {
       confirmButtonText: "确定",
       showCancelButton:false,
-      type: type
+      type: type,
+      closeOnClickModal:false,
+      closeOnPressEscape:false,
+      showClose:false,
     });
   },
   // msg提示

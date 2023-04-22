@@ -195,13 +195,13 @@ export default {
           this.request("/user/updateUserPassword",{
             oldPassword:this.$md5(this.ePassForm.oldPass),
             newPassword:this.$md5(this.ePassForm.newPass),
-            id:this.userInfo.id
+            userId:this.userInfo.id
           },'put','form').then((res)=>{
             if(res.code==0){
               this.stSetPsonDialog(false)
               this.hnMsg()
               setTimeout(() => {
-                this.hnMsgBox2().then(()=>{
+                this.hnMsgBox2("密码修改成功，需要您重新登录！").then(()=>{
                   this.loginOut(false)
                 })
               }, 1500)

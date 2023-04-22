@@ -15,7 +15,7 @@
         </div>
         <div class="hn-cont-box">
           <div class="hn-cont-main">
-            <router-view></router-view>
+            <div class="hn-contm-bg"><router-view></router-view></div>
           </div>
         </div>
       </div>
@@ -74,11 +74,11 @@ export default {
 .hn-cont-main{
   height: calc(100vh - 108px);
   overflow: auto;
+}
+.hn-contm-bg{
   background-color: white;
   border-radius: 5px;
-}
-.hn-topnav-box{
-  width: 100%; 
+  height: 100%;
 }
 
 </style>

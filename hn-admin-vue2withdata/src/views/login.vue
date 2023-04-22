@@ -29,6 +29,7 @@
                   v-model="loginForm.password"
                   show-password
                   type="password"
+                  @keyup.enter.native="submitForm"
                 />
               </el-form-item>
               <el-form-item>
@@ -77,16 +78,16 @@ export default {
             account: this.loginForm.userName,
             password: this.$md5(this.loginForm.password),
           }, 'post').then((res) => {
-            this.stSetUserInfo(res.data)
-            this.hasPowerAsideMenus()
-            this.stSetIsLogin(true)
-            this.hnRouterRep("/index")
+            if(res.code==0&&res.data.userBlock){
+              this.hnMsgBox("该用户已被禁止登录，您可以联系管理员解除！")
+              return
+            }else if(res.code==0&&!res.data.userBlock){
+              this.stSetUserInfo(res.data)
+              this.hasPowerAsideMenus()
+              this.stSetIsLogin(true)
+              this.hnRouterRep("/index")
+            }
           })
-
-          // this.stSetUserInfo({ name: "zahsng" })
-          // this.stSetIsLogin(true)
-          // this.$router.replace({ path: '/index' })
-          
         } else {
           return false;
         }

@@ -23,6 +23,12 @@ var asideMenus = [
   {
     id: "3", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
   },
+  {
+    id: "4", name: "客户详情", path: '/customerInfo',needPower:false,hasPower:true,sign:"CUSTOMERINFO",icon:"el-icon-kehu",showAside:false,child: []
+  },
+  {
+    id: "5", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-kehu",showAside:true,child: []
+  },
 ]
 // localStorage无法存储复杂数据类型，所以存储和取出都要转化为json字符串和对象
 export default new Vuex.Store({

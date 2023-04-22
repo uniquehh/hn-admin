@@ -62,12 +62,28 @@ const routes = [
         component: () => import('../views/customer/myCustomer.vue')
       },
       {
+        path: '/customerInfo',
+        name: 'customerInfo',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/customer/customerInfo.vue')
+      },
+      {
         path: '/personal',
         name: 'personal',
         meta: {
           isPublic:false
         },
         component: () => import('../views/user/personal.vue')
+      },
+      {
+        path: '/jieDanZhongXin',
+        name: 'jieDanZhongXin',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/jieDan/jieDanZhongXin.vue')
       }
     ]
   },
@@ -89,7 +105,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   let isLogin = window.localStorage.getItem('isLogin')
-  // console.log(isLogin,to,from)
+  console.log(isLogin,to,from)
 
   if (isLogin) {
     if(to.path==='/login'&&from.path!='/'){

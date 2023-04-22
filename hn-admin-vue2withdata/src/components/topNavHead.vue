@@ -14,21 +14,19 @@
         <i class="el-icon-bell" style="font-size: 18px;margin-right: 15px;" />
         <i :class="fullscreen ? 'el-icon-quxiaoquanping' : 'el-icon-quanping'" @click="handleFullScreen" style="font-size: 18px;margin-right: 15px;" />
       </div>
-      <div class="hn-avatar-wrapper">
-        <img :src="userInfo.headImg? userInfo.headImg :require('../assets/img/defAvatar.png')">
+      <div class="hn-avatar-wrapper" @click="hnRouterPush('/personal')">
+        <img class="hn-user-avatar" :src="userInfo.headImg? userInfo.headImg :require('../assets/img/defAvatar.png')">
         <div class="hn-user-name">{{ userInfo.realName }}</div>
       </div>
       <el-dropdown class="hn-avatar-box" trigger="click">
         <i class="el-icon-arrow-down" />
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
-            <el-dropdown-item @click="personalClick">个人中心</el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided @click="stSetPsonDialog(true)" v-show="$route.name == 'personal'">
-            <span>修改密码</span>
+          <el-dropdown-item @click.native="hnRouterPush('/personal')">个人中心</el-dropdown-item>
+          <el-dropdown-item divided @click.native="stSetPsonDialog(true)" v-show="$route.name == 'personal'">
+            修改密码
           </el-dropdown-item>
-          <el-dropdown-item divided @click.native="loginOut()">
-            <span>退出登录</span>
+          <el-dropdown-item divided @click.native="loginOut">
+            退出登录
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -60,7 +58,6 @@ export default {
     ...mapMutations('personal', ['stSetPsonDialog']),
     // 获取用户store模块
     ...mapMutations('user', ['stSetUserInfo','stSetIsLogin']),
-    logout() { },
     // 全屏
     handleFullScreen() {
       let element = document.documentElement;
@@ -87,13 +84,6 @@ export default {
         }
       }
       this.fullscreen = !this.fullscreen;
-    },
-    // 个人中心点击事件
-    personalClick() {
-      // 处理面包屑和顶部菜单
-      this.handleAsideMenu('/personal')
-      this.handleMianBao('/personal')
-      this.hnRouterPush('/personal')
     },
   }
 }

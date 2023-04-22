@@ -14,27 +14,23 @@
         active-text-color="#ffffff"
         background-color="#202124"
         router
-        @select="handleAsideMenu"
       >
         <template v-for="(item) in asideMenus">
           <!-- 有子菜单才渲染dom -->
-            <el-submenu :key="item.path + 'smenu'" :index="item.path" v-if="item.child.length>0 && item.hasPower&& showAside">
+            <el-submenu :key="item.path + 'smenu'" :index="item.path" v-if="item.child.length>0 && item.hasPower&& item.showAside">
               <template #title>
                 <i :class="item.icon"></i>
                 <span :title="item.name">{{ item.name }}</span>
               </template>
               <template v-for="(items) in item.child">
-                <el-menu-item v-if="items.hasPower" :key="items.path" 
-                  :index="items.path"
-                  @click="handleMianBao(items.path)"
-                >
+                <el-menu-item v-if="items.hasPower" :key="items.path" :index="items.path">
                   <i :class="items.icon"></i>
                   <span :title="items.name">{{ items.name }}</span>
                 </el-menu-item>
               </template>
             </el-submenu>
             <!-- 无子菜单才渲染的dom -->
-            <el-menu-item v-if="!item.child.length&&item.hasPower&&showAside" :key="item.path + 'menu'" :index="item.path" @click="handleMianBao(item.path)">
+            <el-menu-item v-if="!item.child.length&&item.hasPower&&item.showAside" :key="item.path + 'menu'" :index="item.path">
               <i :class="item.icon"></i>
               <span :title="item.name">{{ item.name }}</span>
             </el-menu-item>

@@ -41,10 +41,15 @@ axiosInstance.interceptors.response.use((res) => {
     if (res.data.code == -1) {
       methods.hnMsg(res.data.data.errMsg,'error')
     }
+    if(res.data.code==20001){
+      methods.hnMsg(res.data.data.errMsg)
+      methods.loginOut()
+    }
+
+    
     return res.data //res.data是  axios 请求目标接口返回的数据
   } else {
-    console.log(res,'接口成功了，但status不等于200')
-    methods.hnMsg('接口成功了，但status不等于200','error')
+    methods.hnMsg('接口请求失败',res)
   }
 }, (error) => {
   methods.hnMsg('服务器异常,请求失败','error')

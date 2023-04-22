@@ -9,20 +9,30 @@ const methods = {
     localStorage.removeItem('currentPath') 
   },
   // 退出登录
-  loginOut(){
-    methods.request("/auth/logout",{},'post').then((res)=>{
-      if(res.code==0){
-        methods.removeTopMenuStorage()
-        // localStorage.removeItem('userInfo')
-        // localStorage.removeItem('mianBaos')
-        // localStorage.removeItem('isLogin')
-        localStorage.clear()
-        // location.href = '/'
-        // vm.$store.commit('stSetUserInfo',{})
-        window.location.reload()//刷新页面重置vuex的值
-        vm.$router.replace({ path: '/login',query:{logout:true} })
-      }
-    })
+  loginOut(req=true){
+    if(req){
+      methods.request("/auth/logout",{},'post').then((res)=>{
+        if(res.code==0){
+          methods.removeTopMenuStorage()
+          // localStorage.removeItem('userInfo')
+          // localStorage.removeItem('mianBaos')
+          // localStorage.removeItem('isLogin')
+          localStorage.clear()
+          location.href = '/login'
+          // vm.$store.commit('stSetUserInfo',{})
+          window.location.reload()//刷新页面重置vuex的值
+          // methods.hnRouterPush('/login')
+          // vm.$router.replace({ path: '/login',query:{logout:true} })
+        }
+      })
+    }else{
+      methods.removeTopMenuStorage()
+      localStorage.clear()
+      window.location.reload()//刷新页面重置vuex的值
+      location.href = '/login'
+      // methods.hnRouterPush('/login')
+      // vm.$router.replace({ path: '/login',query:{logout:true} })
+    }
   },
   // 请求数据
   request,
@@ -31,6 +41,13 @@ const methods = {
     return MessageBox.confirm(text, "提示", {
       confirmButtonText: "确定",
       cancelButtonText: "取消",
+      type: type
+    });
+  },
+  hnMsgBox2(text = "用户信息变更，需要重新登录！", type = "danger") {
+    return MessageBox.confirm(text, "提示", {
+      confirmButtonText: "确定",
+      showCancelButton:false,
       type: type
     });
   },
@@ -216,6 +233,23 @@ const methods = {
       return s + d + e + '@' + em[1];
     }
     return s + d + e;
+  },
+  // 获取用户信息
+  getUserInfo(){
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    return new Promise((rs,rj) => {
+      methods.request('/user/getUserDetails',{
+        userId:userInfo.id
+      },'get','form').then((res) => {
+        if (res.code == 0) {
+          vm.$store.commit('user/stSetUserInfo', res.data)
+          window.localStorage.setItem('userInfo',JSON.stringify(res.data))
+          rs(res.data)
+        } else {
+          rj(res)
+        }
+      })
+    })
   },
 
 

@@ -7,6 +7,7 @@
     <!-- <el-button >重置</el-button> -->
     <!-- <el-button  type="primary">搜索</el-button> -->
     <!-- <el-button  icon="el-icon-search" type="primary">搜索</el-button> -->
+    <!-- <el-date-picker v-model="value" type="date" placeholder="请选择日期"></el-date-picker> -->
   </div>
 </template>
 
@@ -29,6 +30,7 @@ export default {
     // console.log(this.$route)
     this.stSetTopCurrent(this.$route.fullPath)
     this.handleMianBao(this.$route.fullPath)
+    this.handleAsideMenu(this.$route.fullPath)
   },
   beforeDestroy() {
     // 关闭页面前清除顶部菜单缓存数据--下次进入页面自动跳转首页
@@ -53,12 +55,6 @@ export default {
   word-break: break-all;
   word-wrap: break-word;
 }
-// 公共头像样式
-.pbgimg{
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 .el-menu-item:hover{
   background-color: #409EFF !important;
   color: white !important;
@@ -82,4 +78,9 @@ export default {
 .el-table th.el-table__cell{
   background-color: #FAFAFA !important;
 }
+// .hn-jdzxmh-center{
+//   ::v-deep .el-switch__label *{
+//     font-size: 18px !important;
+//   }
+// }
 </style>

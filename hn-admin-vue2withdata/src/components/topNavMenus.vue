@@ -1,15 +1,17 @@
 <template>
   <div class="hn-topnav-menus">
-    <el-menu :default-active="current" class="el-menu-demo" mode="horizontal" 
-      @select="handleTopMenu"
-      router  
-    >
-      <el-menu-item class="hn-hmenu-item" v-for="(item,index) in topMenus" :key="item.path" 
-        :index="item.path" @click="handleMianBao(item.path)">
-        <span style="margin-right: 5px;">{{ item.name }}</span>
-        <i @click.stop="closeTopMenu(index)" v-show="item.path!='/index'" style="font-size: 14px;" class="el-icon-close"></i>
-      </el-menu-item>
-    </el-menu>
+    <div class="hn-topnav-scroll">
+      <el-menu :default-active="current" class="el-menu-demo" mode="horizontal" 
+        @select="handleTopMenu"
+        router  
+      >
+        <el-menu-item class="hn-hmenu-item" v-for="(item,index) in topMenus" :key="item.path" 
+          :index="item.path" @click="handleMianBao(item.path)">
+          <span style="margin-right: 5px;">{{ item.name }}</span>
+          <i @click.stop="closeTopMenu(index)" v-show="item.path!='/index'" style="font-size: 14px;" class="el-icon-close"></i>
+        </el-menu-item>
+      </el-menu>
+    </div>
   </div>
 </template>
 
@@ -55,12 +57,13 @@ export default {
 <style lang="scss" scoped>
 .hn-topnav-menus{
   background-color: white;
-  width: 1780px;
-  overflow-x: auto;
-}
-.el-menu--horizontal{
+  min-width: 800px;
   border-top: 1px solid #e6e6e6;
   border-bottom: 1px solid #e6e6e6;
+}
+.hn-topnav-scroll{
+  max-width: 1000px;
+  overflow-x: auto;
 }
 .hn-hmenu-item{
   height: 36px !important;

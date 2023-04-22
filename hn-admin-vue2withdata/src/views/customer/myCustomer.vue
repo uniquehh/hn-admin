@@ -10,47 +10,47 @@
         <i class="hn-mctmhr-icon el-icon-s-operation"></i>
       </div>
     </div>
-    <el-row :gutter="20">
-      <el-col>
-        <!-- <el-select v-model="value" placeholder="请选择员工">
+    <el-row class="hn-mctm-search" :gutter="20">
+      <el-col :xs="{span:4}" :sm="{span:3}">
+        <el-select v-model="value" @change="staffChange" placeholder="请选择员工">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select> -->
+        </el-select>
       </el-col>
 
-      <el-col>
-        <!-- <el-select v-model="value" placeholder="请选择员工">
+      <el-col :xs="{span:4}" :sm="{span:3}">
+        <el-select v-model="value" clearable @change="statusChange" placeholder="全部状态">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select> -->
+        </el-select>
       </el-col>
 
-      <el-col>
-        <!-- <el-input placeholder="请输入手机号" prefix-icon="el-icon-search" v-model="input2">  </el-input> -->
+      <el-col :xs="{span:4}" :sm="{span:3}">
+        <el-input placeholder="请输入手机号" prefix-icon="el-icon-search" v-model="value">  </el-input>
       </el-col>
       
-      <el-col>
-        <!-- <el-input placeholder="请选择日期" prefix-icon="el-icon-date" v-model="input1"> </el-input> -->
+      <el-col :xs="{span:4}" :sm="{span:3}">
+        <el-date-picker v-model="value" type="date" placeholder="请选择日期"></el-date-picker>
       </el-col>
 
-      <el-col>
-        <!-- <el-select v-model="value" placeholder="请选择员工">
+      <el-col :xs="{span:4}" :sm="{span:3}">
+        <el-select v-model="value" clearable @change="provChange" placeholder="全部省份">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select> -->
+        </el-select>
       </el-col>
 
-      <el-col>
-        <!-- <el-select v-model="value" placeholder="请选择员工">
+      <el-col :xs="{span:4}" :sm="{span:3}">
+        <el-select v-model="value" clearable @change="cityChange" placeholder="全部城市">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select> -->
+        </el-select>
       </el-col>
 
-      <el-col>
-        <!-- <el-select v-model="value" placeholder="请选择员工">
+      <el-col :xs="{span:4}" :sm="{span:3}">
+        <el-select v-model="value" clearable @change="areaChange" placeholder="全部地区">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select> -->
+        </el-select>
       </el-col>
 
-      <el-col>
-        <el-button  icon="el-icon-search" type="success">搜索</el-button>
+      <el-col :xs="{span:4}" :sm="{span:3}">
+        <el-button icon="el-icon-search" @click="hnRouterPush('/customerInfo')" type="success">搜索</el-button>
       </el-col>
     </el-row>
 
@@ -75,18 +75,41 @@
 export default {
   data() {
     return {
-      tableData:[]
+      tableData:[],
+      value:"",
+      options:[],
     }
   },
   mounted() {
 
   },
   methods: {
-
+    // 员工改变
+    staffChange(e){
+      console.log(e,"员工")
+    },
+    // 状态改变
+    statusChange(e){
+      console.log(e,"状态")
+    },
+    // 省份改变
+    provChange(e){
+      console.log(e,"省份")
+    },
+    // 城市改变
+    cityChange(e){
+      console.log(e,"城市")
+    },
+    // 省份改变
+    areaChange(e){
+      console.log(e,"地区")
+    },
   }
 }
 </script>
 
 <style scoped lang="scss">
-
+.el-date-editor.el-input{
+  width: unset !important;
+}
 </style>

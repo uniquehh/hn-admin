@@ -15,6 +15,7 @@ var asideMenus = [
       { id: "1-2", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian",showAside:true, child: [] },
       { id: "1-3", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER",icon:"el-icon-shujuzidian-jianying", child: [] },
       { id: "1-4", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER",icon:"el-icon-guanlikehu",showAside:true, child: [] },
+      { id: "1-5", name: "小组管理", path: '/system/groupAdmin',needPower:true,hasPower:false,sign:"GROUP_MANAGER",icon:"el-icon-s-management",showAside:true, child: [] },
     ] 
   },
   {

@@ -33,6 +33,8 @@
               <span v-if="scope.row.roleVo">{{ scope.row.roleVo.roleAlias }}</span>
             </template>
           </el-table-column>
+          <el-table-column prop="groupName" label="所属小组">
+          </el-table-column>
           <el-table-column label="禁止登录">
             <template slot-scope="scope">
               <el-switch :value="scope.row.userBlock" @change="handLoginStatus(scope.row)"></el-switch>
@@ -95,6 +97,14 @@
             </el-select>
           </el-form-item>
         </div>
+        
+        <div class="hn-fitem-box">
+          <el-form-item label="所属小组" prop="roleId" required>
+            <el-select v-model="editUserForm.groupId" placeholder="请选择所属小组">
+              <el-option v-for="(item) in groupData._list" :key="item.id" :label="item.groupName" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+        </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button  @click="showEUDialog = false">取 消</el-button>
@@ -113,11 +123,13 @@ export default {
       editUserForm:{
         "age": "",
         "loginName": "",
+        groupId:"",
         "phone": "",
         "realName": "",
         "roleId": "",
         "sex": 2
       },
+      groupData: new Paging('/group/getGroupPage', { order:"id DESC" },'post'),
       editUserFormRules: {
         realName: [
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
@@ -127,6 +139,9 @@ export default {
         ],
         roleId: [
           { required: true, message: '请选择所属角色', trigger: 'blur' },
+        ],
+        groupId: [
+          { required: true, message: '请选择所属小组', trigger: 'blur' },
         ],
         phone: [
           { required: true, message: '请输入电话号码', trigger: 'blur' },
@@ -150,6 +165,7 @@ export default {
     },
   },
   created(){
+    this.getGroupData()
     this.getUserListData()
     this.getRolesAll().then((res)=>{
       res.code==0?this.roles = res.data:''
@@ -164,6 +180,11 @@ export default {
 
   },
   methods: {
+    // 获取小组管理数据
+    getGroupData() {
+      this.groupData._limit = 200
+      this.groupData.exec()
+    },
     // 重置用户密码
     resetUserPass(row){
       this.currUserId = row.id

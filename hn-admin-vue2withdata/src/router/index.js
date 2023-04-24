@@ -54,6 +54,14 @@ const routes = [
         component: () => import('../views/system/staffAdmin.vue')
       },
       {
+        path: '/system/groupAdmin',
+        name: 'groupAdmin',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/system/groupAdmin.vue')
+      },
+      {
         path: '/myCustomer',
         name: 'myCustomer',
         meta: {
@@ -105,7 +113,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   let isLogin = window.localStorage.getItem('isLogin')
-  console.log(isLogin,to,from)
+  // console.log(isLogin,to,from)
 
   if (isLogin) {
     if(to.path==='/login'&&from.path!='/'){

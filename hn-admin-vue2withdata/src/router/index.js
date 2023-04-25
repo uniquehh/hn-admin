@@ -92,6 +92,14 @@ const routes = [
           isPublic:false
         },
         component: () => import('../views/jieDan/jieDanZhongXin.vue')
+      },
+      {
+        path: '/paiDanAdmin',
+        name: 'paiDanAdmin',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/paiDanAdmin/paiDanAdmin.vue')
       }
     ]
   },

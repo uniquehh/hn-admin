@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5799986",
+      "name": "人工派单",
+      "font_class": "yunliankeji-",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
       "icon_id": "657478",
       "name": "短信",
       "font_class": "duanxin",
@@ -76,13 +83,6 @@
       "unicode_decimal": 58959
     },
     {
-      "icon_id": "6217497",
-      "name": "首页",
-      "font_class": "oA",
-      "unicode": "e602",
-      "unicode_decimal": 58882
-    },
-    {
       "icon_id": "8288897",
       "name": "医院",
       "font_class": "yiyuan",
@@ -102,13 +102,6 @@
       "font_class": "yiyuan1",
       "unicode": "e6fd",
       "unicode_decimal": 59133
-    },
-    {
-      "icon_id": "18592271",
-      "name": "字典管理",
-      "font_class": "zidianguanli",
-      "unicode": "e631",
-      "unicode_decimal": 58929
     },
     {
       "icon_id": "2076286",

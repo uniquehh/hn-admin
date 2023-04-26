@@ -51,10 +51,8 @@
 </template>
 
 <script>
-import groupTable from '@/components/dictTable.vue'
 import { Paging } from '@/util/paging'
 export default {
-  components: { groupTable },
   data() {
     return {
       groupData: new Paging('/group/getGroupPage', { groupName: "",order:"id DESC" },'post'),//小组数据

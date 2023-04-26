@@ -14,7 +14,10 @@
     <el-table :data="paiDanData._list" style="width: 100%">
       <el-table-column prop="customName" label="客户名称">
       </el-table-column>
-      <el-table-column prop="gender" label="客户性别">
+      <el-table-column label="客户性别">
+        <template slot-scope="scope">
+          <span>{{ scope.row.gender==0?'女':scope.row.gender==1?'男':'未知' }}</span>
+        </template>
       </el-table-column>
       <el-table-column prop="phone" label="客户电话">
       </el-table-column>
@@ -166,7 +169,8 @@ export default {
       selectHospitalIds:[],//选中得医院id集合
       khLaiYuan:[],//客户来源字典数据
       showDIDialog:false,//是否显示派单管理弹窗
-      currPaiDanId:"",//当前操作的派单id
+      currPaiDanId:0,//当前操作的派单id
+
     }
   },
   computed: {
@@ -285,7 +289,16 @@ export default {
     // 查看派单详情
     getPaiDanRow(scope) {
       this.currPaiDanId = scope.row.id
-      this.$refs.paiDanInfo.open()
+      const loading = this.$loading({
+        lock: true,
+        text: '数据加载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$refs.paiDanInfo.open()
+      }, 500);
     },
     resetPaiDanForm(){
       this.addPaiDanForm = {

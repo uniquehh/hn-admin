@@ -4,7 +4,7 @@ export class Paging {
 	_path = "";
 	_page = 1;
 	_total = 0;
-	_limit = 20;
+	_limit = 10;
 	_noMore = false;
 	_list = [];
 	_params = {};

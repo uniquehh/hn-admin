@@ -92,7 +92,7 @@ export default {
         ],
       },
       roleLevels: [
-        { value: 1, label: "部门负责人", roleName :"ROLE_DEP"},
+        // { value: 1, label: "部门负责人", roleName :"ROLE_DEP"},
         { value: 2, label: "小组负责人", roleName: "ROLE_GROUP" },
         { value: 3, label: "普通员工", roleName: "ROLE_EMPLOYEE" },
         { value: 4, label: "医院用户", roleName: "ROLE_HOSPITAL" },

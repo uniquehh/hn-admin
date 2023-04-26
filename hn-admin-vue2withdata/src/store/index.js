@@ -10,13 +10,7 @@ var asideMenus = [
     id: "0", name: "首页", path: '/index',needPower:false,hasPower:true,sign:"INDEX",icon:"el-icon-s-home",showAside:true,child: []
   },
   {
-    id: "1", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools",showAside:true, child: [
-      { id: "1-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER",icon:"el-icon-yiyuan1",showAside:true, child: [] },
-      { id: "1-2", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian",showAside:true, child: [] },
-      { id: "1-3", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER",icon:"el-icon-shujuzidian-jianying", child: [] },
-      { id: "1-4", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER",icon:"el-icon-guanlikehu",showAside:true, child: [] },
-      { id: "1-5", name: "小组管理", path: '/system/groupAdmin',needPower:true,hasPower:false,sign:"GROUP_MANAGER",icon:"el-icon-s-management",showAside:true, child: [] },
-    ] 
+    id: "1", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
   },
   {
     id: "2", name: "我的客户", path: '/myCustomer',needPower:false,hasPower:true,sign:"CUSTOMER",icon:"el-icon-kehu",showAside:true,child: []
@@ -28,10 +22,16 @@ var asideMenus = [
     id: "4", name: "客户详情", path: '/customerInfo',needPower:false,hasPower:true,sign:"CUSTOMERINFO",icon:"el-icon-kehu",showAside:false,child: []
   },
   {
-    id: "5", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-s-order",showAside:true,child: []
+    id: "5", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-s-order",showAside:false,child: []
   },
   {
-    id: "6", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
+    id: "8", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools",showAside:true, child: [
+      { id: "8-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER",icon:"el-icon-yiyuan1",showAside:true, child: [] },
+      { id: "8-2", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER",icon:"el-icon-guanlikehu",showAside:true, child: [] },
+      { id: "8-3", name: "小组管理", path: '/system/groupAdmin',needPower:true,hasPower:false,sign:"GROUP_MANAGER",icon:"el-icon-s-management",showAside:true, child: [] },
+      { id: "8-4", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER",icon:"el-icon-shujuzidian-jianying", child: [] },
+      { id: "8-5", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian",showAside:true, child: [] },
+    ] 
   },
 ]
 // localStorage无法存储复杂数据类型，所以存储和取出都要转化为json字符串和对象

@@ -16,7 +16,6 @@
           <div class="hn-dictsl-text">{{ dictType[currDTInd].label }}</div>
         </div>
         <div class="hn-dicts-right">
-          <el-button icon="el-icon-upload">导出全部</el-button>
           <el-button type="primary" @click="openADDialog">添加数据字典</el-button>
         </div>
       </div>
@@ -146,8 +145,7 @@ export default {
             dictId: this.currDictId,
           }, 'delete').then((res) => {
             if (res.code == 0) {
-              let ind = this.dictType[this.currDTInd].list._list.findIndex((item)=>item.id==this.currDictId)
-              this.dictType[this.currDTInd].list._list.splice(ind,1)
+              this.getDictData()
               this.hnMsg()
             }
           })

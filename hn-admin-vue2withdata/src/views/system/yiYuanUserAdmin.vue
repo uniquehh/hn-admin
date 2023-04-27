@@ -2,7 +2,7 @@
   <div class="hn-yiy-main">
     <div class="hn-power-left">
       <div class="hn-yiyml-head">
-        <el-button  icon="el-icon-upload">导出全部</el-button>
+        <!-- <el-button  icon="el-icon-upload">导出全部</el-button> -->
         <el-button  icon="el-icon-plus" @click="opEditYYDialog('add')" type="primary">新增医院</el-button>
       </div>
       <div class="hn-yiyml-search">
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="hn-yiyml-table">
-        <el-table @row-click="clickRow" :row-class-name="tableRowClassName" :data="yyList._list" style="width: 100%">
+        <el-table @row-click.stop="clickRow" :row-class-name="tableRowClassName" :data="yyList._list" style="width: 100%">
           <el-table-column prop="name" label="医院名称">
           </el-table-column>
           <el-table-column label="行政区域">
@@ -33,8 +33,8 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button style="color: red;" type="text" @click="deleteYY(scope.row)">删除</el-button>
-              <el-button type="text" @click="opEditYYDialog('edit',scope.row)">修改</el-button>
+              <el-button style="color: red;" type="text" @click.stop="deleteYY(scope.row)">删除</el-button>
+              <el-button type="text" @click.stop="opEditYYDialog('edit',scope.row)">修改</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -141,7 +141,7 @@
 
     <!-- 添加/编辑用户的弹窗 -->
     <el-dialog :title="editDilogTitle" width="600px" :visible.sync="showEUDialog">
-      <el-form :model="editUserForm"  :rules="editUserFormRules" ref="editUserForm">
+      <el-form :model="editUserForm" :rules="editUserFormRules" ref="editUserForm">
         <div class="hn-fitem-box">
           <el-form-item label="真实姓名" prop="realName" required>
             <el-input v-model="editUserForm.realName" placeholder="请输入真实姓名" autocomplete="off"></el-input>
@@ -255,7 +255,7 @@ export default {
         {value:1,label:'男'},
         {value:2,label:'保密'}
       ],
-      roles:[],//所有角色
+      roles:[],//所有医院角色
       editDilogTitle:"",
       showEUDialog:false,
 
@@ -270,15 +270,7 @@ export default {
     },
   },
   created(){
-    this.getRolesAll().then((res)=>{
-      res.code==0?this.roles = res.data:''
-      this.roles.forEach((item,index)=>{
-        if(item.roleLevel==0){ //去除超管
-          this.roles.splice(index,1)
-        }
-      })
-    })
-
+    this.getHostRoles()
     this.getAreaData()
     // this.getYYTableData()
     // 进入页面加载医院表格数据，默认展示第一条医院的用户
@@ -294,6 +286,15 @@ export default {
     
   },
   methods: {
+    // 获取新增医院用户时选中角色得角色数据
+    getHostRoles(){
+      this.request("/hospital/getHospitalRoleList").then((res)=>{
+        if(res.code==0){
+          this.roles = res.data
+        }
+      })
+    },
+    // 给当前点击得行设置类名-实现高亮
     tableRowClassName({row, rowIndex}) {
       if (row.id === this.currYYId) {
         return 'rowbg';
@@ -597,10 +598,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.hn-yiyml-table{
-  ::v-deep .rowbg{
-    background-color: #F5F7FA;
-  }
-}
+
 
 </style>

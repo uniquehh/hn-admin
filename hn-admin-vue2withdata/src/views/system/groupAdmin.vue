@@ -162,7 +162,6 @@ export default {
     // 重置按钮
     resetBtnEvent() {
       this.groupData._params.groupName = ''
-      this.resetPaging()
       this.getGroupData()
     },
     // 分页器页码、显示条数改变

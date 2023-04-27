@@ -4,9 +4,13 @@
       <div class="hn-yiymr-head">
         <!-- <div class="hn-yiymrh-text">xxx公司</div> -->
         <div class="hn-yiymrh-shbox">
-          <el-input prefix-icon="el-icon-search" @change="inputSearch" v-model="list._params.searchValue" placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
-          <el-button icon="el-icon-plus" type="primary" @click="opUserDialog('add')">新增用户</el-button>
+          <el-input prefix-icon="el-icon-search" @keyup.enter.native="inputSearch" v-model="list._params.searchValue" placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
+          <el-button @click="resetSearch">重置</el-button>
+          <el-button icon="el-icon-search" @click="inputSearch" type="primary">搜索</el-button>
+        </div>
+        <div class="hn-yiymrh-shbox">
           <el-button icon="el-icon-delete" type="danger" @click="deleteUser(null)">批量删除</el-button>
+          <el-button icon="el-icon-plus" type="primary" @click="opUserDialog('add')">新增用户</el-button>
         </div>
       </div>
       <div class="hn-yiymr-table">
@@ -150,7 +154,7 @@ export default {
       editDilogTitle:"",
       showEUDialog:false,
       currUserId:"",//当前操作的用户id
-      roles:[],//所有角色
+      roles:[],//所有用户角色
       sexOption:[
         {value:0,label:'女'},
         {value:1,label:'男'},
@@ -167,19 +171,25 @@ export default {
   created(){
     this.getGroupData()
     this.getUserListData()
-    this.getRolesAll().then((res)=>{
-      res.code==0?this.roles = res.data:''
-      this.roles.forEach((item,index)=>{
-        if(item.roleLevel==0){ //去除超管
-          this.roles.splice(index,1)
-        }
-      })
-    })
+    this.getUserRoles()
   },
   mounted() {
 
   },
   methods: {
+    // 获取新增用户时得角色下拉数据
+    getUserRoles(){
+      this.request("/user/getUserRoleList").then((res)=>{
+        if(res.code==0){
+          this.roles = res.data
+        }
+      })
+    },
+    // 重置搜索
+    resetSearch(){
+      this.list._params.searchValue = ''
+      this.getUserListData()
+    },
     // 获取小组管理数据
     getGroupData() {
       this.groupData._limit = 200

@@ -1,6 +1,9 @@
 <template>
   <div class="hn-dtdict-main">
     <div class="hn-dict-search">
+      <el-button type="primary" icon="el-icon-plus" @click="openADDialog">派单</el-button>
+    </div>
+    <div class="hn-dict-search">
       <div class="hn-dicts-left">
         <div class="hn-dictsl-text">客户名称：</div>
         <el-input @keyup.enter.native="inputSearch" v-model="paiDanData._params.customName" class="hn-paiDansl-inp"></el-input>
@@ -8,7 +11,6 @@
       <div class="hn-dicts-right">
         <el-button @click="resetBtnEvent">重置</el-button>
         <el-button @click="inputSearch" type="primary">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="openADDialog">派单</el-button>
       </div>
     </div>
     <el-table :data="paiDanData._list" style="width: 100%">
@@ -355,6 +357,6 @@ export default {
   justify-content: unset;
 }
 .hn-dicts-left{
-  margin-right: 20px;
+  margin-right: 10px;
 }
 </style>

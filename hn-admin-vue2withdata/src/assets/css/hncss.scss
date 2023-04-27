@@ -188,6 +188,18 @@
 .hn-mctmh-left,.hn-mctmh-right{
   flex-shrink: 0;
 }
+.hn-mcust-shbox{
+  display: flex;
+  margin-bottom: 20px;
+  .hn-mcust-shinp{
+    width: 200px;
+  }
+  .hn-mrr10{
+    margin-right: 10px;
+  }
+}
+
+
 .hn-mctmhl-text{
   color: #666;
   margin-left: 10px;

@@ -28,9 +28,10 @@ var asideMenus = [
     id: "8", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools",showAside:true, child: [
       { id: "8-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER",icon:"el-icon-yiyuan1",showAside:true, child: [] },
       { id: "8-2", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER",icon:"el-icon-guanlikehu",showAside:true, child: [] },
-      { id: "8-3", name: "小组管理", path: '/system/groupAdmin',needPower:true,hasPower:false,sign:"GROUP_MANAGER",icon:"el-icon-s-management",showAside:true, child: [] },
-      { id: "8-4", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER",icon:"el-icon-shujuzidian-jianying", child: [] },
-      { id: "8-5", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian",showAside:true, child: [] },
+      { id: "8-3", name: "客户管理", path: '/system/customeAdmin',needPower:true,hasPower:false,sign:"ALL_CUSTOM_MANAGER",icon:"el-icon-navicon-grkh",showAside:true, child: [] },
+      { id: "8-4", name: "小组管理", path: '/system/groupAdmin',needPower:true,hasPower:false,sign:"GROUP_MANAGER",icon:"el-icon-s-management",showAside:true, child: [] },
+      { id: "8-5", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER",icon:"el-icon-shujuzidian-jianying", child: [] },
+      { id: "8-6", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian",showAside:true, child: [] },
     ] 
   },
 ]

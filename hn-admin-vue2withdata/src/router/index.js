@@ -62,6 +62,14 @@ const routes = [
         component: () => import('../views/system/groupAdmin.vue')
       },
       {
+        path: '/system/customeAdmin',
+        name: 'customeAdmin',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/system/customeAdmin.vue')
+      },
+      {
         path: '/myCustomer',
         name: 'myCustomer',
         meta: {

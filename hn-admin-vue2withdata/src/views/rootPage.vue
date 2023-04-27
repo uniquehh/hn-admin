@@ -80,6 +80,9 @@ export default {
   background-color: white;
   border-radius: 5px;
   height: 100%;
+  ::v-deep .rowbg{
+    background-color: #F5F7FA;
+  }
 }
 
 </style>

@@ -1,7 +1,4 @@
 <template>
-  <!-- <div class="about">
-    <h1 v-hasPower="['1234']">This is an about page</h1>
-  </div> -->
   <div class="page">
     <div class="hn-login-bgbox">
       <div class="hn-login-form">
@@ -63,7 +60,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['userInfo','isLogin']),
+    // ...mapState('user', ['userInfo','isLogin']),
   },
   mounted() {
 

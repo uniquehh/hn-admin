@@ -19,7 +19,7 @@
           </el-table-column>
           <el-table-column prop="loginName" label="账号">
           </el-table-column>
-          <el-table-column prop="phone" label="联系方式">
+          <el-table-column prop="phone" label="手机号">
           </el-table-column>
           <el-table-column prop="realName" label="真实姓名">
           </el-table-column>
@@ -59,7 +59,7 @@
           :total="list._total" 
           :page="list._page" 
           :limit="list._limit"
-          layout='prev, pager, next, sizes, jumper'
+          layout='total, prev, pager, next, sizes, jumper'
           @pagination="pagingChange" 
         />
       </div>
@@ -170,7 +170,7 @@ export default {
     this.getRolesAll().then((res)=>{
       res.code==0?this.roles = res.data:''
       this.roles.forEach((item,index)=>{
-        if(item.roleLevel==0){
+        if(item.roleLevel==0){ //去除超管
           this.roles.splice(index,1)
         }
       })

@@ -112,11 +112,7 @@ export default {
       }, "put").then((res) => {
         if (res.code == 0) {
           this.showDIDialog = false
-          this.dictType[this.currDTInd].list._list.find((item) => {
-            if (item.id == this.currDictId) {
-              item.dictName = this.addDictForm.dictName
-            }
-          })
+          this.getDictData()
           this.hnMsg()
         }
       })

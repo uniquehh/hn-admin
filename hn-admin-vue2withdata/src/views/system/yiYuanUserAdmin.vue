@@ -23,11 +23,8 @@
         </div>
       </div>
       <div class="hn-yiyml-table">
-        <el-table :data="yyList._list" style="width: 100%">
-          <el-table-column label="医院名称">
-            <template slot-scope="scope">
-              <span class="hn-yiymlt-name" @click="getUserListByYY(scope.row)">{{ scope.row.name }}</span>
-            </template>
+        <el-table @row-click="clickRow" :row-class-name="tableRowClassName" :data="yyList._list" style="width: 100%">
+          <el-table-column prop="name" label="医院名称">
           </el-table-column>
           <el-table-column label="行政区域">
             <template slot-scope="scope">
@@ -46,7 +43,7 @@
           :total="yyList._total" 
           :page="yyList._page" 
           :limit="yyList._limit"
-          layout='prev, pager, next, sizes, jumper'
+          layout='total, prev, pager, next, sizes, jumper'
           @pagination="yyPagingChange" 
         />
       </div>
@@ -63,7 +60,7 @@
         <el-table :data="yyUList._list" style="width: 100%">
           <el-table-column prop="loginName" label="登录账号">
           </el-table-column>
-          <el-table-column prop="phone" label="联系方式">
+          <el-table-column prop="phone" label="手机号">
           </el-table-column>
           <el-table-column prop="realName" label="真实姓名">
           </el-table-column>
@@ -101,7 +98,7 @@
           :total="yyUList._total" 
           :page="yyUList._page" 
           :limit="yyUList._limit"
-          layout='prev, pager, next, sizes, jumper'
+          layout='total, prev, pager, next, sizes, jumper'
           @pagination="userPagingChange" 
         />
       </div>
@@ -276,7 +273,7 @@ export default {
     this.getRolesAll().then((res)=>{
       res.code==0?this.roles = res.data:''
       this.roles.forEach((item,index)=>{
-        if(item.roleLevel==0){
+        if(item.roleLevel==0){ //去除超管
           this.roles.splice(index,1)
         }
       })
@@ -289,6 +286,7 @@ export default {
       if(res&&res.length){
         this.currYYId = this.yyList._list[0].id
         this.getUserListByYY()
+        console.log(this.yyList)
       }
     })
   },
@@ -296,6 +294,18 @@ export default {
     
   },
   methods: {
+    tableRowClassName({row, rowIndex}) {
+      if (row.id === this.currYYId) {
+        return 'rowbg';
+      } else {
+        return '';
+      }
+    },
+    // 行点击事件
+    clickRow(row){
+      this.currYYId = row.id
+      this.getUserListByYY()
+    },
     // 删除医院用户
     deleteUser(id){
       this.hnMsgBox().then(()=>{
@@ -428,16 +438,16 @@ export default {
           hospitalIdList:row.id
         },'delete','form').then((res)=>{
           if(res.code==0){
-            this.getYYTableData().then(ress=>{
-              //若删除的是当前选择的医院，且有剩余数据则默认回到第一个医院
+            this.getYYTableData().then((ress)=>{
               if(this.currYYId==row.id&&!this.isEmpty(ress)){ 
                 this.currYYId = ress[0].id
                 this.getUserListByYY()
-              }else{
+              }else if(this.currYYI==row.id&&this.isEmpty(ress)){
+                // 若删除得是当前选中得医院，且医院数据为空，则医院和用户数据置空
                 this.resetAllTable()
               }
+              this.hnMsg()
             })
-            this.hnMsg()
           }
         })
       })
@@ -552,11 +562,8 @@ export default {
     // 获取医院表格数据
     async getYYTableData(){
       let res = await this.yyList.exec()
-      if(res.length==1){
-        this.currYYId = res[0].id
-        this.getUserListByYY()
-      }
-      return res
+      console.log(res,999)
+      return JSON.parse(JSON.stringify(res))
     },
     // 根据医院获取医院下的用户数据
     getUserListByYY(row){
@@ -590,5 +597,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.hn-yiyml-table{
+  ::v-deep .rowbg{
+    background-color: #F5F7FA;
+  }
+}
 
 </style>

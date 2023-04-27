@@ -115,22 +115,30 @@ const methods = {
   },
   //路由跳转
   hnRouterPush(par) {
+    let curr = vm.$route.path
     if (typeof par == 'object'&& par.hasOwnProperty('query')) {
+      if(curr==par.path)return;
       vm.$router.push({ path:par.path,query:par.query})
     } else if (typeof par == 'object' && par.hasOwnProperty('params')) {
+      if(curr==par.path)return;
       vm.$router.push({ path:par.path,params:par.params})
     } else if (typeof par == 'string') {
+      if(curr==par)return;
       vm.$router.push(par)
     } else {
       methods.hnMsg("函数参数处理错误",'info')
     }
   },
   hnRouterRep(par) {
+    let curr = vm.$route.path
     if (typeof par == 'object'&& par.hasOwnProperty('query')) {
+      if(curr==par.path)return;
       vm.$router.replace({ path:par.path,query:par.query})
     } else if (typeof par == 'object' && par.hasOwnProperty('params')) {
+      if(curr==par.path)return;
       vm.$router.replace({ path:par.path,params:par.params})
     } else if (typeof par == 'string') {
+      if(curr==par)return;
       vm.$router.replace(par)
     } else {
       methods.hnMsg("函数参数处理错误",'info')

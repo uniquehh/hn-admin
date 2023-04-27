@@ -53,7 +53,7 @@
         </el-form-item>
         <el-form-item label="角色等级" prop="roleLevel" required>
           <el-select v-model="addRoleForm.roleLevel" placeholder="请选择角色等级">
-            <el-option v-for="(role) in roleLevels" :key="role.value" :label="role.label" :value="role.value"></el-option>
+            <el-option v-for="(item) in roleLevels" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -108,22 +108,23 @@ export default {
   methods: {
     // 编辑角色
     editRole() {
-      this.addRoleForm.roleName = this.roleLevels[this.addRoleForm.roleLevel - 1].roleName
+      this.addRoleForm.roleName = this.roleLevels.find(item=>item.value==this.addRoleForm.roleLevel).roleName
       this.request("/authority/updateRole", {
         ...this.addRoleForm,
         id:this.currRoleId,
       }, 'put').then((res) => {
         if (res.code == 0) {
           this.showARDialog = false
-          let ind = this.roles.findIndex(item=>item.id==this.currRoleId)
-          this.roles[ind].roleAlias = this.addRoleForm.roleAlias
+          this.getRolesAll().then((ress) => {
+            this.roles = ress.data
+          })
           this.hnMsg()
         }
       })
     },
     // 添加角色
     addRole() {
-      this.addRoleForm.roleName = this.roleLevels[this.addRoleForm.roleLevel - 1].roleName
+      this.addRoleForm.roleName = this.roleLevels.find(item=>item.value==this.addRoleForm.roleLevel).roleName
       console.log(this.addRoleForm)
       this.request('/authority/addRole', this.addRoleForm, "post").then((res) => {
         if (res.code == 0) {
@@ -176,13 +177,16 @@ export default {
           roleId: id,
         }, 'delete').then((res) => {
           if (res.code == 0) {
-            let ind = this.roles.findIndex(item=>item.id==id)
-            this.roles.splice(ind,1)
-            if (this.checkedRoleId == id) {
-              this.checkedRoleId = this.roles[0].id
-              this.getRoleMenuIds(this.checkedRoleId)
-            }
-            this.hnMsg()
+            this.getRolesAll().then((ress) => {
+              this.roles = ress.data
+              if (this.checkedRoleId == id) {
+                this.checkedRoleId = this.roles[0].id
+                this.getRoleMenuIds(this.checkedRoleId)
+              }
+              this.hnMsg()
+            })
+            
+            
           }
         })
       })

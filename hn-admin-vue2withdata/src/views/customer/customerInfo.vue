@@ -28,13 +28,13 @@
         </div>
         <div class="hn-custm-warp">
           <el-form :model="moveCustForm" :rules="moveCustFormRules" label-width="80px" ref="moveCustForm">
-            <el-form-item label="转移客户" required prop="staffId">
-              <el-select clearable v-model="moveCustForm.staffId" placeholder="请选择转移同事">
-                <el-option v-for="(item) in staffs" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            <el-form-item label="转移客户" required prop="userId">
+              <el-select filterable clearable v-model="moveCustForm.userId" placeholder="请选择同事">
+                <el-option v-for="(item) in usStaff" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary">提交</el-button>
+              <el-button type="primary" @click="mcDialogConfirm">提交</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -231,23 +231,44 @@ export default {
 
 
       moveCustForm:{
-        staffId:""
+        userId: "",
+        customId: "",
       },
       moveCustFormRules:{
-        staffId:[
+        userId:[
           { required: true, message: '请选择同事', trigger: 'blur' },
         ]
       },
-      staffs:[],//员工数据
       hfResult:"",//回访结果
-      tableData:[],//客户回访任务表格
+      tableData: [],//客户回访任务表格
+      currCustomId: "",//当前的客户id
+      usStaff:[],//可选择的同事
     }
+  },
+  async created() {
+    this.currCustomId = localStorage.getItem('customId')
+    this.moveCustForm.customId = localStorage.getItem('customId')
+    // console.log(this.currCustomId)
+    this.usStaff = await this.getUsableStaff() //可选择的同事
   },
   mounted() {
 
   },
   methods: {
-
+    // 转移客户弹窗确认
+    mcDialogConfirm() {
+      this.$refs.moveCustForm.validate((valid) => {
+        if (valid) {
+          this.request("/custom/transferCustom", this.moveCustForm, 'post', 'form').then((res) => {
+            if (res.code == 0) {
+              this.hnMsg()
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    },
   }
 }
 </script>

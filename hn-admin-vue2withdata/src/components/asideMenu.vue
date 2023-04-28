@@ -86,8 +86,8 @@ export default {
 .hn-menus-box{
   margin-right: -17px;
   overflow-y: scroll;
-  max-height: calc(100vh - 60px);
   overflow-x: hidden;
+  max-height: calc(100vh - 60px);
 }
 .el-menu{
   max-width: 200px;

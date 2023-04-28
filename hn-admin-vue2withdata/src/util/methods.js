@@ -3,10 +3,14 @@ import vm from '@/main';
 import { MessageBox, Message } from "element-ui";
 
 const methods = {
-  // 清除顶部菜单相关缓存
+  // 关闭网页后需要清除的缓存
   removeTopMenuStorage(){
     localStorage.removeItem('topMenus')
     localStorage.removeItem('currentPath') 
+    localStorage.removeItem('mianBaos') 
+    localStorage.removeItem('topMenus') 
+    localStorage.removeItem('chinaArea') 
+    localStorage.removeItem('customId') 
   },
   // 退出登录
   loginOut(req=true){
@@ -255,6 +259,18 @@ const methods = {
         if (res.code == 0) {
           vm.$store.commit('user/stSetUserInfo', res.data)
           window.localStorage.setItem('userInfo',JSON.stringify(res.data))
+          rs(res.data)
+        } else {
+          rj(res)
+        }
+      })
+    })
+  },
+  // 获取可选择的同事数据
+  getUsableStaff(par={}) {
+    return new Promise((rs,rj) => {
+      methods.request('/custom/getUserList',par,'post','form').then((res) => {
+        if (res.code == 0) {
           rs(res.data)
         } else {
           rj(res)

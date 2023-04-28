@@ -18,15 +18,13 @@
       </el-table-column>
       <el-table-column prop="phone" label="客户电话">
       </el-table-column>
-      <el-table-column prop="whetherTransfer" label="是否同事转移">
+      <el-table-column prop="beLongUserName" label="所属用户">
       </el-table-column>
       <el-table-column prop="customLevel" label="客户等级">
       </el-table-column>
       <el-table-column prop="area" label="所在地区">
       </el-table-column>
-      <el-table-column prop="gainDate" label="获取日期">
-      </el-table-column>
-      <el-table-column prop="edit" label="操作">
+      <el-table-column label="操作" width="230" align="center">
         <template slot-scope="scope">
           <el-button type="warning" icon="el-icon-delete" @click.stop="deleteCustomer(scope.row)">释放客户</el-button>
           <el-button type="primary" icon="el-icon-guide" @click.stop="moveCustomer(scope.row)">转移客户</el-button>
@@ -38,7 +36,21 @@
       @pagination="pagingChange"
       :limit="tableData._limit" 
     />
-
+    
+    <!-- 转移客户弹窗 -->
+    <el-dialog title="转移客户" width="400px" :visible.sync="showMCDialog">
+      <el-form :model="moveCustForm"  :rules="moveCustFormRules" ref="moveCustForm">
+        <el-form-item label="用户名称" prop="userId" required>
+          <el-select style="width: 100%;" v-model="moveCustForm.userId" filterable placeholder="请选择同事">
+            <el-option v-for="(item) in usStaff" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button  @click="showMCDialog = false">取 消</el-button>
+        <el-button  type="primary" @click="mcDialogConfirm">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -48,15 +60,49 @@ export default {
   data() {
     return {
       tableData:new Paging('/custom/getAllCustom', { phone: "",customName: "",beLongUserName:"",order:"id DESC" },'post'),
-
+      usStaff: [],//可选择的同事
+      showMCDialog: false,//转移客户弹窗
+      moveCustForm: {
+        customId: "",
+        userId: "",
+      },
+      moveCustFormRules: {
+        userId: [
+          { required: true, message: '请选择同事', trigger: 'blur' },
+        ],
+      },
     }
   },
-  created() {
+  async created() {
     this.getCustData()
+    this.usStaff = await this.getUsableStaff() //可选择的同事
   },
   methods: {
-    moveCustomer(){
-      // /custom/transferCustom
+    // 转移客户弹窗确认
+    mcDialogConfirm() {
+      this.$refs.moveCustForm.validate((valid) => {
+        if (valid) {
+          this.request("/custom/transferCustom", this.moveCustForm, 'post', 'form').then((res) => {
+            if (res.code == 0) {
+              this.getCustData()
+              this.hnMsg()
+              this.showMCDialog = false
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    // 打开转移客户弹窗
+    moveCustomer(row) { 
+      this.moveCustForm.customId = row.id
+      this.moveCustForm.userId = ''
+      this.showMCDialog = true
+      //userId 初始化会触发验证，所以打开弹窗时先清除验证
+      this.$nextTick(() => { 
+        this.$refs.moveCustForm.clearValidate()
+      })
     },
 
     // 重置搜索条件

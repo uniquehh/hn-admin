@@ -6,7 +6,7 @@
     <div class="hn-dict-search">
       <div class="hn-dicts-left">
         <div class="hn-dictsl-text">客户名称：</div>
-        <el-input @keyup.enter.native="inputSearch" v-model="paiDanData._params.customName" class="hn-paiDansl-inp"></el-input>
+        <el-input @keyup.enter.native="inputSearch"  placeholder="请输入客户名称" v-model="paiDanData._params.customName" class="hn-paiDansl-inp"></el-input>
       </div>
       <div class="hn-dicts-right">
         <el-button @click="resetBtnEvent">重置</el-button>

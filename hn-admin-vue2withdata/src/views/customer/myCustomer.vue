@@ -17,7 +17,7 @@
     </div>
     
 
-    <el-table @row-click.stop="clickRow" :row-class-name="tableRowClassName" :data="tableData._list" style="width: 100%">
+    <el-table @row-click="clickRow" :data="tableData._list" style="width: 100%">
       <el-table-column prop="customName" label="客户名称">
       </el-table-column>
       <el-table-column label="客户性别">
@@ -89,7 +89,6 @@ export default {
       value:"",
       options:[],
       
-      currCustId:"",//当前操作得客户id
       showAddCusDialog:false,//添加客户弹窗
 
       searchForm:{
@@ -140,17 +139,10 @@ export default {
       this.tableData._limit = e.limit
       this.getCustData()
     },
-    tableRowClassName({row}) {
-      if (row.id === this.currCustId) {
-        return 'rowbg';
-      } else {
-        return '';
-      }
-    },
     // 行点击事件
     clickRow(row){
-      this.currCustId = row.id
-      this.hnRouterPush({path:'/customerInfo',query:{id:row.id}})
+      localStorage.setItem("customId", row.id) //存储进入客户详情的客户id
+      this.hnRouterPush('/customerInfo')
     },
     // 重置搜索条件
     resetSearchForm(){

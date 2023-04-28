@@ -61,6 +61,7 @@ export default {
 .hn-rtpage-aside{
   background-color: #202124;
   height: 100vh;
+  overflow-x: hidden;
 }
 /* 右侧内容区域 */
 .hn-rtpage-main{

@@ -39,7 +39,7 @@
     <el-dialog :title="dicDilogTitle" width="400px" :visible.sync="showDIDialog">
       <el-form :model="addDictForm"  :rules="addDictFormRules" ref="addDictForm">
         <el-form-item label="字典名称" prop="dictName" required>
-          <el-input v-model="addDictForm.dictName" autocomplete="off"></el-input>
+          <el-input v-model="addDictForm.dictName" placeholder="请输入字典名称" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -197,5 +197,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.hn-dict-search{
+  margin-bottom: 20px;
+}
 </style>

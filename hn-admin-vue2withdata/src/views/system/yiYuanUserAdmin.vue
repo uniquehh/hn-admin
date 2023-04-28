@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="hn-yiyml-table">
-        <el-table @row-click.stop="clickRow" :row-class-name="tableRowClassName" :data="yyList._list" style="width: 100%">
+        <el-table @row-click="clickRow" :row-class-name="tableRowClassName" :data="yyList._list" style="width: 100%">
           <el-table-column prop="name" label="医院名称">
           </el-table-column>
           <el-table-column label="行政区域">
@@ -168,7 +168,7 @@
           </el-form-item>
           <el-form-item label="所属角色" prop="roleId" required>
             <el-select v-model="editUserForm.roleId" placeholder="请选择所属角色">
-              <el-option v-for="(role) in roles" :key="role.id" :label="role.roleAlias" :value="role.id"></el-option>
+              <el-option v-for="(item) in roles" :key="item.id" :label="item.roleAlias" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
         </div>
@@ -257,8 +257,9 @@ export default {
       ],
       roles:[],//所有医院角色
       editDilogTitle:"",
-      showEUDialog:false,
-
+      showEUDialog: false,
+      
+      setClassId:"",//点击行的时候记录的医院id--与操作栏点击的currYYId分开，便于加行class
     }
   },
   computed:{
@@ -277,6 +278,7 @@ export default {
     this.yyList.exec().then((res)=>{
       if(res&&res.length){
         this.currYYId = this.yyList._list[0].id
+        this.setClassId = this.yyList._list[0].id
         this.getUserListByYY()
         console.log(this.yyList)
       }
@@ -296,7 +298,7 @@ export default {
     },
     // 给当前点击得行设置类名-实现高亮
     tableRowClassName({row, rowIndex}) {
-      if (row.id === this.currYYId) {
+      if (row.id === this.setClassId) {
         return 'rowbg';
       } else {
         return '';
@@ -304,7 +306,7 @@ export default {
     },
     // 行点击事件
     clickRow(row){
-      this.currYYId = row.id
+      this.setClassId = row.id
       this.getUserListByYY()
     },
     // 删除医院用户

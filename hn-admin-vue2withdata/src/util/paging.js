@@ -24,7 +24,7 @@ export class Paging {
       if(res.code==0){
         if (this._page==1) this._total = res.total;
         this._list = res.data;
-				console.log(this._list,88888)
+				// console.log(this._list,88888)
 				return res.data
       }
     })

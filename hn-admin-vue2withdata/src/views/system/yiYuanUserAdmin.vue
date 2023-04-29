@@ -307,6 +307,7 @@ export default {
     // 行点击事件
     clickRow(row){
       this.setClassId = row.id
+      this.currYYId = row.id
       this.getUserListByYY()
     },
     // 删除医院用户
@@ -475,6 +476,7 @@ export default {
         this.currYYId = row.id
         this.eYYDialogTitle = "编辑医院"
         this.$nextTick(async ()=>{
+          // 获取省code 和城市code用于区域下拉回显
           let temp = [row.cityCode.slice(0,2),row.cityCode]
           let pind = this.chinaArea2.findIndex(item=>item.name==row.province)
           let res = await this.getChinaAreaList({
@@ -482,6 +484,7 @@ export default {
             cityCode:this.chinaArea2[pind].cityCode
           })
           this.chinaArea2[pind].child = res
+
           this.eYYForm = JSON.parse(JSON.stringify(row))
           this.eYYForm.cityCode = temp
         })

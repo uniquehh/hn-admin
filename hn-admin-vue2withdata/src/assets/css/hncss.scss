@@ -194,9 +194,10 @@
   .hn-mcust-shinp{
     width: 200px;
   }
-  .hn-mrr10{
-    margin-right: 10px;
-  }
+  
+}
+.hn-mrr10{
+  margin-right: 10px;
 }
 
 
@@ -543,4 +544,11 @@
   color: #999;
 }
 
-// 客户管理
+// 医院派单
+.hn-yypd-search{
+  display: flex;
+  margin-bottom: 10px;
+}
+.hn-mrb20{
+  margin-bottom: 20px;
+}

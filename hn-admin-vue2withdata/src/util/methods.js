@@ -4,7 +4,7 @@ import { MessageBox, Message } from "element-ui";
 
 const methods = {
   // 关闭网页后需要清除的缓存
-  removeTopMenuStorage(){
+  removeLocalStorage(){
     localStorage.removeItem('topMenus')
     localStorage.removeItem('currentPath') 
     localStorage.removeItem('mianBaos') 
@@ -17,7 +17,7 @@ const methods = {
     if(req){
       methods.request("/auth/logout",{},'post').then((res)=>{
         if(res.code==0){
-          methods.removeTopMenuStorage()
+          methods.removeLocalStorage()
           // localStorage.removeItem('userInfo')
           // localStorage.removeItem('mianBaos')
           // localStorage.removeItem('isLogin')
@@ -30,7 +30,7 @@ const methods = {
         }
       })
     }else{
-      methods.removeTopMenuStorage()
+      methods.removeLocalStorage()
       localStorage.clear()
       window.location.reload()//刷新页面重置vuex的值
       location.href = '/login'
@@ -148,9 +148,8 @@ const methods = {
       methods.hnMsg("函数参数处理错误",'info')
     }
   },
-  hnRouterGo(par=-1) {
-    // -1 后退一页 ，1前进一页
-    vm.$router.go(par)
+  hnRouterBack() {
+    vm.$router.back()
   },
   // 将后端返回来的菜单数据与本地数据对比处理出有权限的菜单数据
   hasPowerAsideMenus() {

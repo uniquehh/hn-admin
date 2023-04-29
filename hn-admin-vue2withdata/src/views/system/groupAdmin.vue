@@ -3,7 +3,7 @@
     <div class="hn-dict-search">
       <div class="hn-dicts-left">
         <div class="hn-dictsl-text">小组名称：</div>
-        <el-input @keyup.enter.native="inputSearch" v-model="groupData._params.groupName" class="hn-groupsl-inp"></el-input>
+        <el-input @keyup.enter.native="inputSearch" placeholder="请输入小组名称" v-model="groupData._params.groupName" class="hn-groupsl-inp"></el-input>
       </div>
       <div class="hn-dicts-right">
         <el-button @click="resetBtnEvent">重置</el-button>
@@ -39,7 +39,7 @@
     <el-dialog :title="dicDilogTitle" width="400px" :visible.sync="showDIDialog">
       <el-form :model="addGroupForm"  :rules="addGroupFormRules" ref="addGroupForm">
         <el-form-item label="小组名称" prop="groupName" required>
-          <el-input v-model="addGroupForm.groupName" autocomplete="off"></el-input>
+          <el-input placeholder="请输入小组名称" v-model="addGroupForm.groupName" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

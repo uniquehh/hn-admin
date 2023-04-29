@@ -5,7 +5,7 @@
         <div class="hn-jdzxmh-left">
           <img src="../assets/img/defAvatar.png" class="hn-jdzxmhl-img">
           <div class="hn-jdzxmhl-text">
-            <div class="hn-jdzxmhlt-name">你好，账号</div>
+            <div class="hn-jdzxmhlt-name">你好，{{ userInfo.realName }}</div>
             <div class="hn-jdzxmhlt-time">欢迎回来！现在是：2022-03-19 56:55:44</div>
           </div>
         </div>
@@ -187,11 +187,7 @@ export default {
     ...mapState('user', ['userInfo', 'isLogin']),
   },
   mounted() {
-    // 若本地缓存没有全国区域数据，则请求接口获取
-    let chinaArea = JSON.parse(window.localStorage.getItem('chinaArea'))
-    if (this.isEmpty(chinaArea)) {
-      this.getChinaAreaList()
-    }
+    this.getChinaAreaList()
   },
   methods: {
     // 今日新增客户表格选择数据

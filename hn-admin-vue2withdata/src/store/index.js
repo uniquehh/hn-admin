@@ -13,16 +13,19 @@ var asideMenus = [
     id: "1", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
   },
   {
-    id: "2", name: "我的客户", path: '/myCustomer',needPower:false,hasPower:true,sign:"CUSTOMER",icon:"el-icon-kehu",showAside:true,child: []
+    id: "2", name: "医院派单", path: '/yiYuanPaiDan',needPower:true,hasPower:false,sign:"HOSPITAL_DISPATCH_MANAGER",icon:"el-icon-yiyuan",showAside:true,child: []
   },
   {
-    id: "3", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
+    id: "3", name: "我的客户", path: '/myCustomer',needPower:false,hasPower:true,sign:"CUSTOMER",icon:"el-icon-kehu",showAside:true,child: []
   },
   {
-    id: "4", name: "客户详情", path: '/customerInfo',needPower:false,hasPower:true,sign:"CUSTOMERINFO",icon:"el-icon-kehu",showAside:false,child: []
+    id: "4", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
   },
   {
-    id: "5", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-s-order",showAside:false,child: []
+    id: "5", name: "客户详情", path: '/customerInfo',needPower:false,hasPower:true,sign:"CUSTOMERINFO",icon:"el-icon-kehu",showAside:false,child: []
+  },
+  {
+    id: "6", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-s-order",showAside:false,child: []
   },
   {
     id: "8", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools",showAside:true, child: [

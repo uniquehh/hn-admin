@@ -169,26 +169,9 @@ export default {
     getCustData(){
       this.tableData.exec()
     },
-    // 员工改变
-    staffChange(e){
-      console.log(e,"员工")
-    },
-    // 状态改变
-    statusChange(e){
-      console.log(e,"状态")
-    },
-    // 省份改变
-    provChange(e){
-      console.log(e,"省份")
-    },
-    // 城市改变
-    cityChange(e){
-      console.log(e,"城市")
-    },
-    // 省份改变
-    areaChange(e){
-      console.log(e,"地区")
-    },
+
+
+    
   }
 }
 </script>

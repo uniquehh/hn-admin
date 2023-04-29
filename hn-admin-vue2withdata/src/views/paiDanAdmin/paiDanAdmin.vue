@@ -316,6 +316,7 @@ export default {
     // 打开派单弹窗
     openADDialog() {
       this.showDIDialog = true
+      this.resetPaiDanForm()
       this.$nextTick(() => { //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
         this.$refs.addPaiDanForm.clearValidate()
       })

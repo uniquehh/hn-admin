@@ -34,7 +34,7 @@ export default {
   },
   beforeDestroy() {
     // 关闭页面前清除顶部菜单等缓存数据--下次进入页面自动跳转首页
-    this.removeTopMenuStorage()
+    this.removeLocalStorage()
   },
   methods: {
     ...mapMutations('topMenu', ['stSetTopMenus', 'stSetTopCurrent']),

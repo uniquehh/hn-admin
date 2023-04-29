@@ -108,6 +108,14 @@ const routes = [
           isPublic:false
         },
         component: () => import('../views/paiDanAdmin/paiDanAdmin.vue')
+      },
+      {
+        path: '/yiYuanPaiDan',
+        name: 'yiYuanPaiDan',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/yiYuanPaiDan/yiYuanPaiDan.vue')
       }
     ]
   },

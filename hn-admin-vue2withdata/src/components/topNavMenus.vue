@@ -62,12 +62,21 @@ export default {
   border-bottom: 1px solid #e6e6e6;
 }
 .hn-topnav-scroll{
-  max-width: 1000px;
-  overflow-x: auto;
+  margin-bottom: -17px;
+  overflow: hidden;
+  height: 44px;
+  .el-menu-demo{
+    // max-width: 1000px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+  }
 }
 .hn-hmenu-item{
+  flex-shrink: 0;
   height: 36px !important;
   line-height: 36px !important;
+  width: 120px;
   &:hover{
     background-color: #409EFF !important;
   }

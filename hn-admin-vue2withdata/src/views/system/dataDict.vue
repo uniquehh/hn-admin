@@ -4,7 +4,7 @@
       <div class="hn-dict-search">
         <div class="hn-dicts-left">
           <div class="hn-dictsl-text">字典名称：</div>
-          <el-input @keyup.enter.native="inputSearch" v-model="dictType[currDTInd].list._params.dictName" class="hn-dictsl-inp"></el-input>
+          <el-input @keyup.enter.native="inputSearch" placeholder="请输入字典名称" v-model="dictType[currDTInd].list._params.dictName" class="hn-dictsl-inp"></el-input>
         </div>
         <div class="hn-dicts-right">
           <el-button @click="resetBtnEvent">重置</el-button>

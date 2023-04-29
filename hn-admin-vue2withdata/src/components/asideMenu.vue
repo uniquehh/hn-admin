@@ -1,8 +1,8 @@
 <template>
   <div class="hn-aside-menu">
     <div class="hn-aside-title" @click="hnRouterPush('/index')">
-      <img src="../assets/img/defAvatar.png" alt="">
-      <span v-show="!isCollapse">管理系统</span>
+      <!-- <img src="../assets/img/defAvatar.png" alt=""> -->
+      <span v-show="!isCollapse">后台管理系统</span>
     </div>
     <div class="hn-menus-box">
       <el-menu
@@ -78,6 +78,8 @@ export default {
   color: white;
   padding: 15px 0;
   cursor: pointer;
+  height: 56px;
+  box-sizing: border-box;
 }
 .hn-aside-title img{
   width: 30px;

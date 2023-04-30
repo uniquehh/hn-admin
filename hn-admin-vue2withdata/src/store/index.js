@@ -16,7 +16,7 @@ var asideMenus = [
     id: "2", name: "医院派单", path: '/yiYuanPaiDan',needPower:true,hasPower:false,sign:"HOSPITAL_DISPATCH_MANAGER",icon:"el-icon-yiyuan",showAside:true,child: []
   },
   {
-    id: "3", name: "我的客户", path: '/myCustomer',needPower:false,hasPower:true,sign:"CUSTOMER",icon:"el-icon-kehu",showAside:true,child: []
+    id: "3", name: "我的客户", path: '/myCustomer',needPower:true,hasPower:false,sign:"CUSTOM_MANAGER",icon:"el-icon-kehu",showAside:true,child: []
   },
   {
     id: "4", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []

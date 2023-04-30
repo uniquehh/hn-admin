@@ -117,7 +117,7 @@ export default {
       addPaiDanForm: {
         "customName": "",
         "dictId": "",
-        "followStatus": "",
+        "followStatus": "暂时不跟进",
         "gender": 2,
         "hospitalIdList": [],
         "phone": "",
@@ -306,7 +306,7 @@ export default {
       this.addPaiDanForm = {
         "customName": "",
         "dictId": "",
-        "followStatus": "",
+        "followStatus": "暂时不跟进",
         "gender": 2,
         "hospitalIdList": [],
         "phone": "",

@@ -226,8 +226,6 @@ export default {
         ],
       },
 
-      currSelectedArea:{},//当前的省市级区域数据
-
       editUserForm:{ //新增修改用户的表单
         "age": "",
         "loginName": "",
@@ -266,8 +264,8 @@ export default {
     currUserIndex(){ //当前操作的用户所在list的下标
       return this.yyUList._list.findIndex(item=>item.id==this.currUserId)
     },
-    currYYIndex(){ //当前操作的用户所在list的下标
-      return this.yyList._list.findIndex(item=>item.id==this.currYYId)
+    currYYIndex(){ //当前操作医院id--与右侧医院用户列表同步
+      return this.yyList._list.findIndex(item=>item.id==this.setClassId)
     },
   },
   created(){
@@ -414,10 +412,10 @@ export default {
     // 新增医院
     addYY(){
       this.request("/hospital/saveHospital",{
-        "city": this.currSelectedArea.child.name,
-        "cityCode": this.currSelectedArea.child.cityCode,
+        "cityCode": this.eYYForm.cityCode[1],
         "name": this.eYYForm.name,
-        "province": this.currSelectedArea.parent.name,
+        "province": this.eYYForm.province,
+        "city": this.eYYForm.city,
         "type": this.eYYForm.type
       },'post').then((res)=>{
         if(res.code==0){
@@ -458,8 +456,14 @@ export default {
     },
     // 修改医院
     updateYY(){
-      this.eYYForm.cityCode = this.eYYForm.cityCode[1]
-      this.request("/hospital/updateHospital",this.eYYForm,'put').then((res)=>{
+      this.request("/hospital/updateHospital",{
+        "cityCode": this.eYYForm.cityCode[1],
+        "name": this.eYYForm.name,
+        "id": this.currYYId,
+        "province": this.eYYForm.province,
+        "city": this.eYYForm.city,
+        "type": this.eYYForm.type
+      },'put').then((res)=>{
         if(res.code==0){
           this.getYYTableData()
           this.hnMsg()
@@ -468,6 +472,7 @@ export default {
     },
     // 打开添加、修改医院弹窗
     opEditYYDialog(type,row){
+      console.log(type,row)
       this.showEYYDialog = true
       this.$nextTick(() => { //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
         this.$refs.eYYForm.clearValidate()
@@ -478,12 +483,16 @@ export default {
         this.$nextTick(async ()=>{
           // 获取省code 和城市code用于区域下拉回显
           let temp = [row.cityCode.slice(0,2),row.cityCode]
-          let pind = this.chinaArea2.findIndex(item=>item.name==row.province)
+          // console.log(temp,this.chinaArea2)
+          let pind = this.chinaArea2.findIndex(item=>item.cityCode==temp[0])
           let res = await this.getChinaAreaList({
             level:'1',
-            cityCode:this.chinaArea2[pind].cityCode
+            cityCode:temp[0]
           })
           this.chinaArea2[pind].child = res
+
+          this.eYYForm.province = row.province
+          this.eYYForm.city = row.city
 
           this.eYYForm = JSON.parse(JSON.stringify(row))
           this.eYYForm.cityCode = temp
@@ -550,14 +559,16 @@ export default {
       this.yyList._params.cityCode = value.length?value[1]:''
       this.getYYTableData()
     },
-    // 行政区域选择--编辑\添加
+    // 行政区域选择--添加
     editAreaChange(value) {
-      let temp = this.$refs.eYYArea.getCheckedNodes()[0]
-      this.currSelectedArea.child = temp.data
-      this.currSelectedArea.parent = temp.parent.data
+      // console.log(value)
+      let pindex = this.chinaArea2.findIndex(item=>item.cityCode==value[0])
+      this.eYYForm.province = this.chinaArea2[pindex].name
+      this.eYYForm.city = this.chinaArea2[pindex].child.find(item=>item.cityCode==value[1]).name
+      // console.log(this.eYYForm)
     },
     async getAreaByParent(val){
-      console.log(val,756)
+      // console.log(val,756)
       let pind = this.chinaArea2.findIndex(item=>item.cityCode==val[0])
       let res = await this.getChinaAreaList({
         level:'1',

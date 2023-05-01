@@ -24,9 +24,7 @@
     <div class="hn-power-right">
       <div class="hn-powerr-head">
         <div class="hn-powerrh-text">权限列表</div>
-        <div class="hn-powerrh-bcbtn">
-          <el-button type="primary" @click="setRolePower">保存</el-button>
-        </div>
+        <el-button type="primary" @click="setRolePower">保存</el-button>
       </div>
       <div class="hn-powerr-cont">
         <div class="hn-powerrc-item" v-for="(item,index) in menus" :key="item.id">

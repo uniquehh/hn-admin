@@ -5,7 +5,7 @@
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户手机号" prefix-icon="el-icon-search" v-model="tableData._params.phone"></el-input>
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入所属用户姓名" prefix-icon="el-icon-search" v-model="tableData._params.beLongUserName"></el-input>
       <el-button @click="resetSearchForm">重置</el-button>
-      <el-button icon="el-icon-search" @click="getCustData" type="success">搜索</el-button>
+      <el-button icon="el-icon-search" @click="getCustData" type="primary">搜索</el-button>
     </div>
 
     <el-table :data="tableData._list" style="width: 100%">
@@ -26,8 +26,8 @@
       </el-table-column>
       <el-table-column label="操作" width="230" align="center">
         <template slot-scope="scope">
-          <el-button type="warning" icon="el-icon-delete" @click.stop="deleteCustomer(scope.row)">释放客户</el-button>
-          <el-button type="primary" icon="el-icon-guide" @click.stop="moveCustomer(scope.row)">转移客户</el-button>
+          <el-button type="text" icon="el-icon-delete" @click.stop="deleteCustomer(scope.row)">释放客户</el-button>
+          <el-button type="text" icon="el-icon-guide" @click.stop="moveCustomer(scope.row)">转移客户</el-button>
         </template>
       </el-table-column>
     </el-table>

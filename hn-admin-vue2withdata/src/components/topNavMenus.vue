@@ -8,7 +8,7 @@
         <el-menu-item class="hn-hmenu-item" v-for="(item,index) in topMenus" :key="item.path" 
           :index="item.path" @click="handleMianBao(item.path)">
           <span style="margin-right: 5px;">{{ item.name }}</span>
-          <i @click.stop="closeTopMenu(index)" v-show="item.path!='/index'" style="font-size: 14px;" class="el-icon-close"></i>
+          <i @click.stop="closeTopMenu(index)" v-show="item.path!=firstPath" style="font-size: 14px;" class="el-icon-close"></i>
         </el-menu-item>
       </el-menu>
     </div>
@@ -26,6 +26,7 @@ export default {
   computed:{
     ...mapState('topMenu',['topMenus','current']),
     ...mapState('asideMenu',['asideMenus']),
+    ...mapState('firstPath',['firstPath']),
   },
   methods: {
     ...mapMutations('topMenu',['stSetTopMenus','stSetTopCurrent']),
@@ -76,7 +77,7 @@ export default {
   flex-shrink: 0;
   height: 36px !important;
   line-height: 36px !important;
-  width: 120px;
+  // width: 120px;
   &:hover{
     background-color: #409EFF !important;
   }

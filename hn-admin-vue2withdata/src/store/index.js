@@ -81,11 +81,23 @@ export default new Vuex.Store({
         },
       },
     },
+    firstPath: {
+      namespaced: true,
+      state: {
+        firstPath: JSON.parse(localStorage.getItem("firstPath"))||"",//侧边栏第一个菜单可跳转的path
+      },
+      mutations: {
+        stSetFirstPath(state,val) {
+          state.firstPath = val
+          localStorage.setItem('firstPath',JSON.stringify(val))
+        },
+      },
+    },
     topMenu: {
       namespaced: true,
       state: {
-        topMenus:JSON.parse(localStorage.getItem("topMenus"))||[asideMenus[0]],//顶部激活的历史菜单集合-默认首页
-        current:localStorage.getItem("currentPath")||"/index",//当前激活的菜单path-默认首页
+        topMenus:JSON.parse(localStorage.getItem("topMenus"))||[],//顶部激活的历史菜单集合
+        current:localStorage.getItem("currentPath")||"",//当前激活的菜单path
       },
       mutations: {
         stSetTopMenus(state,val) {

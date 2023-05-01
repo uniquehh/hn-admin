@@ -103,7 +103,7 @@ export default {
         "age": "",
         "phone": "",
         "realName": "",
-        "sex": 2
+        "sex": 0
       },
       editUserFormRules: {
         realName: [

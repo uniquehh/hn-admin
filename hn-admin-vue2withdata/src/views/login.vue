@@ -61,6 +61,7 @@ export default {
   },
   computed: {
     // ...mapState('user', ['userInfo','isLogin']),
+    ...mapState('firstPath', ['firstPath']),
   },
   mounted() {
 
@@ -82,7 +83,8 @@ export default {
               this.stSetUserInfo(res.data)
               this.hasPowerAsideMenus()
               this.stSetIsLogin(true)
-              this.hnRouterRep("/index")
+              // console.log(this.firstPath)
+              this.hnRouterRep(this.firstPath)
             }
           })
         } else {

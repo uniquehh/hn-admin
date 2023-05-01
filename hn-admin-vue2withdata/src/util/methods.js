@@ -11,6 +11,7 @@ const methods = {
     localStorage.removeItem('topMenus') 
     localStorage.removeItem('chinaArea') 
     localStorage.removeItem('customId') 
+    localStorage.removeItem('firstPath') 
   },
   // 退出登录
   loginOut(req=true){
@@ -154,8 +155,16 @@ const methods = {
   // 将后端返回来的菜单数据与本地数据对比处理出有权限的菜单数据
   hasPowerAsideMenus() {
     let asideMenus = vm.$store.state.asideMenu.asideMenus
-    // console.log()
+    let userInfo = vm.$store.state.user.userInfo
+
     asideMenus.forEach((item) => {
+      // 医院用户不显示首页
+      if(userInfo.roleVo.roleLevel==4&&item.path=='/index'){
+        item.needPower = true
+        item.hasPower = false
+        item.showAside = false
+      }
+
       if (item.child.length&&item.needPower) {
         item.hasPower = methods.hasPower(item.sign)//父节点也要做权限判断
         if (item.hasPower) {//父级有权限才对子级进行判断
@@ -172,6 +181,10 @@ const methods = {
       }
     })
     console.log(asideMenus,8080)
+    // 侧边栏第一个可跳转的有权限的path
+    let haspower = asideMenus.find(item=>item.hasPower==true)
+    let pt = haspower.child.length>0?haspower.child[0].path:haspower.path
+    vm.$store.commit('firstPath/stSetFirstPath',pt)
     vm.$store.commit('asideMenu/stSetasideMenus', asideMenus)
   },
   // 判断当前用户是否有某个菜单的权限

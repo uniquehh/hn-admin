@@ -71,7 +71,8 @@ export default {
   background-color: #F6F6F6;
 }
 .hn-cont-box{
-  padding: 10px;
+  padding: 17px;
+  // padding-top: 15px;
 }
 .hn-cont-main{
   height: calc(100vh - 108px);

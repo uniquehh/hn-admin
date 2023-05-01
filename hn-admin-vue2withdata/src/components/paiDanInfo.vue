@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="派单详情" width="800px" :visible.sync="showDIDialog">
+    <el-dialog title="派单详情" width="700px" :visible.sync="showDIDialog">
       <div class="hn-fitem-box">
         <div class="hn-pdinfo-item hn-mrr40">
           <div class="hn-pdinfoi-th">客户姓名：</div>

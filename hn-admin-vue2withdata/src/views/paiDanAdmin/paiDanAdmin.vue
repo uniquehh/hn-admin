@@ -118,7 +118,7 @@ export default {
         "customName": "",
         "dictId": "",
         "followStatus": "暂时不跟进",
-        "gender": 2,
+        "gender": 0,
         "hospitalIdList": [],
         "phone": "",
         "project": ""
@@ -307,7 +307,7 @@ export default {
         "customName": "",
         "dictId": "",
         "followStatus": "暂时不跟进",
-        "gender": 2,
+        "gender": 0,
         "hospitalIdList": [],
         "phone": "",
         "project": ""
@@ -317,7 +317,8 @@ export default {
     openADDialog() {
       this.showDIDialog = true
       this.resetPaiDanForm()
-      this.$nextTick(() => { //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
+      //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
+      this.$nextTick(() => { 
         this.$refs.addPaiDanForm.clearValidate()
       })
     },

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import rootPage from '../views/rootPage.vue'
+import store from '@/store/index'
 
 Vue.use(VueRouter)
 
@@ -137,15 +138,16 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   let isLogin = window.localStorage.getItem('isLogin')
-  // console.log(isLogin,to,from)
+  let firstPath = store.state.firstPath.firstPath
+  console.log(to,from)
 
   if (isLogin) {
     if(to.path==='/login'&&from.path!='/'){
       next({path:from.path,replace:true})
     }else if(to.path==='/login'&&from.path=='/'){
-      next({path:'/index',replace:true});
+      next({path:firstPath,replace:true});
     }else if(to.path==='/'){
-      next({path:'/index',replace:true});
+      next({path:firstPath,replace:true});
     }else {
       next()
     }

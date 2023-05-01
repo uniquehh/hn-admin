@@ -131,7 +131,7 @@ export default {
         "phone": "",
         "realName": "",
         "roleId": "",
-        "sex": 2
+        "sex": 0
       },
       groupData: new Paging('/group/getGroupPage', { order:"id DESC" },'post'),
       editUserFormRules: {
@@ -277,7 +277,7 @@ export default {
         "phone": "",
         "realName": "",
         "roleId": "",
-        "sex": 2
+        "sex": 0
       }
     },
     // 打开弹窗

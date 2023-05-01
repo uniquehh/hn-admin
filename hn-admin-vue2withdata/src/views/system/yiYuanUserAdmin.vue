@@ -232,7 +232,7 @@ export default {
         "phone": "",
         "realName": "",
         "roleId": "",
-        "sex": 2
+        "sex": 0
       },
       editUserFormRules: {
         realName: [
@@ -281,9 +281,6 @@ export default {
         console.log(this.yyList)
       }
     })
-  },
-  mounted(){
-    
   },
   methods: {
     // 获取新增医院用户时选中角色得角色数据
@@ -342,7 +339,7 @@ export default {
         "phone": "",
         "realName": "",
         "roleId": "",
-        "sex": 2
+        "sex": 0
       }
     },
     // 新增用户

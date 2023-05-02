@@ -83,7 +83,7 @@ export default {
     // 编辑/删除字典数据
     editDictRow(scope,type){
       scope.row.editType = type
-      this.$emit("editDictRow",scope)
+      this.$emit("editDictRow",this.toJSON(scope))
     },
     // 是否禁用
     handleStatusChange(row){

@@ -26,9 +26,9 @@ axiosInstance.interceptors.request.use((config) => {
     config.headers['token'] = JSON.parse(localStorage.getItem('userInfo')).token
   }
 
-  if (config.method == 'put') {
-    // config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset:utf-8'
-  }
+  // if (config.method == 'put') {
+  //   config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset:utf-8'
+  // }
   return config;
 }, (error) => {
   return Promise.reject(error,'请求拦截器走了错误入口');
@@ -41,9 +41,10 @@ axiosInstance.interceptors.response.use((res) => {
     if (res.data.code == -1) {
       methods.hnMsg(res.data.data.errMsg,'error')
     }
-    if(res.data.code==20001){
-      methods.hnMsg(res.data.data.errMsg)
-      methods.loginOut()
+    if(res.data.data.errCode==20001){
+      setTimeout(() => {
+        methods.loginOut(false)
+      }, 2000);
     }
 
     

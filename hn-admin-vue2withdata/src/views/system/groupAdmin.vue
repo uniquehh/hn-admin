@@ -1,7 +1,7 @@
 <template>
   <div class="hn-dtdict-main">
     <div class="hn-dict-search">
-      <div class="hn-dicts-left">
+      <div class="hn-dicts-left hn-mrr10">
         <div class="hn-dictsl-text">小组名称：</div>
         <el-input @keyup.enter.native="inputSearch" placeholder="请输入小组名称" v-model="groupData._params.groupName" class="hn-groupsl-inp"></el-input>
       </div>
@@ -12,7 +12,7 @@
     </div>
     <div class="hn-dtdictt-head">
       <div class="hn-dicts-right">
-        <el-button type="primary" @click="openADDialog">添加小组管理</el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="openADDialog">添加小组</el-button>
       </div>
     </div>
     <el-table :data="groupData._list" style="width: 100%">
@@ -178,5 +178,6 @@ export default {
 <style scoped lang="scss">
 .hn-dict-search{
   margin-bottom: 20px;
+  justify-content: unset;
 }
 </style>

@@ -1,16 +1,61 @@
 <template>
   <div class="hn-dtdict-main">
-    <div class="hn-dict-search">
+
+    <div class="hn-dict-search" v-if="!isChaoGuan()">
       <el-button type="primary" icon="el-icon-plus" @click="openADDialog">派单</el-button>
     </div>
     <div class="hn-dict-search">
-      <div class="hn-dicts-left">
+      <!-- <div class="hn-dicts-left">
         <div class="hn-dictsl-text">客户名称：</div>
-        <el-input @keyup.enter.native="inputSearch"  placeholder="请输入客户名称" v-model="paiDanData._params.customName" class="hn-paiDansl-inp"></el-input>
+        <el-input placeholder="请输入客户名称" v-model="paiDanData._params.customName" class="hn-paiDansl-inp"></el-input>
+      </div> -->
+      <div class="hn-dicts-left">
+        <el-input placeholder="请输入客户姓名" prefix-icon="el-icon-search" v-model="searchForm.customName"></el-input>
       </div>
+      <div class="hn-dicts-left">
+        <el-input placeholder="请输入客户手机号" prefix-icon="el-icon-search" v-model="searchForm.phone"></el-input>
+      </div>
+      <div class="hn-dicts-left">
+        <el-input placeholder="请输入派单人" prefix-icon="el-icon-search" v-model="searchForm.userName"></el-input>
+      </div>
+      <!-- <div class="hn-dicts-left">
+        <el-input placeholder="请输入项目" prefix-icon="el-icon-search" v-model="searchForm.project"></el-input>
+      </div> -->
+      <!-- <div class="hn-dicts-left">
+        <el-select v-model="searchForm.followStatus" placeholder="请选择跟进状态">
+          <el-option v-for="(item) in gjStatus" :key="item.value" :label="item.label" :value="item.label"></el-option>
+        </el-select>
+      </div> -->
+      <!-- <div class="hn-dicts-left">
+        <el-select v-model="searchForm.gender" placeholder="请选择客户性别">
+          <el-option v-for="(item) in sexOption" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+      </div> -->
+      <!-- <div class="hn-dicts-left">
+        <el-select v-model="searchForm.dictId" placeholder="请选择客户来源">
+          <el-option v-for="(item) in khLaiYuan" :key="item.id" :label="item.dictName" :value="item.id"></el-option>
+        </el-select>
+      </div> -->
+      <!-- <div class="hn-dicts-left">
+        <el-select v-model="searchForm.groupId" placeholder="请选择所属小组">
+          <el-option v-for="(item) in groupData._list" :key="item.id" :label="item.groupName" :value="item.id"></el-option>
+        </el-select>
+      </div> -->
+      <!-- <div class="hn-dicts-left">
+        <el-date-picker
+          class="hn-mrr10"
+          v-model="searchForm.times"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="派单开始时间"
+          end-placeholder="派单结束时间"
+        ></el-date-picker>
+      </div> -->
       <div class="hn-dicts-right">
-        <el-button @click="resetBtnEvent">重置</el-button>
-        <el-button @click="inputSearch" type="primary">搜索</el-button>
+        <el-button @click="resetSearchForm">重置</el-button>
+        <el-button icon="el-icon-search" @click="searchPDData" type="primary">搜索</el-button>
+      
       </div>
     </div>
     <el-table :data="paiDanData._list" style="width: 100%">
@@ -24,6 +69,8 @@
       <el-table-column prop="phone" label="客户电话">
       </el-table-column>
       <el-table-column prop="project" label="项目">
+      </el-table-column>
+      <el-table-column prop="userName" label="派单人">
       </el-table-column>
       <el-table-column prop="dictName" label="客户来源">
       </el-table-column>
@@ -112,7 +159,8 @@ export default {
   components: { paiDanInfo },
   data() {
     return {
-      paiDanData: new Paging('/dispatch/getDispatchList', { customName: "",order:"id DESC" },'post'),//派单数据
+      paiDanData: new Paging('/dispatch/getDispatchList', { order:"id DESC" },'post'),//派单数据
+      groupData: new Paging('/group/getGroupPage', { order:"id DESC" },'post'),
       // 添加派单管理的表单
       addPaiDanForm: {
         "customName": "",
@@ -173,6 +221,19 @@ export default {
       showDIDialog:false,//是否显示派单管理弹窗
       currPaiDanId:0,//当前操作的派单id
 
+      searchForm:{
+        "customName": "",
+        "dictId": "", //客户来源
+        "dispatchBeginTime": "",
+        "dispatchEndTime": "",
+        gender:"",
+        groupId:"",
+        "phone": "",
+        "project": "",
+        "followStatus": "",
+        "userName": "",
+        times:"",
+      },
     }
   },
   computed: {
@@ -184,11 +245,43 @@ export default {
     this.getKeHuLaiYuan()
     this.getPaiDanData()
     this.getAreaData()
+    this.getGroupData()
   },
   mounted() {
 
   },
   methods: {
+    // 获取小组数据
+    getGroupData() {
+      this.groupData._limit = 200
+      this.groupData.exec()
+    },
+    // 筛选派单数据
+    searchPDData(){
+      // console.log(this.searchForm,this.paiDanData)
+      // this.searchForm.dispatchBeginTime = this.searchForm.times[0]
+      // this.searchForm.dispatchEndTime = this.searchForm.times[1]
+      this.paiDanData._params = Object.assign(this.paiDanData._params,this.searchForm)
+      this.getPaiDanData()
+    },
+    // 重置搜索条件
+    resetSearchForm(){
+      this.searchForm = {
+        "customName": "",
+        "dictId": "", //客户来源
+        "dispatchBeginTime": "",
+        "dispatchEndTime": "",
+        gender:"",
+        groupId:"",
+        "phone": "",
+        "project": "",
+        "followStatus": "",
+        "userName": "",
+        times:"",
+      },
+      this.paiDanData._params = Object.assign(this.paiDanData._params,this.searchForm)
+      this.getPaiDanData()
+    },
     // 获取客户来源
     getKeHuLaiYuan(){
       this.request("/dict/getDictPage",{
@@ -322,11 +415,6 @@ export default {
         this.$refs.addPaiDanForm.clearValidate()
       })
     },
-    // 关键词搜索
-    inputSearch(){
-      this.resetPaging()
-      this.getPaiDanData()
-    },
     // 获取派单管理数据
     getPaiDanData() {
       this.paiDanData.exec()
@@ -335,12 +423,6 @@ export default {
     resetPaging() {
       this.paiDanData._page = 1
       this.paiDanData._limit = 20
-    },
-    // 重置按钮
-    resetBtnEvent() {
-      this.paiDanData._params.customName = ''
-      this.resetPaging()
-      this.getPaiDanData()
     },
     // 分页器页码、显示条数改变
     pagingChange(e) {
@@ -357,8 +439,17 @@ export default {
 .hn-dict-search{
   margin-bottom: 20px;
   justify-content: unset;
+  flex-wrap: wrap;
+}
+.hn-dtdict-main{
+  padding:25px 30px;
 }
 .hn-dicts-left{
   margin-right: 10px;
+  padding: 5px 0;
+  flex-shrink: 0;
+}
+.hn-dicts-right{
+  flex-shrink: 0;
 }
 </style>

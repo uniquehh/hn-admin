@@ -139,7 +139,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let isLogin = window.localStorage.getItem('isLogin')
   let firstPath = store.state.firstPath.firstPath
-  console.log(to,from)
+  // console.log(to,from)
 
   if (isLogin) {
     if(to.path==='/login'&&from.path!='/'){

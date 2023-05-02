@@ -9,13 +9,13 @@
             <div class="hn-jdzxmhlt-time">欢迎回来！现在是：2022-03-19 56:55:44</div>
           </div>
         </div>
-        <div class="hn-jdzxmh-center">
+        <!-- <div class="hn-jdzxmh-center">
           <el-switch
             v-model="value"
             active-text="开启接单"
             inactive-text="停止接单">
           </el-switch>
-        </div>
+        </div> -->
         <div class="hn-jdzxmh-right">
           <div class="hn-jdzxmhr-item">
             <div class="hn-jdzxmhri-text">30日客户数</div>

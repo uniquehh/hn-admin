@@ -290,6 +290,15 @@ const methods = {
       })
     })
   },
+  // 是否是超管的判断函数
+  isChaoGuan(){
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    return userInfo.roleVo.roleLevel==0
+  },
+  // 简单对象转json--深拷贝
+  toJSON(obj){
+    return JSON.parse(JSON.stringify(obj))
+  },
 
 
   

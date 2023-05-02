@@ -1,16 +1,19 @@
 <template>
   <div class="hn-myctomer-main">
-    <div class="hn-yypd-search">
+    <div class="hn-yypd-search hn-mrb20">
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户姓名" prefix-icon="el-icon-search" v-model="searchForm.customName"></el-input>
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户手机号" prefix-icon="el-icon-search" v-model="searchForm.phone"></el-input>
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入派单人" prefix-icon="el-icon-search" v-model="searchForm.userName"></el-input>
-      <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入项目" prefix-icon="el-icon-search" v-model="searchForm.project"></el-input>
-      <el-select class="hn-mcust-shinp hn-mrr10" v-model="searchForm.status" placeholder="请选择状态">
+      <!-- <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入项目" prefix-icon="el-icon-search" v-model="searchForm.project"></el-input> -->
+      <!-- <el-select class="hn-mcust-shinp hn-mrr10" v-model="searchForm.status" placeholder="请选择状态">
         <el-option v-for="(item) in searchStOp" :key="item.value" :label="item.label" :value="item.value"></el-option>
-      </el-select>
+      </el-select> -->
+      <el-button @click="resetSearchForm">重置</el-button>
+      <el-button icon="el-icon-search" @click="searchYYPDData" type="primary">搜索</el-button>
+      
     </div>
 
-    <div class="hn-yypd-search hn-mrb20">
+    <!-- <div class="hn-yypd-search hn-mrb20">
       <el-date-picker
         class="hn-mrr10"
         v-model="searchForm.times"
@@ -20,10 +23,8 @@
         start-placeholder="派单开始时间"
         end-placeholder="派单结束时间"
       ></el-date-picker>
-
-      <el-button @click="resetSearchForm">重置</el-button>
-      <el-button icon="el-icon-search" @click="searchYYPDData" type="primary">搜索</el-button>
-    </div>
+      
+    </div> -->
     
 
     <el-table :data="tableData._list" style="width: 100%">
@@ -47,7 +48,7 @@
       </el-table-column>
       <el-table-column prop="dispatchTime" label="派单时间">
       </el-table-column>
-      <el-table-column prop="edit" label="操作">
+      <el-table-column prop="edit" v-if="!isChaoGuan()" label="操作">
         <template slot-scope="scope">
           <el-button type="text" @click.stop="editYiYuanPaiDan(scope.row)">处理</el-button>
         </template>
@@ -128,8 +129,8 @@ export default {
     // 筛选派单数据
     searchYYPDData(){
       // console.log(this.searchForm,this.tableData)
-      this.searchForm.dispatchBeginTime = this.searchForm.times[0]
-      this.searchForm.dispatchEndTime = this.searchForm.times[1]
+      // this.searchForm.dispatchBeginTime = this.searchForm.times[0]
+      // this.searchForm.dispatchEndTime = this.searchForm.times[1]
       this.tableData._params = Object.assign(this.tableData._params,this.searchForm)
       this.getYYPDData()
     },

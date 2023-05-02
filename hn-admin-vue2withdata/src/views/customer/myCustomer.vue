@@ -1,6 +1,6 @@
 <template>
   <div class="hn-myctomer-main">
-    <div class="hn-mctm-head">
+    <div class="hn-mctm-head" v-if="!isChaoGuan()">
       <div class="hn-mctmh-left">
         <el-button class="hn-mctmhl-btn" icon="el-icon-plus" type="primary" @click="editCustome('add')">添加新客户</el-button>
       </div>
@@ -40,7 +40,7 @@
       </el-table-column>
       <el-table-column prop="gainDate" label="获取日期">
       </el-table-column>
-      <el-table-column prop="edit" label="操作">
+      <el-table-column v-if="!isChaoGuan()" prop="edit" label="操作">
         <template slot-scope="scope">
           <el-button type="text" icon="el-icon-delete" @click.stop="deleteCustomer(scope.row)">释放客户</el-button>
           <el-button type="text" @click.stop="editCustome('edit',scope.row)">修改</el-button>
@@ -176,12 +176,13 @@ export default {
     },
     // 修改、添加客户
     editCustome(type,row){
+      let nrow = JSON.parse(JSON.stringify(row))
       this.showEditCusDialog = true
       this.$nextTick(() => { 
         this.$refs.editCustForm.clearValidate()
       })
       this.editCustDiaTitle = type=='edit'?'编辑客户':'新增客户'
-      type=='edit'?this.editCustForm = row:this.resetEditCustForm()
+      type=='edit'?this.editCustForm = nrow:this.resetEditCustForm()
     },
 
     // 分页器页码、显示条数改变

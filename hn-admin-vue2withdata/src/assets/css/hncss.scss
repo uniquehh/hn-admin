@@ -319,6 +319,10 @@
 .hn-custimlth-text{
   margin-left: 10px;
 }
+.hn-gjlog-list{
+  max-height: 480px;
+  overflow-y: auto;
+}
 .hn-custimlt-item{
   padding-top: 10px;
 }
@@ -551,4 +555,16 @@
 }
 .hn-mrb20{
   margin-bottom: 20px;
+}
+
+// 成单管理样式
+.hn-cdadmin-shbox{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.hn-cdadmin-item{
+  margin-right: 10px;
+  padding: 5px 0;
+  flex-shrink: 0;
 }

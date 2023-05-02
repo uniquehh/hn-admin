@@ -10,7 +10,7 @@ var asideMenus = [
     id: "0", name: "首页", path: '/index',needPower:false,hasPower:true,sign:"INDEX",icon:"el-icon-s-home",showAside:true,child: []
   },
   {
-    id: "1", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
+    id: "1", name: "成单管理", path: '/cdAdmin',needPower:true,hasPower:false,sign:"ORDER_MANAGER",icon:"el-icon-s-claim",showAside:true,child: []
   },
   {
     id: "2", name: "医院派单", path: '/yiYuanPaiDan',needPower:true,hasPower:false,sign:"HOSPITAL_DISPATCH_MANAGER",icon:"el-icon-yiyuan",showAside:true,child: []
@@ -19,13 +19,16 @@ var asideMenus = [
     id: "3", name: "我的客户", path: '/myCustomer',needPower:true,hasPower:false,sign:"CUSTOM_MANAGER",icon:"el-icon-kehu",showAside:true,child: []
   },
   {
-    id: "4", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
+    id: "4", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
   },
   {
-    id: "5", name: "客户详情", path: '/customerInfo',needPower:false,hasPower:true,sign:"CUSTOMERINFO",icon:"el-icon-kehu",showAside:false,child: []
+    id: "5", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
   },
   {
-    id: "6", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-s-order",showAside:false,child: []
+    id: "6", name: "客户详情", path: '/customerInfo',needPower:false,hasPower:true,sign:"CUSTOMERINFO",icon:"el-icon-kehu",showAside:false,child: []
+  },
+  {
+    id: "7", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-s-order",showAside:false,child: []
   },
   {
     id: "8", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools",showAside:true, child: [

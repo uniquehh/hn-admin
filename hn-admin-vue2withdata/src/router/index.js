@@ -87,6 +87,14 @@ const routes = [
         component: () => import('../views/customer/customerInfo.vue')
       },
       {
+        path: '/cdAdmin',
+        name: 'cdAdmin',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/cdAdmin/cdAdmin.vue')
+      },
+      {
         path: '/personal',
         name: 'personal',
         meta: {

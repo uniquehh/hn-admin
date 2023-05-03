@@ -100,7 +100,7 @@
           </el-form-item>
           <el-form-item label="客户来源" required prop="dictId">
             <el-select v-model="addPaiDanForm.dictId" placeholder="请选择客户来源">
-              <el-option v-for="(item) in khLaiYuan" :key="item.id" :label="item.dictName" :value="item.id"></el-option>
+              <el-option v-for="(item) in khLaiYuan" :key="item.id" :disabled="item.dictBlock" :label="item.dictName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
         </div>

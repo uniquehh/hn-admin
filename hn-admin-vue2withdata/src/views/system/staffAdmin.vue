@@ -326,6 +326,7 @@ export default {
     pagingChange(e){
       this.list._page = e.page
       this.list._limit = e.limit
+      this.getUserListData()
     },
   }
 }

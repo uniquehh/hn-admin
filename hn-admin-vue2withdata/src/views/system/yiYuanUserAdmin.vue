@@ -601,10 +601,12 @@ export default {
     yyPagingChange(e){
       this.yyList._page = e.page
       this.yyList._limit = e.limit
+      this.getYYTableData()
     },
     userPagingChange(e){
       this.yyUList._page = e.page
       this.yyUList._limit = e.limit
+      this.getUserListByYY()
     },
   }
 }

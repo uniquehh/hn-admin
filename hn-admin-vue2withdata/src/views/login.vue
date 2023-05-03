@@ -6,7 +6,7 @@
           <div class="hn-login-cont">
             <div class="hn-login-title">
               <h3 style="margin-bottom: 10px;">欢迎登录</h3>
-              <h3 style="margin-bottom: 30px;">欢迎登录XX数字化信息管理平台</h3>
+              <h3 style="margin-bottom: 30px;">无瑕科技有限公司信息化管理平台</h3>
             </div>
             <el-form :model="loginForm" :rules="loginRules" ref="lgForm">
               <el-form-item prop="userName">
@@ -106,12 +106,11 @@ export default {
   background-size: cover;
 }
 .hn-login-form{
-  background-color: #4E72ED;
-  /* opacity: 0.8; */
+  background-color: rgb(79, 116, 238);
   border-radius: 5px;
   box-sizing: border-box;
   padding-top: 10px;
-  width: 350px;
+  width: 370px;
   position: absolute;
   top: 200px;
   right: 250px;
@@ -124,14 +123,14 @@ export default {
   padding-bottom: 80px;
 }
 .hn-login-cont{
-  width: 240px;
+  width: 250px;
   margin: 0 auto;
 }
 .hn-login-user{
   margin-bottom: 15px;
 }
 .hn-login-user,.hn-login-pass{
-  width: 240px;
+  width: 100%;
   ::v-deep .el-input{
     width: 100% !important;
   }

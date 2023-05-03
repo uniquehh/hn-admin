@@ -123,6 +123,11 @@
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间">
             </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button @click="deleteGJJH(scope.row)" type="text">删除</el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
       </div>
@@ -156,7 +161,7 @@
             </el-form-item>
             
             <el-form-item required prop="customName" label="地区：">
-              <el-input style="width: 215px;" v-model="editCustForm.customName" placeholder="请输入客户所在地区"></el-input>
+              <el-input style="width: 215px;" v-model="editCustForm.area" placeholder="请输入客户所在地区"></el-input>
             </el-form-item>
             <el-form-item required prop="customLevel" label="等级：">
               <el-select v-model="editCustForm.customLevel" placeholder="请选择客户等级">
@@ -368,6 +373,19 @@ export default {
         if(res.code==0){
           this.gjLog = res.data
         }
+      })
+    },
+    // 删除跟进计划
+    deleteGJJH(row){
+      this.hnMsgBox().then(()=>{
+        this.request("/follow/deletePlanFollow",{
+          planFollowId:row.id
+        },'delete','form').then(res=>{
+          if(res.code==0){
+            this.getGenJinJiHua()
+            this.hnMsg()
+          }
+        })
       })
     },
     // 提交跟进计划

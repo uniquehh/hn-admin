@@ -73,10 +73,10 @@ export default {
       deep:true,
       imimmediate:true,
       handler(val){
-        console.log(val,'watch')
+        // console.log(val,'watch')
         if(val){
           this.addPaiDanForm = Object.assign(this.addPaiDanForm,val)
-          console.log(this.addPaiDanForm,'watch2')
+          // console.log(this.addPaiDanForm,'watch2')
         }
       },
     },

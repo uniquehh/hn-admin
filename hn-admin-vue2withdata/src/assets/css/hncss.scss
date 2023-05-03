@@ -490,7 +490,7 @@
 .hn-jdzxmd-item{
   display: flex;
   align-items: center;
-  // flex-shrink: 0;
+  flex-shrink: 0;
 }
 .hn-jdzxmdi-left{
   border-top-left-radius: 5px;
@@ -537,15 +537,18 @@
 }
 
 .hn-jdzxmm-left{
-  width: 698px;
+  width: 500px;
   margin-right: 10px;
+  flex-shrink: 0;
 }
 .hn-jdzxmm-center{
   margin-right: 10px;
-  width: 490px;
+  width: 700px;
+  flex-shrink: 0;
 }
 .hn-jdzxmm-right{
-  width: 490px;
+  width: 460px;
+  flex-shrink: 0;
 }
 
 .hn-custimlth-text2{

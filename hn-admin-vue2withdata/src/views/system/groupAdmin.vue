@@ -166,7 +166,7 @@ export default {
     },
     // 分页器页码、显示条数改变
     pagingChange(e) {
-      console.log(e)
+      // console.log(e)
       this.groupData._page = e.page
       this.groupData._limit = e.limit
       this.getGroupData()

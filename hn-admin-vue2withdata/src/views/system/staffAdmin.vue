@@ -242,7 +242,6 @@ export default {
     },
     // 表格数据选中事件
     handleSelectionChange(rows) {
-      console.log(rows,123)
       this.selectedRowIds = []
       rows.forEach((item)=>{
         this.selectedRowIds.push(item.id)
@@ -289,7 +288,6 @@ export default {
       if(type=='edit'){ //修改
         this.currUserId = row.id
         this.editDilogTitle = "修改用户"
-        console.log(row)
         let nroleId = row.roleVo?row.roleVo.id:''
         this.editUserForm = JSON.parse(JSON.stringify(row))
         this.editUserForm.roleId = nroleId

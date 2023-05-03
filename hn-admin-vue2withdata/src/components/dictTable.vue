@@ -11,11 +11,11 @@
         </el-table-column>
         <!-- <el-table-column prop="form" label="字典属于">
         </el-table-column> -->
-        <el-table-column prop="dictUse" label="字典是否正在使用">
+        <!-- <el-table-column prop="dictUse" label="字典是否正在使用">
           <template slot-scope="scope">
             <span>{{ scope.row.dictUse?'使用中':'未使用' }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="字典是否禁用">
           <template slot-scope="scope">
             <el-switch 

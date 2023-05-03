@@ -9,9 +9,9 @@
     </div>
     <div class="hn-head-right">
       <div class="hn-avatar-icons">
-        <i class="el-icon-suoping" style="font-size: 18px;margin-right: 15px;" />
-        <i class="el-icon-yifu" style="font-size: 18px;margin-right: 15px;" />
-        <i class="el-icon-bell" style="font-size: 18px;margin-right: 15px;" />
+        <!-- <i class="el-icon-suoping" style="font-size: 18px;margin-right: 15px;" /> -->
+        <!-- <i class="el-icon-yifu" style="font-size: 18px;margin-right: 15px;" /> -->
+        <!-- <i class="el-icon-bell" style="font-size: 18px;margin-right: 15px;" /> -->
         <i :class="fullscreen ? 'el-icon-quxiaoquanping' : 'el-icon-quanping'" @click="handleFullScreen" style="font-size: 18px;margin-right: 15px;" />
       </div>
       <div class="hn-avatar-wrapper" @click="hnRouterPush('/personal')">

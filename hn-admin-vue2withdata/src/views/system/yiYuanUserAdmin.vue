@@ -277,7 +277,7 @@ export default {
         this.currYYId = this.yyList._list[0].id
         this.setClassId = this.yyList._list[0].id
         this.getUserListByYY()
-        console.log(this.yyList)
+        // console.log(this.yyList)
       }
     })
   },
@@ -378,7 +378,7 @@ export default {
     },
     // 打开用户新增、修改弹窗
     opUserDialog(type,row){
-      console.log(this.currYYId,'--------')
+      // console.log(this.currYYId,'--------')
       this.showEUDialog = true
       this.$nextTick(() => { //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
         this.$refs.editUserForm.clearValidate()
@@ -386,7 +386,7 @@ export default {
       if(type=='edit'){ //修改
         this.currUserId = row.id
         this.editDilogTitle = "修改用户"
-        console.log(row)
+        // console.log(row)
         let nroleId = row.roleVo?row.roleVo.id:''
         this.editUserForm = JSON.parse(JSON.stringify(row))
         this.editUserForm.roleId = nroleId
@@ -469,7 +469,7 @@ export default {
     },
     // 打开添加、修改医院弹窗
     opEditYYDialog(type,row){
-      console.log(type,row)
+      // console.log(type,row)
       this.showEYYDialog = true
       this.$nextTick(() => { //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
         this.$refs.eYYForm.clearValidate()
@@ -576,7 +576,7 @@ export default {
     // 获取医院表格数据
     async getYYTableData(){
       let res = await this.yyList.exec()
-      console.log(res,999)
+      // console.log(res,999)
       return JSON.parse(JSON.stringify(res))
     },
     // 根据医院获取医院下的用户数据

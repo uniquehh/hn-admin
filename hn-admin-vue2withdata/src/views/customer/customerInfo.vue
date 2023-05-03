@@ -4,7 +4,7 @@
     <div class="hn-custim-left">
       <div class="hn-custiml-telhis">
         <div class="hn-custimlt-head">
-          <i class="el-icon-s-order"></i>
+          <i class="el-icon-tickets"></i>
           <span class="hn-custimlth-text">跟进记录</span>
         </div>
         <div class="hn-gjlog-list" v-show="gjLog.length>0">
@@ -30,13 +30,13 @@
           <span class="hn-custimlth-text">将此客户转移给同事</span>
         </div>
         <div class="hn-custm-warp">
-          <el-form :model="moveCustForm" :rules="moveCustFormRules" label-width="80px" ref="moveCustForm">
+          <el-form :show-message="showMVRuleMsg" :model="moveCustForm" :rules="moveCustFormRules" label-width="80px" ref="moveCustForm">
             <el-form-item label="转移客户" required prop="userId">
-              <el-select filterable clearable v-model="moveCustForm.userId" placeholder="请选择同事">
+              <el-select @change="showMVRuleMsg=false" filterable clearable v-model="moveCustForm.userId" placeholder="请选择同事">
                 <el-option v-for="(item) in usStaff" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item>
+            <el-form-item v-if="!isChaoGuan()">
               <el-button type="primary" @click="mcDialogConfirm">提交</el-button>
             </el-form-item>
           </el-form>
@@ -48,15 +48,16 @@
       <div class="hn-custimc-top">
         <div class="hn-custimcm-head">
           <div class="hn-custimcmh-left">
-            <i class="el-icon-s-claim"></i>
+            <i class="el-icon-document-checked"></i>
             <span class="hn-custimlth-text">跟进结果</span>
           </div>
-          <el-button @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
+          <el-button v-if="!isChaoGuan()" @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
         </div>
         <div class="hn-custm-warp">
-          <el-form :model="gjResultForm"  :rules="gjResultFormRules" ref="gjResultForm">
+          <el-form :model="gjResultForm" :show-message="showGJRuleMsg" :rules="gjResultFormRules" ref="gjResultForm">
             <el-form-item prop="gjResult" required>
               <el-input
+                @change="showGJRuleMsg = false"
                 type="textarea"
                 placeholder="请输入跟进结果"
                 v-model="gjResultForm.gjResult"
@@ -65,8 +66,8 @@
               ></el-input>
             </el-form-item>
           </el-form>
-          
-          <el-button @click="confirmGJJG" icon="el-icon-s-promotion" type="primary">提交跟进结果</el-button>
+          <!-- v-if="!isChaoGuan()" -->
+          <el-button v-if="!isChaoGuan()" @click="confirmGJJG" icon="el-icon-s-promotion" type="primary">提交跟进结果</el-button>
         </div>
       </div>
       <div class="hn-custimc-center">
@@ -77,17 +78,18 @@
           </div>
         </div>
         <div class="hn-custm-warp">
-          <el-form :model="gjjhForm"  :rules="gjjhFormRules" ref="gjjhForm">
+          <el-form :model="gjjhForm" :show-message="showGJJHRuleMsg" :rules="gjjhFormRules" ref="gjjhForm">
             <el-form-item prop="nextFollowDate" required>
               <div>
                 <div class="hn-custimcct-text">跟进日期</div>
-                <el-date-picker value-format="yyyy-MM-dd" v-model="gjjhForm.nextFollowDate" type="date" placeholder="请选择下次跟进日期"></el-date-picker>
+                <el-date-picker @change="showGJJHRuleMsg = false" value-format="yyyy-MM-dd" v-model="gjjhForm.nextFollowDate" type="date" placeholder="请选择下次跟进日期"></el-date-picker>
               </div>
             </el-form-item>
             <el-form-item prop="followInfo" required>
               <div>
                 <div class="hn-custimcct-text">计划跟进内容</div>
                 <el-input
+                  @change="showGJJHRuleMsg = false"
                   type="textarea"
                   placeholder="请输入计划跟进内容"
                   v-model="gjjhForm.followInfo"
@@ -97,7 +99,7 @@
               </div>
             </el-form-item>
           </el-form>
-          <el-button @click="confirmGJJH" icon="el-icon-plus" type="primary">提交跟进计划</el-button>
+          <el-button v-if="!isChaoGuan()" @click="confirmGJJH" icon="el-icon-plus" type="primary">提交跟进计划</el-button>
         </div>
       </div>
       <div class="hn-custimc-bottom">
@@ -123,7 +125,7 @@
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间">
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column v-if="!isChaoGuan()" label="操作">
               <template slot-scope="scope">
                 <el-button @click="deleteGJJH(scope.row)" type="text">删除</el-button>
               </template>
@@ -142,7 +144,7 @@
           </div>
         </div>
         <div class="hn-custm-warp">
-          <el-form :model="editCustForm"  :rules="editCustFormRules" ref="editCustForm">
+          <el-form :model="editCustForm" label-width="70px" :show-message="showCustRuleMsg" :rules="editCustFormRules" ref="editCustForm">
             <!-- <div class="hn-fitem-box">
               <el-form-item label="编号：" style="width: 200px;">
                 <el-input style="width: 130px;" v-model="form.name"></el-input>
@@ -152,7 +154,7 @@
               </el-form-item>
             </div> -->
             <el-form-item required prop="customName" label="姓名：">
-              <el-input style="width: 215px;" v-model="editCustForm.customName" placeholder="请输入客户姓名"></el-input>
+              <el-input @change="showCustRuleMsg = false" style="width: 215px;" v-model="editCustForm.customName" placeholder="请输入客户姓名"></el-input>
             </el-form-item>
             <el-form-item required prop="gender" label="性别：">
               <el-select v-model="editCustForm.gender" placeholder="请选择客户性别">
@@ -161,7 +163,7 @@
             </el-form-item>
             
             <el-form-item required prop="customName" label="地区：">
-              <el-input style="width: 215px;" v-model="editCustForm.area" placeholder="请输入客户所在地区"></el-input>
+              <el-input @change="showCustRuleMsg = false" style="width: 215px;" v-model="editCustForm.area" placeholder="请输入客户所在地区"></el-input>
             </el-form-item>
             <el-form-item required prop="customLevel" label="等级：">
               <el-select v-model="editCustForm.customLevel" placeholder="请选择客户等级">
@@ -223,7 +225,7 @@
             <!-- <el-form-item label="备注：">
               <el-input type="textarea" placeholder="请输入备注" v-model="gjResult" maxlength="1024" show-word-limit></el-input>
             </el-form-item> -->
-            <el-form-item>
+            <el-form-item v-if="!isChaoGuan()">
               <el-button type="primary" @click="editCustConfirm" icon="el-icon-check">更新客户信息</el-button>
             </el-form-item>
           </el-form>
@@ -240,19 +242,6 @@ export default {
   components:{paiDanCom},
   data() {
     return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
-      value:"",
-
-
 
       moveCustForm:{
         userId: "",
@@ -263,6 +252,7 @@ export default {
           { required: true, message: '请选择同事', trigger: 'blur' },
         ]
       },
+      showMVRuleMsg:false,
       gjResultForm:{
         gjResult:"",//跟进结果
       },
@@ -271,6 +261,7 @@ export default {
           { required: true, message: '请输入跟进结果', trigger: 'blur' },
         ],
       },
+      showGJRuleMsg:false,//是否显示跟进结果校验文字
       gjjhTable: [],//客户跟进计划表格数据
       currCustomId: "",//当前的客户id
       usStaff:[],//可选择的同事
@@ -287,6 +278,7 @@ export default {
           { required: true, message: '请选择跟进日期', trigger: 'blur' },
         ],
       },
+      showGJJHRuleMsg:false,//跟进计划校验错误信息是否显示
       editCustForm:{
         "area": "",
         "customLevel": "",
@@ -307,6 +299,7 @@ export default {
           { required: true, message: '请选择客户性别', trigger: 'blur' },
         ],
       },
+      showCustRuleMsg:false,
       genderOption:[
         {value:0,label:'女'},
         {value:1,label:'男'},
@@ -344,8 +337,10 @@ export default {
     },
     // 提交跟进结果
     confirmGJJG(){
+      this.showGJRuleMsg = true
       this.$refs.gjResultForm.validate((valid)=>{
         if(valid){
+          this.showGJRuleMsg = false
           this.request('/follow/addFollowResult',{
             "customId": this.currCustomId,
             "info": this.gjResultForm.gjResult
@@ -390,8 +385,10 @@ export default {
     },
     // 提交跟进计划
     confirmGJJH(){
+      this.showGJJHRuleMsg = true
       this.$refs.gjjhForm.validate((valid)=>{
         if(valid){
+          this.showGJJHRuleMsg = false
           this.request('/follow/addPlanFollow',{
             "customId": this.currCustomId,
             "followInfo": this.gjjhForm.followInfo,
@@ -424,8 +421,10 @@ export default {
     },
     // 更新客户信息
     editCustConfirm(){
+      this.showCustRuleMsg = true
       this.$refs.editCustForm.validate((valid)=>{
         if(valid){
+          this.showCustRuleMsg = false
           this.request('/custom/updateCustom',{
             "area": this.editCustForm.area,
             "customLevel": this.editCustForm.customLevel,
@@ -461,6 +460,7 @@ export default {
     // 转移客户提交
     mcDialogConfirm() {
       this.moveCustForm.customId = this.currCustomId
+      this.showMVRuleMsg = true
       this.$refs.moveCustForm.validate((valid) => {
         if (valid) {
           this.request("/custom/transferCustom", this.moveCustForm, 'post', 'form').then((res) => {

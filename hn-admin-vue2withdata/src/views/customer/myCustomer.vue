@@ -176,18 +176,17 @@ export default {
     },
     // 修改、添加客户
     editCustome(type,row){
-      let nrow = JSON.parse(JSON.stringify(row))
       this.showEditCusDialog = true
       this.$nextTick(() => { 
         this.$refs.editCustForm.clearValidate()
       })
       this.editCustDiaTitle = type=='edit'?'编辑客户':'新增客户'
-      type=='edit'?this.editCustForm = nrow:this.resetEditCustForm()
+      type=='edit'?this.editCustForm = this.toJSON(row):this.resetEditCustForm()
     },
 
     // 分页器页码、显示条数改变
     pagingChange(e) {
-      console.log(e)
+      // console.log(e)
       this.tableData._page = e.page
       this.tableData._limit = e.limit
       this.getCustData()

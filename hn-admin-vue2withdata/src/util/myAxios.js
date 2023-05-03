@@ -1,6 +1,10 @@
 import axios from 'axios'
 const urlConfig = require('./config')
 import methods from './methods' 
+import domMessage from './onceMsg'
+
+// new 对象实例
+const messageOnce = new domMessage()
 
 
 const axiosInstance = axios.create({
@@ -39,21 +43,29 @@ axiosInstance.interceptors.response.use((res) => {
   // console.log(res, 'axios')
   if (res.status == 200) { //res第一层是 axios 返回的
     if (res.data.code == -1) {
-      methods.hnMsg(res.data.data.errMsg,'error')
+      messageOnce.warning({
+        message: res.data.data.errMsg,
+        type: 'warning'
+      })
+      // methods.hnMsg(res.data.data.errMsg,'error')
+      if(res.data.data.errCode==20001){
+        setTimeout(() => {
+          methods.loginOut(false)
+        }, 2000);
+      }
     }
-    if(res.data.data.errCode==20001){
-      setTimeout(() => {
-        methods.loginOut(false)
-      }, 2000);
-    }
-
+    
     
     return res.data //res.data是  axios 请求目标接口返回的数据
   } else {
     methods.hnMsg('接口请求失败',res)
   }
 }, (error) => {
-  methods.hnMsg('服务器异常,请求失败','error')
+  messageOnce.warning({
+    message: '服务器异常,请求失败',
+    type: 'error'
+  })
+  // methods.hnMsg('服务器异常,请求失败','error')
   return Promise.reject(error);
 })
 

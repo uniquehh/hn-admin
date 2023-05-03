@@ -38,7 +38,7 @@ export default {
     },
     // 选择的医院
     editAreaChange(val){
-      console.log(val)
+      // console.log(val)
     },
     async getAreaData(){
       // 若本地缓存没有全国区域数据，则请求接口获取
@@ -58,7 +58,7 @@ export default {
     },
     // 获取城市、医院
     async getAreaByParent(val){
-      console.log(val,756)
+      // console.log(val,756)
       
       if(val.length==1){
         this.currProvIndex = this.chinaArea.findIndex(item=>item.id==val[0])
@@ -119,7 +119,7 @@ export default {
         this.selectVals = hids
       }
       
-      console.log(this.selectVals)
+      // console.log(this.selectVals)
       
     },
 

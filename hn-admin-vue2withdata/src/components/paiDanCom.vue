@@ -154,7 +154,7 @@ export default {
     },
     resetPaiDanForm(){
       this.addPaiDanForm.dictId = ""
-      this.addPaiDanForm.followStatus = ""
+      this.addPaiDanForm.followStatus = "暂时不跟进"
       this.addPaiDanForm.hospitalIdList = []
       this.addPaiDanForm.project = ""
     },
@@ -234,7 +234,7 @@ export default {
     // 派单弹窗确认
     paiDanDialogConfirm(){
       this.$refs.addPaiDanForm.validate((valid) => {
-        console.log(this.addPaiDanForm)
+        // console.log(this.addPaiDanForm)
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.addPaiDanForm))
           obj.hospitalIdList = this.selectHospitalIds

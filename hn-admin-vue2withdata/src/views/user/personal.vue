@@ -143,7 +143,7 @@ export default {
         return this.$store.state.personal.showDialog;
       },
       set(v) {
-        console.log(v)
+        // console.log(v)
         this.stSetPsonDialog(v)
       }
     },
@@ -164,7 +164,7 @@ export default {
     },
     // 上传文件成功回调
     handleAvatarSuccess(res, file) {
-      console.log(res,'upload')
+      // console.log(res,'upload')
       // this.imageUrl = URL.createObjectURL(file.raw);
     },
     // 编辑用户弹窗确认

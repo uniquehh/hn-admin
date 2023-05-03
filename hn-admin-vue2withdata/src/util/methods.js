@@ -180,7 +180,7 @@ const methods = {
         }
       }
     })
-    console.log(asideMenus,8080)
+    // console.log(asideMenus,8080)
     // 侧边栏第一个可跳转的有权限的path
     let haspower = asideMenus.find(item=>item.hasPower==true)
     let pt = haspower.child.length>0?haspower.child[0].path:haspower.path

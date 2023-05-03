@@ -336,12 +336,12 @@ export default {
     },
     // 医院选择
     editAreaChange(value) {
-      console.log(value,88888)
+      // console.log(value,88888)
       this.selectHospitalIds = []
       value.forEach(item=>{
         this.selectHospitalIds.push(item[2])
       })
-      console.log(this.selectHospitalIds)
+      // console.log(this.selectHospitalIds)
     },
     // 获取城市下得医院
     getHospitalByCity(){
@@ -353,7 +353,6 @@ export default {
           order:'id DESC'
         },'post').then((res)=>{
           if(res.code==0){
-            console.log(res,55555)
             rs(res.data)
           }else{
             rj(res)
@@ -426,7 +425,6 @@ export default {
     },
     // 分页器页码、显示条数改变
     pagingChange(e) {
-      console.log(e)
       this.paiDanData._page = e.page
       this.paiDanData._limit = e.limit
       this.getPaiDanData()

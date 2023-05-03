@@ -24,19 +24,19 @@
     <div class="hn-power-right">
       <div class="hn-powerr-head">
         <div class="hn-powerrh-text">权限列表</div>
-        <el-button type="primary" @click="setRolePower">保存</el-button>
+        <el-button type="primary" @click="setRolePower" v-if="checkedRoleLevel!=0">保存</el-button>
       </div>
       <div class="hn-powerr-cont">
         <div class="hn-powerrc-item" v-for="(item,index) in menus" :key="item.id">
           <div class="hn-powerrci-parent">
             <div class="hn-mycheck-box" @click="pcheckClick(item.checked,index)">
-              <input :checked="item.checked" class="hn-check-inp" type="checkbox">
+              <input :disabled="checkedRoleLevel==0" :checked="item.checked" class="hn-check-inp" type="checkbox">
               <span class="hn-check-tect">{{ item.menuAlias }}</span>
             </div>
           </div>
           <div class="hn-powerrci-child" v-for="(items,indexs) in item.child" :key="items.id">
             <div class="hn-mycheck-box" @click="ccheckClick(items.checked,index,indexs)">
-              <input :checked="items.checked" class="hn-check-inp" type="checkbox">
+              <input :disabled="checkedRoleLevel==0" :checked="items.checked" class="hn-check-inp" type="checkbox">
               <span class="hn-check-tect">{{ items.menuAlias }}</span>
             </div>
           </div>
@@ -94,7 +94,8 @@ export default {
         { value: 2, label: "小组负责人", roleName: "ROLE_GROUP" },
         { value: 3, label: "普通员工", roleName: "ROLE_EMPLOYEE" },
         { value: 4, label: "医院用户", roleName: "ROLE_HOSPITAL" },
-      ]
+      ],
+      checkedRoleLevel:0,//当前选中的角色等级 0为超管
     }
   },
   mounted() {
@@ -123,7 +124,7 @@ export default {
     // 添加角色
     addRole() {
       this.addRoleForm.roleName = this.roleLevels.find(item=>item.value==this.addRoleForm.roleLevel).roleName
-      console.log(this.addRoleForm)
+      // console.log(this.addRoleForm)
       this.request('/authority/addRole', this.addRoleForm, "post").then((res) => {
         if (res.code == 0) {
           this.showARDialog = false
@@ -170,7 +171,7 @@ export default {
     // 删除角色
     deleteRole(id) {
       this.hnMsgBox().then(() => {
-        console.log(id)
+        // console.log(id)
         this.request('/authority/deleteRole', {
           roleId: id,
         }, 'delete').then((res) => {
@@ -212,7 +213,7 @@ export default {
         this.handleMenus()
         this.checkedRoleId ? this.getRoleMenuIds(this.checkedRoleId) :''
       } catch (error) {
-        console.log(error,"trycatch")
+        // console.log(error,"trycatch")
         this.checkedMenuIds = []
         this.roles = []
         this.menusAll = []
@@ -220,7 +221,7 @@ export default {
     },
     // 回显当前角色拥有的菜单权限
     checkHasPower() {
-      console.log(this.checkedMenuIds,7)
+      // console.log(this.checkedMenuIds,7)
       this.menus.forEach((item) => {
         if (this.checkedMenuIds.find(ids => ids == item.id)) {
           item.checked = true
@@ -239,10 +240,11 @@ export default {
           }
         })
       })
-      console.log(this.menus)
+      // console.log(this.menus)
     },
     // 获取角色菜单id集合
     getRoleMenuIds(id) {
+      this.checkedRoleLevel = this.roles.find(item=>item.id==id).roleLevel
       this.checkedRoleId = id
       this.request('/authority/getRoleMenuIdList', {
         roleId:id
@@ -255,12 +257,14 @@ export default {
     },
     // 根据一级菜单选中状态改变子菜单选中状态
     pcheckClick(check,ind){
+      if(this.checkedRoleLevel==0)return;
       this.menus[ind].checked = !check
       this.menus[ind].child.forEach(items=>items.checked = !check)
       this.getcheckedMenuIds()
     },
     // 根据子菜单选中状态改变父级菜单选中状态
     ccheckClick(check,ind,inds){
+      if(this.checkedRoleLevel==0)return;
       this.menus[ind].child[inds].checked = !check
       this.menus[ind].checked = true
       this.getcheckedMenuIds()
@@ -278,7 +282,7 @@ export default {
       // 将选中的菜单的id数据存储在checkedMenuIds中
       this.checkedMenuIds = []
       allchecked.forEach(item => this.checkedMenuIds.push(Number(item.id)))
-      console.log(this.checkedMenuIds)
+      // console.log(this.checkedMenuIds)
     },
     // 处理菜单数据
     handleMenus(){

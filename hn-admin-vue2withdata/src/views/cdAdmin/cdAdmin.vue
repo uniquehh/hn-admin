@@ -195,7 +195,7 @@ export default {
     },
     // 获取城市、医院
     async getAreaByParent(val){
-      console.log(val,756)
+      // console.log(val,756)
       
       if(val.length==1){
         this.currProvIndex = this.chinaArea.findIndex(item=>item.id==val[0])
@@ -280,13 +280,13 @@ export default {
         this.editCDForm.hospitalId = hids
       }
       
-      console.log(this.editCDForm)
+      // console.log(this.editCDForm)
       
     },
 
     // 分页器页码、显示条数改变
     pagingChange(e) {
-      console.log(e)
+      // console.log(e)
       this.tableData._page = e.page
       this.tableData._limit = e.limit
       this.getCDData()

@@ -129,7 +129,7 @@ export default {
     },
     // 打开编辑/删除字典弹窗
     emitDictRow(scope) {
-      console.log(scope,85)
+      // console.log(scope,85)
       this.currDictId = scope.row.id
       if(scope.row.editType=='edit'){
         this.showDIDialog = true
@@ -181,7 +181,7 @@ export default {
     },
     // 分页器页码、显示条数改变
     pagingChange(e) {
-      console.log(e)
+      // console.log(e)
       this.dictType[this.currDTInd].list._page = e.page
       this.dictType[this.currDTInd].list._limit = e.limit
       this.getDictData()

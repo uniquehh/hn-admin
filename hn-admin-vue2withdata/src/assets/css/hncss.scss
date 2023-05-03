@@ -311,6 +311,10 @@
   min-height: 400px;
   margin-bottom: 10px;
 }
+.hn-gjlog-list{
+  max-height: 480px;
+  overflow-y: auto;
+}
 .hn-custimlt-head{
   padding-bottom: 10px;
   border-bottom: 1px solid #e6e6e6;
@@ -319,12 +323,13 @@
 .hn-custimlth-text{
   margin-left: 10px;
 }
-.hn-gjlog-list{
-  max-height: 480px;
-  overflow-y: auto;
-}
 .hn-custimlt-item{
   padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e6e6e6;
+  &:last-of-type{
+    border-bottom: none;
+  }
 }
 .hn-custimlti-left{
   width: 10px;

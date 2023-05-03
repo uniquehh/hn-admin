@@ -181,7 +181,7 @@ export default {
     },
 
      // 根据省份得citycode获取城市数据
-     async getCityByProv(pccode){
+    async getCityByProv(pccode){
       let temp = this.currCityCodeHistory.find(item=>item==pccode)
       // 若已经获取过该省份下得城市数据，则不再获取
       if(temp)return;

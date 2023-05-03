@@ -7,8 +7,8 @@
           <i class="el-icon-s-order"></i>
           <span class="hn-custimlth-text">跟进记录</span>
         </div>
-        <div class="hn-gjlog-list">
-          <div class="hn-custimlt-item" v-for="(item,index) in gjLog._list">
+        <div class="hn-gjlog-list" v-show="gjLog.length>0">
+          <div class="hn-custimlt-item" v-for="(item,index) in gjLog">
             <div class="hn-custimlti-left"></div>
             <div class="hn-custimlti-right">
               <div class="hn-custimltir-time">{{ item.createTime }}</div>
@@ -22,6 +22,7 @@
             </div>
           </div>
         </div>
+        <el-empty v-show="gjLog.length==0" description="暂无数据"></el-empty>
       </div>
       <div class="hn-custiml-movecut">
         <div class="hn-custimlt-head">
@@ -50,17 +51,21 @@
             <i class="el-icon-s-claim"></i>
             <span class="hn-custimlth-text">跟进结果</span>
           </div>
-          <el-button icon="el-icon-plus" type="primary">派单</el-button>
+          <el-button @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
         </div>
         <div class="hn-custm-warp">
-          <el-input
-            class="hn-custimcmt-inp"
-            type="textarea"
-            placeholder="请输入跟进结果"
-            v-model="gjResult"
-            maxlength="255"
-            show-word-limit
-          ></el-input>
+          <el-form :model="gjResultForm"  :rules="gjResultFormRules" ref="gjResultForm">
+            <el-form-item prop="gjResult" required>
+              <el-input
+                type="textarea"
+                placeholder="请输入跟进结果"
+                v-model="gjResultForm.gjResult"
+                maxlength="255"
+                show-word-limit
+              ></el-input>
+            </el-form-item>
+          </el-form>
+          
           <el-button @click="confirmGJJG" icon="el-icon-s-promotion" type="primary">提交跟进结果</el-button>
         </div>
       </div>
@@ -72,26 +77,27 @@
           </div>
         </div>
         <div class="hn-custm-warp">
-          <div class="hn-custimcc-th">
-            <div class="hn-custimcct-text">跟进日期</div>
-            <!-- <el-date-picker
-              v-model="value"
-              type="datetime"
-              placeholder="请选择下次跟进日期">
-            </el-date-picker> -->
-            <el-date-picker v-model="value" type="date" placeholder="请选择下次跟进日期"></el-date-picker>
-          </div>
-          <div class="hn-custimcc-th">
-            <div class="hn-custimcct-text">计划跟进内容</div>
-            <el-input
-              type="textarea"
-              placeholder="请输入计划跟进内容"
-              v-model="gjResult"
-              maxlength="255"
-              show-word-limit
-            ></el-input>
-          </div>
-          <el-button icon="el-icon-plus" type="primary">提交跟进计划</el-button>
+          <el-form :model="gjjhForm"  :rules="gjjhFormRules" ref="gjjhForm">
+            <el-form-item prop="nextFollowDate" required>
+              <div>
+                <div class="hn-custimcct-text">跟进日期</div>
+                <el-date-picker value-format="yyyy-MM-dd" v-model="gjjhForm.nextFollowDate" type="date" placeholder="请选择下次跟进日期"></el-date-picker>
+              </div>
+            </el-form-item>
+            <el-form-item prop="followInfo" required>
+              <div>
+                <div class="hn-custimcct-text">计划跟进内容</div>
+                <el-input
+                  type="textarea"
+                  placeholder="请输入计划跟进内容"
+                  v-model="gjjhForm.followInfo"
+                  maxlength="255"
+                  show-word-limit
+                ></el-input>
+              </div>
+            </el-form-item>
+          </el-form>
+          <el-button @click="confirmGJJH" icon="el-icon-plus" type="primary">提交跟进计划</el-button>
         </div>
       </div>
       <div class="hn-custimc-bottom">
@@ -100,25 +106,22 @@
             <i class="el-icon-user-solid"></i>
             <span class="hn-custimlth-text">计划跟进任务</span>
           </div>
-          <i class="el-icon-dibudaohanglan-"></i>
+          <!-- <i @click="getGenJinJiHua" class="el-icon-dibudaohanglan-"></i> -->
         </div>
         <div class="hn-custm-warp">
           <!-- <div class="hn-custimcc-th">
             <span style="margin-right: 10px;">是否关闭此客户跟进计划</span>
             <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
           </div> -->
-          <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="dictName" label="计划跟进日期">
+          <el-table :data="gjjhTable" style="width: 100%">
+            <el-table-column label="计划跟进日期">
+              <template slot-scope="scope">
+                <span>{{ scope.row.nextFollowDate.split(' ')[0] }}</span>
+              </template>
             </el-table-column>
-            <el-table-column prop="dictUse" label="计划内容">
-              <!-- <template slot-scope="scope">
-                <span>{{ scope.row.dictUse ? '使用中' : '未使用' }}</span>
-              </template> -->
+            <el-table-column prop="followInfo" label="计划跟进内容">
             </el-table-column>
-            <el-table-column prop="edit" label="创建时间">
-              <!-- <template slot-scope="scope">
-                <el-button type="warning" icon="el-icon-delete">释放客户</el-button>
-              </template> -->
+            <el-table-column prop="createTime" label="创建时间">
             </el-table-column>
           </el-table>
         </div>
@@ -222,12 +225,14 @@
         </div>
       </div>
     </div>
+    <paiDanCom :data="pdDiData" ref="paiDanCom"></paiDanCom>
   </div>
 </template>
 
 <script>
-import { Paging } from '@/util/paging'
+import paiDanCom from '@/components/paiDanCom.vue'
 export default {
+  components:{paiDanCom},
   data() {
     return {
       form: {
@@ -253,14 +258,29 @@ export default {
           { required: true, message: '请选择同事', trigger: 'blur' },
         ]
       },
-      gjResult:"",//跟进结果
-      tableData: [],//客户跟进任务表格
+      gjResultForm:{
+        gjResult:"",//跟进结果
+      },
+      gjResultFormRules:{
+        gjResult:[
+          { required: true, message: '请输入跟进结果', trigger: 'blur' },
+        ],
+      },
+      gjjhTable: [],//客户跟进计划表格数据
       currCustomId: "",//当前的客户id
       usStaff:[],//可选择的同事
 
       gjjhForm:{
         "followInfo": "",
         "nextFollowDate": ""
+      },
+      gjjhFormRules:{
+        followInfo:[
+          { required: true, message: '请输入计划跟进内容', trigger: 'blur' },
+        ],
+        nextFollowDate:[
+          { required: true, message: '请选择跟进日期', trigger: 'blur' },
+        ],
       },
       editCustForm:{
         "area": "",
@@ -293,42 +313,96 @@ export default {
         {value:'C',label:'C'},
         {value:'D',label:'D'}
       ],
-      gjLog:new Paging('/follow/getFollowResultList', { order:"id DESC" },'post'),
+      gjLog:[],
+      pdDiData:{ //传给派单弹窗的客户信息
+        "customName": "",
+        "gender": 0,
+        "phone": "",
+      },
     }
   },
   async created() {
     this.currCustomId = localStorage.getItem('customId')
-    
     // console.log(this.currCustomId)
     this.usStaff = await this.getUsableStaff() //可选择的同事
     this.getCustData()
     this.getGenJinLog()
+    this.getGenJinJiHua()
   },
   mounted() {
 
   },
   methods: {
+    // 打开派单弹窗
+    openPaiDan(){
+      this.$refs.paiDanCom.open()
+    },
     // 提交跟进结果
     confirmGJJG(){
-      this.request('/follow/addFollowResult',{
-        "customId": this.currCustomId,
-        "info": this.gjResult
-      },'post').then(res=>{
-        if(res.code==0){
-          this.getGenJinLog()
-          this.gjResult = ''
-          this.hnMsg()
+      this.$refs.gjResultForm.validate((valid)=>{
+        if(valid){
+          this.request('/follow/addFollowResult',{
+            "customId": this.currCustomId,
+            "info": this.gjResultForm.gjResult
+          },'post').then(res=>{
+            if(res.code==0){
+              this.getGenJinLog()
+              this.gjResultForm.gjResult = ''
+              this.$nextTick(()=>{
+                this.$refs.gjResultForm.clearValidate()
+              })
+              this.hnMsg()
+            }
+          })
+        }else{
+          return false
         }
       })
+      
     },
     // 获取跟进记录
     getGenJinLog(){
-      this.gjLog._params.customId = this.currCustomId
-      this.gjLog.exec()
+      this.request('/follow/getFollowResultList',{
+        customId:this.currCustomId
+      },'get','form').then(res=>{
+        if(res.code==0){
+          this.gjLog = res.data
+        }
+      })
     },
     // 提交跟进计划
     confirmGJJH(){
-      this.request('/follow/addPlanFollow',{},'post')
+      this.$refs.gjjhForm.validate((valid)=>{
+        if(valid){
+          this.request('/follow/addPlanFollow',{
+            "customId": this.currCustomId,
+            "followInfo": this.gjjhForm.followInfo,
+            "nextFollowDate": this.gjjhForm.nextFollowDate
+          },'post').then(res=>{
+            if(res.code==0){
+              this.getGenJinJiHua()
+              this.gjjhForm.followInfo = ''
+              this.gjjhForm.nextFollowDate = ''
+              this.$nextTick(()=>{
+                this.$refs.gjjhForm.clearValidate()
+              })
+              this.hnMsg()
+            }
+          })
+        }else{
+          return false
+        }
+      })
+    },
+    // 获取跟进计划列表
+    getGenJinJiHua(){
+      this.request('/follow/getPlanFollowList',{
+        customId:this.currCustomId
+      },'get','form').then(res=>{
+        if(res.code==0){
+          this.gjjhTable = res.data
+        }
+      })
     },
     // 更新客户信息
     editCustConfirm(){
@@ -359,6 +433,10 @@ export default {
       }).then(res=>{
         if(res.code==0){
           this.editCustForm = res.data
+          this.pdDiData.customName = res.data.customName
+          this.pdDiData.gender = res.data.gender
+          this.pdDiData.phone = res.data.phone
+          // console.log(this.pdDiData)
         }
       })
     },

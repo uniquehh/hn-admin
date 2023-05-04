@@ -9,17 +9,17 @@
     </div>
     <div class="hn-head-right">
       <div class="hn-avatar-icons">
-        <!-- <i class="el-icon-suoping" style="font-size: 18px;margin-right: 15px;" /> -->
-        <!-- <i class="el-icon-yifu" style="font-size: 18px;margin-right: 15px;" /> -->
-        <!-- <i class="el-icon-bell" style="font-size: 18px;margin-right: 15px;" /> -->
-        <i :class="fullscreen ? 'el-icon-quxiaoquanping' : 'el-icon-quanping'" @click="handleFullScreen" style="font-size: 18px;margin-right: 15px;" />
+        <!-- <i class="el-icon-suoping" /> -->
+        <!-- <i class="el-icon-yifu" /> -->
+        <!-- <i class="el-icon-bell" /> -->
+        <i class="hn-ava-icon hn-mrr15" :class="fullscreen ? 'el-icon-quxiaoquanping' : 'el-icon-quanping'" @click="handleFullScreen" />
       </div>
       <div class="hn-avatar-wrapper" @click="hnRouterPush('/personal')">
         <img class="hn-user-avatar" :src="userInfo.headImg? userInfo.headImg :require('../assets/img/defAvatar.png')">
         <div class="hn-user-name">{{ userInfo.realName }}</div>
       </div>
       <el-dropdown class="hn-avatar-box" trigger="click">
-        <i class="el-icon-arrow-down" />
+        <i class="el-icon-arrow-down hn-ava-icon" />
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item @click.native="hnRouterPush('/personal')">个人中心</el-dropdown-item>
           <el-dropdown-item divided @click.native="stSetPsonDialog(true)" v-show="$route.name == 'personal'">
@@ -105,7 +105,17 @@ export default {
   cursor: pointer;
   margin-right: 20px;
   font-size: 0;
+  
 }
+.hn-head-right {
+  .hn-mrr15{
+    margin-right: 15px;
+  }
+  ::v-deep .hn-ava-icon{
+    font-size: 18px;
+  }
+}
+  
 .hn-user-avatar{
   width: 30px;
   height: 30px;

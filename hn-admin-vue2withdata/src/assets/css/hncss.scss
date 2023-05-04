@@ -18,7 +18,7 @@
   padding: 10px;
   border-radius: 5px;
   flex: 1 1 auto;
-  min-width: 800px;
+  // min-width: 800px;
 }
 .hn-powerr-head{
   display: flex;
@@ -301,7 +301,7 @@
   height: 100%;
 }
 .hn-custim-left{
-  width: 460px;
+  width: 600px;
   flex-shrink: 0;
   margin-right: 10px;
 }
@@ -367,7 +367,7 @@
 }
 
 .hn-custim-center{
-  width: 600px;
+  width: 650px;
   flex-shrink: 0;
   margin-right: 10px;
 }
@@ -409,12 +409,16 @@
 }
 
 .hn-custim-right{
-  width: 460px;
+  width: 740px;
   flex-shrink: 0;
 }
 .hn-custimr-main{
   background-color: white;
   padding: 20px;
+}
+
+.hn-custm-warp .hn-custmw-inp{
+  width: 220px;
 }
 
 // 接单中心样式
@@ -537,17 +541,17 @@
 }
 
 .hn-jdzxmm-left{
-  width: 500px;
+  width: 635px;
   margin-right: 10px;
   flex-shrink: 0;
 }
 .hn-jdzxmm-center{
   margin-right: 10px;
-  width: 700px;
+  width: 900px;
   flex-shrink: 0;
 }
 .hn-jdzxmm-right{
-  width: 460px;
+  width: 500px;
   flex-shrink: 0;
 }
 

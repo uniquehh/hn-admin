@@ -58,7 +58,6 @@ export default {
 <style lang="scss" scoped>
 .hn-topnav-menus{
   background-color: white;
-  min-width: 800px;
   border-top: 1px solid #e6e6e6;
   border-bottom: 1px solid #e6e6e6;
 }

@@ -103,8 +103,8 @@
                     <span>{{ scope.row.whetherTransfer?'是':'否' }}</span>
                   </template>
                 </el-table-column>
-                <!-- <el-table-column prop="customLevel" label="客户等级">
-                </el-table-column> -->
+                <el-table-column prop="customLevel" label="客户等级">
+                </el-table-column>
                 <!-- <el-table-column prop="area" label="所在地区">
                 </el-table-column> -->
                 <!-- <el-table-column prop="gainDate" label="获取日期">

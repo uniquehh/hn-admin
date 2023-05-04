@@ -7,6 +7,7 @@ import myDirective from './util/myDirective.js'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/iconfont/iconfont.css'
 import methods from '@/util/methods'
+import 'lib-flexible/flexible.js'
 // md5加密
 import md5 from 'js-md5';
 //挂载到vue上

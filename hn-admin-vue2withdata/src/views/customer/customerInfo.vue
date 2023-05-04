@@ -8,7 +8,7 @@
           <span class="hn-custimlth-text">跟进记录</span>
         </div>
         <div class="hn-gjlog-list" v-show="gjLog.length>0">
-          <div class="hn-custimlt-item" v-for="(item,index) in gjLog">
+          <div class="hn-custimlt-item" v-for="(item,index) in gjLog" :key="index">
             <div class="hn-custimlti-left"></div>
             <div class="hn-custimlti-right">
               <div class="hn-custimltir-time">{{ item.createTime }}</div>
@@ -154,19 +154,19 @@
               </el-form-item>
             </div> -->
             <el-form-item required prop="customName" label="姓名：">
-              <el-input @change="showCustRuleMsg = false" style="width: 215px;" v-model="editCustForm.customName" placeholder="请输入客户姓名"></el-input>
+              <el-input class="hn-custmw-inp" @change="showCustRuleMsg = false" v-model="editCustForm.customName" placeholder="请输入客户姓名"></el-input>
             </el-form-item>
             <el-form-item required prop="gender" label="性别：">
-              <el-select v-model="editCustForm.gender" placeholder="请选择客户性别">
+              <el-select class="hn-custmw-inp" v-model="editCustForm.gender" placeholder="请选择客户性别">
                 <el-option v-for="(item) in genderOption" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             
             <el-form-item required prop="customName" label="地区：">
-              <el-input @change="showCustRuleMsg = false" style="width: 215px;" v-model="editCustForm.area" placeholder="请输入客户所在地区"></el-input>
+              <el-input class="hn-custmw-inp" @change="showCustRuleMsg = false" v-model="editCustForm.area" placeholder="请输入客户所在地区"></el-input>
             </el-form-item>
             <el-form-item required prop="customLevel" label="等级：">
-              <el-select v-model="editCustForm.customLevel" placeholder="请选择客户等级">
+              <el-select class="hn-custmw-inp" v-model="editCustForm.customLevel" placeholder="请选择客户等级">
                 <el-option v-for="(item) in customLevelOp" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>

@@ -32,7 +32,7 @@ export default {
     this.getAreaData()
   },
   methods: {
-    // 点击组件时父组件需要调用open方法
+    // 打开该组件时父组件需要调用open方法
     open(type,row){
       type=='edit'?this.editCDHXForm(row):this.selectVals=[]
     },
@@ -90,7 +90,7 @@ export default {
       })
     },
     async editCDHXForm(row){
-      // 若历已点击过就该，代表该医院数据已存在，不需要重新获取
+      // 若已点击过，代表该医院数据已存在，不需要重新获取
       // console.log(this.historyEditYYIds)
       if(!this.historyEditYYIds.includes(row.id)){
         this.historyEditYYIds.push(row.id)

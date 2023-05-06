@@ -613,13 +613,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// .hn-power-left{
-//   width: 46%;
-//   overflow: hidden;
-// }
-// .hn-power-right{
-//   overflow: hidden;
-//   width: 54%;
-// }
 
 </style>

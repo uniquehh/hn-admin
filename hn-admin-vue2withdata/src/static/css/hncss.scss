@@ -102,13 +102,15 @@
   display: flex;
   height: 100%;
   .hn-power-left {
-    width: 600px;
+    width: 46%;
     box-sizing: border-box;
     padding: 15px 20px;
   }
   .hn-power-right {
     box-sizing: border-box;
     padding: 15px 20px;
+    // flex: 1;
+    width: 54%;
   }
 }
 .hn-yiyml-head{

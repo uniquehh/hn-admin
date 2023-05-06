@@ -4,7 +4,7 @@
       <!-- <img src="../assets/img/defAvatar.png" alt=""> -->
       <span v-show="!isCollapse">后台管理系统</span>
     </div>
-    <div class="hn-menus-box">
+    <div class="hn-menus-box" style="margin-right: -17px;">
       <el-menu
         class="new-el-menu--sidebar"
         :default-active="current"
@@ -86,7 +86,7 @@ export default {
   height: 30px;
 }
 .hn-menus-box{
-  margin-right: -20px;
+  /* margin-right: -24px; */
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: calc(100vh - 60px);

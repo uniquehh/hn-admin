@@ -21,8 +21,6 @@
             type="selection"
             width="55">
           </el-table-column>
-          <el-table-column prop="loginName" label="账号">
-          </el-table-column>
           <el-table-column prop="phone" label="手机号">
           </el-table-column>
           <el-table-column prop="realName" label="真实姓名">
@@ -75,12 +73,12 @@
           <el-form-item label="真实姓名" prop="realName" required>
             <el-input v-model="editUserForm.realName" placeholder="请输入真实姓名" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="登录账号" prop="loginName" required>
-            <el-input v-model="editUserForm.loginName" placeholder="请输入登录账号" autocomplete="off"></el-input>
+          <el-form-item label="电话号码" prop="phone" required>
+            <el-input v-model="editUserForm.phone" placeholder="请输入电话号码" autocomplete="off"></el-input>
           </el-form-item>
         </div>
         
-        <div class="hn-fitem-box">
+        <!-- <div class="hn-fitem-box">
           <el-form-item label="年龄" prop="age">
             <el-input v-model="editUserForm.age" type="number" placeholder="请输入年龄" autocomplete="off"></el-input>
           </el-form-item>
@@ -89,26 +87,22 @@
               <el-option v-for="(sex) in sexOption" :key="sex.value" :label="sex.label" :value="sex.value"></el-option>
             </el-select>
           </el-form-item>
-        </div>
+        </div> -->
         
         <div class="hn-fitem-box">
-          <el-form-item label="电话号码" prop="phone" required>
-            <el-input v-model="editUserForm.phone" placeholder="请输入电话号码" autocomplete="off"></el-input>
-          </el-form-item>
+          
           <el-form-item label="所属角色" prop="roleId" required>
             <el-select v-model="editUserForm.roleId" placeholder="请选择所属角色">
               <el-option v-for="(role) in roles" :key="role.id" :label="role.roleAlias" :value="role.id"></el-option>
             </el-select>
           </el-form-item>
-        </div>
-        
-        <div class="hn-fitem-box">
           <el-form-item label="所属小组" prop="roleId" required>
             <el-select v-model="editUserForm.groupId" placeholder="请选择所属小组">
               <el-option v-for="(item) in groupData._list" :key="item.id" :label="item.groupName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
         </div>
+        
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button  @click="showEUDialog = false">取 消</el-button>
@@ -125,21 +119,17 @@ export default {
     return {
       list: new Paging('/user/getUserPage', { searchValue: "",order:"id DESC" },'post'),
       editUserForm:{
-        "age": "",
-        "loginName": "",
-        groupId:"",
+        // "age": "",
+        "groupId":"",
         "phone": "",
         "realName": "",
         "roleId": "",
-        "sex": 0
+        // "sex": 0
       },
       groupData: new Paging('/group/getGroupPage', { order:"id DESC" },'post'),
       editUserFormRules: {
         realName: [
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
-        ],
-        loginName: [
-          { required: true, message: '请选择登录账号', trigger: 'blur' },
         ],
         roleId: [
           { required: true, message: '请选择所属角色', trigger: 'blur' },
@@ -148,7 +138,7 @@ export default {
           { required: true, message: '请选择所属小组', trigger: 'blur' },
         ],
         phone: [
-          { required: true, message: '请输入电话号码', trigger: 'blur' },
+          { required: true, validator:this.validatePhone, trigger: 'blur' },
         ],
       },
       editDilogTitle:"",
@@ -271,12 +261,12 @@ export default {
     // 重置弹窗表单
     resetUserForm(){
       this.editUserForm = {
-        "age": "",
-        "loginName": "",
+        // "age": "",
         "phone": "",
+        "groupId":"",
         "realName": "",
         "roleId": "",
-        "sex": 0
+        // "sex": 0
       }
     },
     // 打开弹窗

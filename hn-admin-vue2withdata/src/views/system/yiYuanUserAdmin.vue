@@ -58,8 +58,6 @@
       </div>
       <div class="hn-yiymr-table">
         <el-table :data="yyUList._list" style="width: 100%">
-          <el-table-column prop="loginName" label="登录账号">
-          </el-table-column>
           <el-table-column prop="phone" label="手机号">
           </el-table-column>
           <el-table-column prop="realName" label="真实姓名">
@@ -145,12 +143,12 @@
           <el-form-item label="真实姓名" prop="realName" required>
             <el-input v-model="editUserForm.realName" placeholder="请输入真实姓名" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="登录账号" prop="loginName" required>
-            <el-input v-model="editUserForm.loginName" placeholder="请输入登录账号" autocomplete="off"></el-input>
+          <el-form-item label="电话号码" prop="phone" required>
+            <el-input v-model="editUserForm.phone" placeholder="请输入电话号码" autocomplete="off"></el-input>
           </el-form-item>
         </div>
         
-        <div class="hn-fitem-box">
+        <!-- <div class="hn-fitem-box">
           <el-form-item label="年龄" prop="age">
             <el-input v-model="editUserForm.age" type="number" placeholder="请输入年龄" autocomplete="off"></el-input>
           </el-form-item>
@@ -159,12 +157,9 @@
               <el-option v-for="(sex) in sexOption" :key="sex.value" :label="sex.label" :value="sex.value"></el-option>
             </el-select>
           </el-form-item>
-        </div>
+        </div> -->
         
         <div class="hn-fitem-box">
-          <el-form-item label="电话号码" prop="phone" required>
-            <el-input v-model="editUserForm.phone" placeholder="请输入电话号码" autocomplete="off"></el-input>
-          </el-form-item>
           <el-form-item label="所属角色" prop="roleId" required>
             <el-select v-model="editUserForm.roleId" placeholder="请选择所属角色">
               <el-option v-for="(item) in roles" :key="item.id" :label="item.roleAlias" :value="item.id"></el-option>
@@ -185,6 +180,16 @@
 import { Paging } from '@/util/paging'
 export default {
   data() {
+    // var validatePhone = (rule, value, callback) => {
+    //   let zzrule = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+    //   if (value === '') {
+    //     callback(new Error('请输入电话号码'));
+    //   } else if (!zzrule.test(value)) {
+    //     callback(new Error('号码格式错误'));
+    //   } else {
+    //     callback();
+    //   }
+    // };
     return {
       searchArea:"",
       areaProps:{
@@ -226,25 +231,21 @@ export default {
       },
 
       editUserForm:{ //新增修改用户的表单
-        "age": "",
-        "loginName": "",
+        // "age": "",
         "phone": "",
         "realName": "",
         "roleId": "",
-        "sex": 0
+        // "sex": 0
       },
       editUserFormRules: {
         realName: [
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
         ],
-        loginName: [
-          { required: true, message: '请选择登录账号', trigger: 'blur' },
-        ],
         roleId: [
           { required: true, message: '请选择所属角色', trigger: 'blur' },
         ],
         phone: [
-          { required: true, message: '请输入电话号码', trigger: 'blur' },
+          { required: true, validator:this.validatePhone, trigger: 'blur' },
         ],
       },
       sexOption:[
@@ -333,12 +334,11 @@ export default {
     // 重置弹窗表单
     resetUserForm(){
       this.editUserForm = {
-        "age": "",
-        "loginName": "",
+        // "age": "",
         "phone": "",
         "realName": "",
         "roleId": "",
-        "sex": 0
+        // "sex": 0
       }
     },
     // 新增用户

@@ -2,9 +2,8 @@
   <div class="hn-staff-main">
     <div class="hn-power-right">
       <div class="hn-yiymr-head">
-        <!-- <div class="hn-yiymrh-text">xxx公司</div> -->
         <div class="hn-yiymrh-shbox">
-          <el-input prefix-icon="el-icon-search" @keyup.enter.native="inputSearch" v-model="list._params.searchValue" placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
+          <el-input prefix-icon="el-icon-search" @keyup.enter.native="inputSearch" v-model="list._params.searchValue" placeholder="姓名、电话号码" class="hn-yiymrh-search"></el-input>
           <el-button @click="resetSearch">重置</el-button>
           <el-button icon="el-icon-search" @click="inputSearch" type="primary">搜索</el-button>
         </div>
@@ -25,11 +24,6 @@
           </el-table-column>
           <el-table-column prop="realName" label="真实姓名">
           </el-table-column>
-          <el-table-column label="性别">
-            <template slot-scope="scope">
-              <span>{{ scope.row.sex==0?'女':scope.row.sex==1?'男':'保密' }}</span>
-            </template>
-          </el-table-column>
           <el-table-column label="角色权限">
             <template slot-scope="scope">
               <span v-if="scope.row.roleVo">{{ scope.row.roleVo.roleAlias }}</span>
@@ -42,17 +36,10 @@
               <el-switch :value="scope.row.userBlock" @change="handLoginStatus(scope.row)"></el-switch>
             </template>
           </el-table-column>
-          <el-table-column label="禁止接单">
-            <template slot-scope="scope">
-              <el-switch :value="scope.row.whetherReceive"></el-switch>
-            </template>
-          </el-table-column>
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <el-button type="text" @click="deleteUser(scope.row.id)" style="color: red;">删除</el-button>
               <el-button type="text" @click="opUserDialog('edit',scope.row)">修改</el-button>
-              <el-button type="text" @click="resetUserPass(scope.row)">重置密码</el-button>
-              <!-- <el-button type="text">关联公司</el-button> -->
             </template>
           </el-table-column>
         </el-table>
@@ -74,7 +61,17 @@
             <el-input v-model="editUserForm.realName" placeholder="请输入真实姓名" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="电话号码" prop="phone" required>
-            <el-input v-model="editUserForm.phone" placeholder="请输入电话号码" autocomplete="off"></el-input>
+            <el-input v-model="editUserForm.phone" :maxlength="11" placeholder="请输入电话号码" autocomplete="off"></el-input>
+          </el-form-item>
+        </div>
+        <div class="hn-fitem-box">
+          <el-form-item label="登录密码" prop="password" required>
+            <el-input placeholder="请输入密码" v-model="editUserForm.password" show-password type="password" />
+          </el-form-item>
+          <el-form-item label="所属角色" prop="roleId" required>
+            <el-select v-model="editUserForm.roleId" placeholder="请选择所属角色">
+              <el-option v-for="(role) in roles" :key="role.id" :label="role.roleAlias" :value="role.id"></el-option>
+            </el-select>
           </el-form-item>
         </div>
         
@@ -90,12 +87,6 @@
         </div> -->
         
         <div class="hn-fitem-box">
-          
-          <el-form-item label="所属角色" prop="roleId" required>
-            <el-select v-model="editUserForm.roleId" placeholder="请选择所属角色">
-              <el-option v-for="(role) in roles" :key="role.id" :label="role.roleAlias" :value="role.id"></el-option>
-            </el-select>
-          </el-form-item>
           <el-form-item label="所属小组" prop="roleId" required>
             <el-select v-model="editUserForm.groupId" placeholder="请选择所属小组">
               <el-option v-for="(item) in groupData._list" :key="item.id" :label="item.groupName" :value="item.id"></el-option>
@@ -119,12 +110,11 @@ export default {
     return {
       list: new Paging('/user/getUserPage', { searchValue: "",order:"id DESC" },'post'),
       editUserForm:{
-        // "age": "",
-        "groupId":"",
+        "groupId": "",
+        "password": "",
         "phone": "",
         "realName": "",
-        "roleId": "",
-        // "sex": 0
+        "roleId": ""
       },
       groupData: new Paging('/group/getGroupPage', { order:"id DESC" },'post'),
       editUserFormRules: {
@@ -139,6 +129,9 @@ export default {
         ],
         phone: [
           { required: true, validator:this.validatePhone, trigger: 'blur' },
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
         ],
       },
       editDilogTitle:"",
@@ -184,19 +177,6 @@ export default {
     getGroupData() {
       this.groupData._limit = 200
       this.groupData.exec()
-    },
-    // 重置用户密码
-    resetUserPass(row){
-      this.currUserId = row.id
-      this.hnMsgBox("您确定要执行此操作吗？").then(()=>{
-        this.request("/user/resetPassword",{
-          userId:row.id
-        },'put','form').then((res)=>{
-          if(res.code==0){
-            this.hnMsg()
-          }
-        })
-      })
     },
     // 是否禁止登录
     handLoginStatus(row){
@@ -261,12 +241,11 @@ export default {
     // 重置弹窗表单
     resetUserForm(){
       this.editUserForm = {
-        // "age": "",
+        "groupId": "",
+        "password": "",
         "phone": "",
-        "groupId":"",
         "realName": "",
-        "roleId": "",
-        // "sex": 0
+        "roleId": ""
       }
     },
     // 打开弹窗

@@ -350,9 +350,8 @@ export default {
         this.currUserId = row.id
         this.editDilogTitle = "修改用户"
         // console.log(row)
-        let nroleId = row.roleVo?row.roleVo.id:''
         this.editUserForm = JSON.parse(JSON.stringify(row))
-        this.editUserForm.roleId = nroleId
+        this.editUserForm.roleId = row.roleId
       }else{ // 新增
         this.editDilogTitle = "新增用户"
         this.resetUserForm()

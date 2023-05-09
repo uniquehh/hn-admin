@@ -75,7 +75,11 @@ export default {
   },
   async created() {
     this.getCustData()
-    this.usStaff = await this.getUsableStaff() //可选择的同事
+    try {
+      this.usStaff = await this.getUsableStaff() //可选择的同事
+    } catch (error) {
+      // console.log(this.usStaff)
+    }
   },
   methods: {
     // 转移客户弹窗确认

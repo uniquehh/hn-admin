@@ -57,28 +57,13 @@
       </div>
       <div class="hn-yiymr-table">
         <el-table :data="yyUList._list" style="width: 100%">
-          <el-table-column prop="phone" label="手机号">
+          <el-table-column prop="realName" label="登录账号">
           </el-table-column>
-          <el-table-column prop="realName" label="真实姓名">
-          </el-table-column>
-          <el-table-column label="性别">
-            <template slot-scope="scope">
-              <span>{{ scope.row.sex==0?'女':scope.row.sex==1?'男':'保密' }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="角色权限">
-            <template slot-scope="scope">
-              <span v-if="scope.row.roleVo">{{ scope.row.roleVo.roleAlias }}</span>
-            </template>
+          <el-table-column prop="roleName" label="角色权限">
           </el-table-column>
           <el-table-column label="禁止登录">
             <template slot-scope="scope">
               <el-switch :value="scope.row.userBlock" @change="handLoginStatus(scope.row)"></el-switch>
-            </template>
-          </el-table-column>
-          <el-table-column label="禁止接单">
-            <template slot-scope="scope">
-              <el-switch :value="scope.row.whetherReceive"></el-switch>
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center" width="200">

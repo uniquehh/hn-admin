@@ -305,6 +305,7 @@ export default {
     },
     // 新增用户
     addUser(){
+      this.editUserForm.password = this.$md5(this.editUserForm.password)
       this.request("/hospital/saveHospitalUser",{
         ...this.editUserForm,
         hospitalId:this.currYYId,
@@ -317,6 +318,7 @@ export default {
     },
     // 修改用户
     editUser(){
+      this.editUserForm.password = this.$md5(this.editUserForm.password)
       this.request("/hospital/updateHospitalUser",{
         ...this.editUserForm,
         id:this.currUserId,

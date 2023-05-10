@@ -219,6 +219,7 @@ export default {
     },
     // 新增用户
     addUser(){
+      this.editUserForm.password = this.$md5(this.editUserForm.password)
       this.request("/user/addUser",this.editUserForm,"post").then((res)=>{
         if(res.code==0){
           this.getUserListData()
@@ -228,6 +229,7 @@ export default {
     },
     // 修改用户
     editUser(){
+      this.editUserForm.password = this.$md5(this.editUserForm.password)
       this.request("/user/updateUser",{
         ...this.editUserForm,
         id:this.currUserId

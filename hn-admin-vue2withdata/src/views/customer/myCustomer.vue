@@ -95,7 +95,6 @@
           </el-form-item>
         </div>
         
-        
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showEditCusDialog = false">取 消</el-button>
@@ -219,6 +218,7 @@ export default {
               if(res.code==0){
                 this.getCustData()
                 this.hnMsg()
+                this.showEditCusDialog = false
               }
             })
           }else{
@@ -227,15 +227,15 @@ export default {
               "customLevel": this.editCustForm.customLevel,
               "customName": this.editCustForm.customName,
               "gender": this.editCustForm.gender,
-              "id": this.editCustForm.id
+              "id": this.editCustForm.id,
             },'put').then(res=>{
               if(res.code==0){
                 this.getCustData()
                 this.hnMsg()
+                this.showEditCusDialog = false
               }
             })
           }
-          this.showEditCusDialog = false
           
         }else{
           return false

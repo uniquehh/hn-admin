@@ -108,8 +108,8 @@
             >
             </el-cascader>
           </el-form-item>
-          <el-form-item prop="order" label="医院排序">
-            <el-input-number class="hn-yygl-numinp" v-model="eYYForm.order" controls-position="right" :min="1"></el-input-number>
+          <el-form-item prop="hosOrder" label="医院排序">
+            <el-input-number class="hn-yygl-numinp" v-model="eYYForm.hosOrder" controls-position="right" :min="1"></el-input-number>
           </el-form-item>
         </div>
 
@@ -195,7 +195,7 @@ export default {
         "name": "",
         "province": "",
         "type":"",
-        "order":1
+        "hosOrder":1
       },
       eYYFormRules: {
         name: [
@@ -204,7 +204,7 @@ export default {
         cityCode: [
           { required: true, message: '请选择行政区域', trigger: 'blur' },
         ],
-        order: [
+        hosOrder: [
           { required: true, message: '请输入医院排序', trigger: 'blur' },
         ],
       },
@@ -313,6 +313,7 @@ export default {
         if(res.code==0){
           this.getUserListByYY()
           this.hnMsg()
+          this.showEUDialog = false
         }
       })
     },
@@ -327,6 +328,7 @@ export default {
         if(res.code==0){
           this.getUserListByYY()
           this.hnMsg()
+          this.showEUDialog = false
         }
       })
     },
@@ -335,7 +337,6 @@ export default {
       this.$refs.editUserForm.validate((valid) => {
         if (valid) {
           this.editDilogTitle == "新增用户"?this.addUser():this.editUser()
-          this.showEUDialog = false
         } else {
           return false;
         }
@@ -368,7 +369,7 @@ export default {
         "name": "",
         "province": "",
         "type":"",
-        "order":1
+        "hosOrder":1
       }
     },
     // 新增医院
@@ -379,7 +380,7 @@ export default {
         "province": this.eYYForm.province,
         "city": this.eYYForm.city,
         "type": this.eYYForm.type,
-        "order": this.eYYForm.order,
+        "hosOrder": this.eYYForm.hosOrder,
       },'post').then((res)=>{
         if(res.code==0){
           this.getYYTableData()
@@ -426,7 +427,7 @@ export default {
         "province": this.eYYForm.province,
         "city": this.eYYForm.city,
         "type": this.eYYForm.type,
-        "order": this.eYYForm.order,
+        "hosOrder": this.eYYForm.hosOrder,
       },'put').then((res)=>{
         if(res.code==0){
           this.getYYTableData()

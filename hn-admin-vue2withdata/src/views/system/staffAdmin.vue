@@ -224,6 +224,7 @@ export default {
         if(res.code==0){
           this.getUserListData()
           this.hnMsg()
+          this.showEUDialog = false
         }
       })
     },
@@ -237,6 +238,7 @@ export default {
         if(res.code==0){
           this.getUserListData()
           this.hnMsg()
+          this.showEUDialog = false
         }
       })
     },
@@ -273,7 +275,6 @@ export default {
       this.$refs.editUserForm.validate((valid) => {
         if (valid) {
           this.editDilogTitle == "新增用户"?this.addUser():this.editUser()
-          this.showEUDialog = false
         } else {
           return false;
         }

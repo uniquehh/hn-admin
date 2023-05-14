@@ -110,7 +110,7 @@ export default {
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
         ],
         phone: [
-          { required: true, message: '请输入电话号码', trigger: 'blur' },
+          { required: true, validator:this.validatePhone, trigger: 'blur' },
         ],
       },
       sexOption: [

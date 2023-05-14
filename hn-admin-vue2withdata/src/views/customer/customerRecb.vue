@@ -15,7 +15,7 @@
           <span>{{ scope.row.gender==0?'女':scope.row.gender==1?'男':'未知' }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="客户电话(必填)">
+      <el-table-column prop="phone" label="客户电话">
       </el-table-column>
       <el-table-column prop="customLevel" label="客户等级">
       </el-table-column>

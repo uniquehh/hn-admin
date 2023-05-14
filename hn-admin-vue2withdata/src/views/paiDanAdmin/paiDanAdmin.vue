@@ -59,18 +59,25 @@
       </div>
     </div>
     <el-table :data="paiDanData._list" style="width: 100%">
+      <el-table-column prop="hospitalName" label="医院">
+      </el-table-column>
+      <el-table-column prop="phone" label="客户电话">
+      </el-table-column>
       <el-table-column prop="customName" label="客户名称">
+      </el-table-column>
+      <el-table-column prop="project" label="项目">
       </el-table-column>
       <el-table-column label="客户性别">
         <template slot-scope="scope">
           <span>{{ scope.row.gender==0?'女':scope.row.gender==1?'男':'未知' }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="客户电话">
-      </el-table-column>
-      <el-table-column prop="project" label="项目">
-      </el-table-column>
       <el-table-column prop="userName" label="派单人">
+      </el-table-column>
+      <el-table-column prop="status" label="医院反馈">
+        <template slot-scope="scope">
+          <span>{{ yyStatusDict(scope.row.status) }}</span>
+        </template>
       </el-table-column>
       <el-table-column prop="dictName" label="客户来源">
       </el-table-column>
@@ -78,11 +85,11 @@
       </el-table-column>
       <el-table-column prop="followStatus" label="跟进状态">
       </el-table-column>
-      <el-table-column prop="edit" label="操作">
+      <!-- <el-table-column prop="edit" label="操作">
         <template slot-scope="scope">
           <el-button type="text" @click="getPaiDanRow(scope)">详情</el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <!-- 分页器 -->
     <pagination v-show="paiDanData._total>0" :total="paiDanData._total" 
@@ -148,15 +155,15 @@
         <el-button  type="primary" @click="paiDanDialogConfirm">确 定</el-button>
       </div>
     </el-dialog>
-    <paiDanInfo ref="paiDanInfo" :id="currPaiDanId"></paiDanInfo>
+    <!-- <paiDanInfo ref="paiDanInfo" :id="currPaiDanId"></paiDanInfo> -->
   </div>
 </template>
 
 <script>
-import paiDanInfo from '@/components/paiDanInfo.vue'
+// import paiDanInfo from '@/components/paiDanInfo.vue'
 import { Paging } from '@/util/paging'
 export default {
-  components: { paiDanInfo },
+  // components: { paiDanInfo },
   data() {
     return {
       paiDanData: new Paging('/dispatch/getDispatchList', { order:"id DESC" },'post'),//派单数据
@@ -188,7 +195,7 @@ export default {
           {type: 'array', required: true, message: '请选择医院', trigger: 'change'}
         ],
         phone: [
-          { required: true, message: '请输入客户电话', trigger: 'blur' },
+          { required: true, validator:this.validatePhone, trigger: 'blur' },
         ],
         project: [
           { required: true, message: '请输入项目', trigger: 'blur' },
@@ -251,7 +258,17 @@ export default {
 
   },
   methods: {
-    // 获取小组数据
+    // 医院反馈状态
+    yyStatusDict(str){
+      let obj = [
+        {name:'NO_BACK',label:'未反馈'},
+        {name:'NO_REPEAT',label:'不重'},
+        {name:'REPEAT',label:'重单'},
+        {name:'DEPTH',label:'深度'},
+      ]
+      let temp = obj.find(item=>item.name==str)
+      return temp?temp.label:''
+    },    // 获取小组数据
     getGroupData() {
       this.groupData._limit = 200
       this.groupData.exec()
@@ -350,7 +367,7 @@ export default {
           limit:200,
           page:1,
           cityCode:this.currCityCode2,
-          order:'id DESC'
+          order:'hosOrder DESC'
         },'post').then((res)=>{
           if(res.code==0){
             rs(res.data)

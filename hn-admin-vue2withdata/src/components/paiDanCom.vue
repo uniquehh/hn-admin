@@ -110,7 +110,7 @@ export default {
           {type: 'array', required: true, message: '请选择医院', trigger: 'change'}
         ],
         phone: [
-          { required: true, message: '请输入客户电话', trigger: 'blur' },
+          { required: true, validator:this.validatePhone, trigger: 'blur' },
         ],
         project: [
           { required: true, message: '请输入项目', trigger: 'blur' },

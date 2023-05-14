@@ -138,7 +138,7 @@
             ></el-cascader>
           </el-form-item>
           <el-form-item label="客户电话" required prop="phone">
-            <el-input v-model="addPaiDanForm.phone" placeholder="请输入客户电话" autocomplete="off"></el-input>
+            <el-input v-model="addPaiDanForm.phone" :maxlength="11" placeholder="请输入客户电话" autocomplete="off"></el-input>
           </el-form-item>
         </div>
 

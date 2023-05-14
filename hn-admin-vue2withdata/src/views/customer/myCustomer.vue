@@ -61,7 +61,7 @@
             <el-input v-model="editCustForm.customName" placeholder="请输入客户姓名" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="客户电话" prop="phone" required>
-            <el-input :disabled="editCustDiaTitle=='编辑客户'" v-model="editCustForm.phone" placeholder="请输入客户电话" autocomplete="off"></el-input>
+            <el-input :disabled="editCustDiaTitle=='编辑客户'" :maxlength="11" v-model="editCustForm.phone" placeholder="请输入客户电话" autocomplete="off"></el-input>
           </el-form-item>
           
         </div>

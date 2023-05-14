@@ -41,7 +41,7 @@
             <el-input v-model="editUserForm.realName" placeholder="请输入真实姓名" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="电话号码" prop="phone" required>
-            <el-input v-model="editUserForm.phone" placeholder="请输入电话号码" autocomplete="off"></el-input>
+            <el-input v-model="editUserForm.phone" :maxlength="11" placeholder="请输入电话号码" autocomplete="off"></el-input>
           </el-form-item>
         </div>
       

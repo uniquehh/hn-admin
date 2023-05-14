@@ -1,7 +1,30 @@
 <template>
   <div class="hn-cusinfo-main">
-    <!-- 左侧记录、转移 -->
     <div class="hn-custim-left">
+      <div class="hn-custimc-top">
+        <div class="hn-custimcm-head">
+          <div class="hn-custimcmh-left">
+            <i class="el-icon-document-checked"></i>
+            <span class="hn-custimlth-text">跟进结果</span>
+          </div>
+        </div>
+        <div class="hn-custm-warp">
+          <el-form :model="gjResultForm" :show-message="showGJRuleMsg" :rules="gjResultFormRules" ref="gjResultForm">
+            <el-form-item prop="gjResult" required>
+              <el-input
+                @change="showGJRuleMsg = false"
+                type="textarea"
+                placeholder="请输入跟进结果"
+                v-model="gjResultForm.gjResult"
+                maxlength="255"
+                show-word-limit
+              ></el-input>
+            </el-form-item>
+          </el-form>
+          <!--  -->
+          <el-button  @click="confirmGJJG" icon="el-icon-s-promotion" type="primary">提交跟进结果</el-button>
+        </div>
+      </div>
       <div class="hn-custiml-telhis">
         <div class="hn-custimlt-head">
           <i class="el-icon-tickets"></i>
@@ -24,104 +47,43 @@
         </div>
         <el-empty v-show="gjLog.length==0" description="暂无数据"></el-empty>
       </div>
-      <div class="hn-custiml-movecut">
-        <div class="hn-custimlt-head">
-          <i class="el-icon-caret-bottom"></i>
-          <span class="hn-custimlth-text">将此客户转移给同事</span>
-        </div>
-        <div class="hn-custm-warp">
-          <el-form :show-message="showMVRuleMsg" :model="moveCustForm" :rules="moveCustFormRules" label-width="80px" ref="moveCustForm">
-            <el-form-item label="转移客户" required prop="userId">
-              <el-select @change="showMVRuleMsg=false" filterable clearable v-model="moveCustForm.userId" placeholder="请选择同事">
-                <el-option v-for="(item) in usStaff" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item >
-              <el-button type="primary" @click="mcDialogConfirm">提交</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </div>
+
     </div>
     <!-- 中间派单、跟进 -->
     <div class="hn-custim-center">
-      <div class="hn-custimc-top">
-        <div class="hn-custimcm-head">
-          <div class="hn-custimcmh-left">
-            <i class="el-icon-document-checked"></i>
-            <span class="hn-custimlth-text">跟进结果</span>
-          </div>
-          <el-button  @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
-        </div>
-        <div class="hn-custm-warp">
-          <el-form :model="gjResultForm" :show-message="showGJRuleMsg" :rules="gjResultFormRules" ref="gjResultForm">
-            <el-form-item prop="gjResult" required>
-              <el-input
-                @change="showGJRuleMsg = false"
-                type="textarea"
-                placeholder="请输入跟进结果"
-                v-model="gjResultForm.gjResult"
-                maxlength="255"
-                show-word-limit
-              ></el-input>
-            </el-form-item>
-          </el-form>
-          <!--  -->
-          <el-button  @click="confirmGJJG" icon="el-icon-s-promotion" type="primary">提交跟进结果</el-button>
-        </div>
-      </div>
       <div class="hn-custimc-center">
         <div class="hn-custimcm-head">
           <div class="hn-custimcmh-left">
             <i class="el-icon-date"></i>
-            <span class="hn-custimlth-text">新增跟进计划</span>
+            <span class="hn-custimlth-text">新增预约</span>
           </div>
+          <el-button @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
         </div>
         <div class="hn-custm-warp">
-          <el-form :model="gjjhForm" :show-message="showGJJHRuleMsg" :rules="gjjhFormRules" ref="gjjhForm">
+          <el-form :model="yuYueForm" :show-message="showYYRuleMsg" :rules="yuYueFormRules" ref="yuYueForm">
             <el-form-item prop="nextFollowDate" required>
               <div>
-                <div class="hn-custimcct-text">跟进日期</div>
-                <el-date-picker @change="showGJJHRuleMsg = false" value-format="yyyy-MM-dd" v-model="gjjhForm.nextFollowDate" type="date" placeholder="请选择下次跟进日期"></el-date-picker>
-              </div>
-            </el-form-item>
-            <el-form-item prop="followInfo" required>
-              <div>
-                <div class="hn-custimcct-text">计划跟进内容</div>
-                <el-input
-                  @change="showGJJHRuleMsg = false"
-                  type="textarea"
-                  placeholder="请输入计划跟进内容"
-                  v-model="gjjhForm.followInfo"
-                  maxlength="255"
-                  show-word-limit
-                ></el-input>
+                <div class="hn-custimcct-text">预约日期</div>
+                <el-date-picker @change="showYYRuleMsg = false" value-format="yyyy-MM-dd" v-model="yuYueForm.yuYue" type="date" placeholder="请选择预约日期"></el-date-picker>
               </div>
             </el-form-item>
           </el-form>
-          <el-button  @click="confirmGJJH" icon="el-icon-plus" type="primary">提交跟进计划</el-button>
+          <el-button  @click="confirmYY" icon="el-icon-plus" type="primary">提交预约</el-button>
         </div>
       </div>
       <div class="hn-custimc-bottom">
         <div class="hn-custimcm-head">
           <div class="hn-custimcmh-left">
             <i class="el-icon-user-solid"></i>
-            <span class="hn-custimlth-text">计划跟进任务</span>
+            <span class="hn-custimlth-text">预约任务</span>
           </div>
           <!-- <i @click="getGenJinJiHua" class="el-icon-dibudaohanglan-"></i> -->
         </div>
         <div class="hn-custm-warp">
-          <!-- <div class="hn-custimcc-th">
-            <span style="margin-right: 10px;">是否关闭此客户跟进计划</span>
-            <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-          </div> -->
           <el-table :data="gjjhTable" style="width: 100%">
-            <el-table-column label="计划跟进日期">
-              <template slot-scope="scope">
-                <span>{{ scope.row.nextFollowDate.split(' ')[0] }}</span>
-              </template>
+            <el-table-column prop="followInfo" label="预约日期">
             </el-table-column>
-            <el-table-column prop="followInfo" label="计划跟进内容">
+            <el-table-column prop="followInfo" label="预约客户">
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间">
             </el-table-column>
@@ -136,7 +98,7 @@
     </div>
     <!-- 右侧表单 -->
     <div class="hn-custim-right">
-      <div class="hn-custimr-main">
+      <div class="hn-custimr-main hn-mrb10">
         <div class="hn-custimcm-head">
           <div class="hn-custimcmh-left">
             <i class="el-icon-user-solid"></i>
@@ -231,6 +193,71 @@
           </el-form>
         </div>
       </div>
+
+      <div class="hn-custimc-center">
+        <div class="hn-custimcm-head">
+          <div class="hn-custimcmh-left">
+            <i class="el-icon-date"></i>
+            <span class="hn-custimlth-text">新增跟进计划</span>
+          </div>
+        </div>
+        <div class="hn-custm-warp">
+          <el-form :model="gjjhForm" :show-message="showGJJHRuleMsg" :rules="gjjhFormRules" ref="gjjhForm">
+            <el-form-item prop="nextFollowDate" required>
+              <div>
+                <div class="hn-custimcct-text">跟进日期</div>
+                <el-date-picker @change="showGJJHRuleMsg = false" value-format="yyyy-MM-dd" v-model="gjjhForm.nextFollowDate" type="date" placeholder="请选择下次跟进日期"></el-date-picker>
+              </div>
+            </el-form-item>
+            <el-form-item prop="followInfo" required>
+              <div>
+                <div class="hn-custimcct-text">计划跟进内容</div>
+                <el-input
+                  @change="showGJJHRuleMsg = false"
+                  type="textarea"
+                  placeholder="请输入计划跟进内容"
+                  v-model="gjjhForm.followInfo"
+                  maxlength="255"
+                  show-word-limit
+                ></el-input>
+              </div>
+            </el-form-item>
+          </el-form>
+          <el-button  @click="confirmGJJH" icon="el-icon-plus" type="primary">提交跟进计划</el-button>
+        </div>
+      </div>
+      <div class="hn-custimc-bottom">
+        <div class="hn-custimcm-head">
+          <div class="hn-custimcmh-left">
+            <i class="el-icon-user-solid"></i>
+            <span class="hn-custimlth-text">计划跟进任务</span>
+          </div>
+          <!-- <i @click="getGenJinJiHua" class="el-icon-dibudaohanglan-"></i> -->
+        </div>
+        <div class="hn-custm-warp">
+          <!-- <div class="hn-custimcc-th">
+            <span style="margin-right: 10px;">是否关闭此客户跟进计划</span>
+            <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+          </div> -->
+          <el-table :data="gjjhTable" style="width: 100%">
+            <el-table-column label="计划跟进日期">
+              <template slot-scope="scope">
+                <span>{{ scope.row.nextFollowDate.split(' ')[0] }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="followInfo" label="计划跟进内容">
+            </el-table-column>
+            <el-table-column prop="createTime" label="创建时间">
+            </el-table-column>
+            <el-table-column  label="操作">
+              <template slot-scope="scope">
+                <el-button @click="deleteGJJH(scope.row)" type="text">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+
     </div>
     <paiDanCom :data="pdDiData" ref="paiDanCom"></paiDanCom>
   </div>
@@ -262,6 +289,17 @@ export default {
         ],
       },
       showGJRuleMsg:false,//是否显示跟进结果校验文字
+
+      yuYueForm:{
+        yuYue:"",//预约日期
+      },
+      yuYueFormRules:{
+        yuYue:[
+          { required: true, message: '请输入选择预约日期', trigger: 'blur' },
+        ],
+      },
+      showYYRuleMsg:false,//是否显示跟进结果校验文字
+
       gjjhTable: [],//客户跟进计划表格数据
       currCustomId: "",//当前的客户id
       usStaff:[],//可选择的同事
@@ -322,15 +360,15 @@ export default {
   async created() {
     this.currCustomId = localStorage.getItem('customId')
     // console.log(this.currCustomId)
-    this.usStaff = await this.getUsableStaff() //可选择的同事
     this.getCustData()
     this.getGenJinLog()
     this.getGenJinJiHua()
   },
-  mounted() {
-
-  },
   methods: {
+    // 提交预约
+    confirmYY(){
+
+    },
     // 打开派单弹窗
     openPaiDan(){
       this.$refs.paiDanCom.open()
@@ -457,25 +495,8 @@ export default {
         }
       })
     },
-    // 转移客户提交
-    mcDialogConfirm() {
-      this.moveCustForm.customId = this.currCustomId
-      this.showMVRuleMsg = true
-      this.$refs.moveCustForm.validate((valid) => {
-        if (valid) {
-          this.request("/custom/transferCustom", this.moveCustForm, 'post', 'form').then((res) => {
-            if (res.code == 0) {
-              this.hnMsg()
-              setTimeout(() => {
-                this.hnRouterBack()
-              }, 1500);
-            }
-          })
-        } else {
-          return false
-        }
-      })
-    },
+
+
   }
 }
 </script>

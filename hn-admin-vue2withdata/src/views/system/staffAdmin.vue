@@ -69,8 +69,8 @@
             <el-input placeholder="请输入密码" v-model="editUserForm.password" show-password type="password" />
           </el-form-item>
           <el-form-item label="所属角色" prop="roleId" required>
-            <el-select v-model="editUserForm.roleId" placeholder="请选择所属角色">
-              <el-option v-for="(role) in roles" :key="role.id" :label="role.roleAlias" :value="role.id"></el-option>
+            <el-select v-model="editUserForm.roleId" @change="roleIdChange" placeholder="请选择所属角色">
+              <el-option v-for="(item) in roleList" :key="item.id" :label="item.roleAlias" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
         </div>
@@ -86,8 +86,8 @@
           </el-form-item>
         </div> -->
         
-        <div class="hn-fitem-box">
-          <el-form-item label="所属小组" prop="roleId" required>
+        <div class="hn-fitem-box" v-if="showGroupOp">
+          <el-form-item label="所属小组" prop="groupId" required>
             <el-select v-model="editUserForm.groupId" placeholder="请选择所属小组">
               <el-option v-for="(item) in groupData._list" :key="item.id" :label="item.groupName" :value="item.id"></el-option>
             </el-select>
@@ -137,34 +137,43 @@ export default {
       editDilogTitle:"",
       showEUDialog:false,
       currUserId:"",//当前操作的用户id
-      roles:[],//所有用户角色
+      roleList:[],//所有用户角色
       sexOption:[
         {value:0,label:'女'},
         {value:1,label:'男'},
         {value:2,label:'保密'}
       ],
       selectedRowIds:[],//选中的表格数据的id集合
+      showGroupOp:true,//所属角色为咨询师咨询师不显示小组选项
     }
-  },
-  computed:{
-    currUserIndex(){ //当前操作的用户所在list的下标
-      return this.list._list.findIndex(item=>item.id==this.currUserId)
-    },
   },
   created(){
     this.getGroupData()
     this.getUserListData()
     this.getUserRoles()
   },
-  mounted() {
-
-  },
   methods: {
+    roleIdChange(val){
+      // console.log(val,8899)
+      // this.editUserForm.roleId = val
+      let temp = this.roleList.find(item=>item.id==this.editUserForm.roleId)
+      if(temp&&temp.roleLevel==5){
+        this.showGroupOp = false
+        this.editUserForm.groupId = 0
+      }else{
+        this.showGroupOp = true
+        this.$nextTick(() => { 
+          this.$refs.editUserForm.clearValidate()
+        })
+        this.editUserForm.groupId = ''
+      }
+      this.$forceUpdate()
+    },
     // 获取新增用户时得角色下拉数据
     getUserRoles(){
       this.request("/user/getUserRoleList").then((res)=>{
         if(res.code==0){
-          this.roles = res.data
+          this.roleList = res.data
         }
       })
     },
@@ -219,8 +228,9 @@ export default {
     },
     // 新增用户
     addUser(){
-      this.editUserForm.password = this.$md5(this.editUserForm.password)
-      this.request("/user/addUser",this.editUserForm,"post").then((res)=>{
+      let par = this.toJSON(this.editUserForm)
+      par.password = this.$md5(par.password)
+      this.request("/user/addUser",par,"post").then((res)=>{
         if(res.code==0){
           this.getUserListData()
           this.hnMsg()
@@ -230,9 +240,10 @@ export default {
     },
     // 修改用户
     editUser(){
-      this.editUserForm.password = this.$md5(this.editUserForm.password)
+      let par = this.toJSON(this.editUserForm)
+      par.password = this.$md5(par.password)
       this.request("/user/updateUser",{
-        ...this.editUserForm,
+        ...par,
         id:this.currUserId
       },"put").then((res)=>{
         if(res.code==0){
@@ -255,7 +266,8 @@ export default {
     // 打开弹窗
     opUserDialog(type,row){
       this.showEUDialog = true
-      this.$nextTick(() => { //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
+      //打开弹窗后移除其表单验证，防止先点击编辑再点击添加自动触发验证
+      this.$nextTick(() => { 
         this.$refs.editUserForm.clearValidate()
       })
       if(type=='edit'){ //修改
@@ -264,6 +276,14 @@ export default {
         let nroleId = row.roleVo?row.roleVo.id:''
         this.editUserForm = JSON.parse(JSON.stringify(row))
         this.editUserForm.roleId = nroleId
+        // 咨询师不显示所属小组
+        let temp = this.roleList.find(item=>item.id==this.editUserForm.roleId)
+        if(temp&&temp.roleLevel==5){
+          this.showGroupOp = false
+          this.editUserForm.groupId = 0
+        }else{
+          this.showGroupOp = true
+        }
       }else{ // 新增
         this.editDilogTitle = "新增用户"
         this.resetUserForm()

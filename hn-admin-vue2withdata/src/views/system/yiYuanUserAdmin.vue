@@ -305,9 +305,10 @@ export default {
     },
     // 新增用户
     addUser(){
-      this.editUserForm.password = this.$md5(this.editUserForm.password)
+      let par = this.toJSON(this.editUserForm)
+      par.password = this.$md5(par.password)
       this.request("/hospital/saveHospitalUser",{
-        ...this.editUserForm,
+        ...par,
         hospitalId:this.currYYId,
       },"post").then((res)=>{
         if(res.code==0){
@@ -319,9 +320,10 @@ export default {
     },
     // 修改用户
     editUser(){
-      this.editUserForm.password = this.$md5(this.editUserForm.password)
+      let par = this.toJSON(this.editUserForm)
+      par.password = this.$md5(par.password)
       this.request("/hospital/updateHospitalUser",{
-        ...this.editUserForm,
+        ...par,
         id:this.currUserId,
         hospitalId:this.currYYId,
       },"put").then((res)=>{

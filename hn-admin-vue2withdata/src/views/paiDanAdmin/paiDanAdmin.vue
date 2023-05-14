@@ -261,12 +261,12 @@ export default {
     // 医院反馈状态
     yyStatusDict(str){
       let obj = [
-        {name:'NO_BACK',label:'未反馈'},
-        {name:'NO_REPEAT',label:'不重'},
-        {name:'REPEAT',label:'重单'},
-        {name:'DEPTH',label:'深度'},
+        {value:'NO_BACK',label:'未反馈'},
+        {value:'NO_REPEAT',label:'不重'},
+        {value:'REPEAT',label:'重单'},
+        {value:'DEPTH',label:'深度'},
       ]
-      let temp = obj.find(item=>item.name==str)
+      let temp = obj.find(item=>item.value==str)
       return temp?temp.label:''
     },    // 获取小组数据
     getGroupData() {

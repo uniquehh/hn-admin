@@ -30,12 +30,12 @@
     <el-table :data="tableData._list" style="width: 100%">
       <el-table-column prop="customName" label="客户名称">
       </el-table-column>
+      <el-table-column prop="phone" label="客户电话">
+      </el-table-column>
       <el-table-column label="客户性别">
         <template slot-scope="scope">
           <span>{{ scope.row.gender==0?'女':scope.row.gender==1?'男':'未知' }}</span>
         </template>
-      </el-table-column>
-      <el-table-column prop="phone" label="客户电话">
       </el-table-column>
       <el-table-column prop="userName" label="派单人">
       </el-table-column>
@@ -99,11 +99,10 @@ export default {
         times:"",
       },
       searchStOp:[
-        {value:'DUPLICATE_ORDER',label:'重单'},
-        {value:'FOLLOWING',label:'跟进中'},
-        {value:'DISPATCHED',label:'已派单'},
-        {value:'DEAL',label:'成交'},
-        {value:'NOT_VISITING',label:'未上门'}
+        {value:'NO_BACK',label:'未反馈'},
+        {value:'NO_REPEAT',label:'不重'},
+        {value:'REPEAT',label:'重单'},
+        {value:'DEPTH',label:'深度'},
       ],
       editYYPDForm:{
         "dispatchId": "",
@@ -115,9 +114,9 @@ export default {
         ],
       },
       statusOption:[
-        {value:'DUPLICATE_ORDER',label:'重单'},
-        {value:'FOLLOWING',label:'跟进中'},
-        {value:'NOT_VISITING',label:'未上门'}
+        {value:'NO_REPEAT',label:'不重'},
+        {value:'REPEAT',label:'重单'},
+        {value:'DEPTH',label:'深度'},
       ],
       currYYPDId:"",//当前操作得医院派单id
     }
@@ -135,15 +134,15 @@ export default {
       this.getYYPDData()
     },
     // 获取派单得状态label
-    getPDStatusText(st){
-      let temp = [
-        {value:'DUPLICATE_ORDER',label:'重单'},
-        {value:'FOLLOWING',label:'跟进中'},
-        {value:'DISPATCHED',label:'已派单'},
-        {value:'DEAL',label:'成交'},
-        {value:'NOT_VISITING',label:'未上门'}
+    getPDStatusText(str){
+      let obj = [
+        {value:'NO_BACK',label:'未反馈'},
+        {value:'NO_REPEAT',label:'不重'},
+        {value:'REPEAT',label:'重单'},
+        {value:'DEPTH',label:'深度'},
       ]
-      return temp.find(item=>item.value==st).label
+      let temp = obj.find(item=>item.value==str)
+      return temp?temp.label:''
     },
     // 分页器页码、显示条数改变
     pagingChange(e) {

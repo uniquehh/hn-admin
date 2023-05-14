@@ -11,8 +11,7 @@
     </div>
     <div class="hn-mcust-shbox">
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户姓名" prefix-icon="el-icon-search" v-model="tableData._params.customName"></el-input>
-      <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户电话(必填)" prefix-icon="el-icon-search" v-model="tableData._params.phone"></el-input>
-      <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户电话(非必填)" prefix-icon="el-icon-search" v-model="tableData._params.contactNumber"></el-input>
+      <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户电话" prefix-icon="el-icon-search" v-model="tableData._params.phone"></el-input>
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入所属用户姓名" prefix-icon="el-icon-search" v-model="tableData._params.beLongUserName"></el-input>
       <el-button @click="resetSearchForm">重置</el-button>
       <el-button icon="el-icon-search" @click="getCustData" type="primary">搜索</el-button>
@@ -26,9 +25,7 @@
           <span>{{ scope.row.gender==0?'女':scope.row.gender==1?'男':'未知' }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="客户电话(必填)">
-      </el-table-column>
-      <el-table-column prop="contactNumber" label="客户电话(非必填)">
+      <el-table-column prop="phone" label="客户电话">
       </el-table-column>
       <el-table-column prop="beLongUserName" label="所属用户">
       </el-table-column>
@@ -63,6 +60,13 @@
           <el-form-item label="客户姓名" prop="customName" required>
             <el-input v-model="editCustForm.customName" placeholder="请输入客户姓名" autocomplete="off"></el-input>
           </el-form-item>
+          <el-form-item label="客户电话" prop="phone" required>
+            <el-input :disabled="editCustDiaTitle=='编辑客户'" v-model="editCustForm.phone" placeholder="请输入客户电话" autocomplete="off"></el-input>
+          </el-form-item>
+          
+        </div>
+        
+        <div class="hn-fitem-box">
           <el-form-item label="所在地区">
             <el-input v-model="editCustForm.area" placeholder="请输入客户所在地区" autocomplete="off"></el-input>
             <!-- 客户所在地区级联选择--暂时不用 -->
@@ -76,14 +80,6 @@
               @expand-change="getAreaByParent"
             ></el-cascader> -->
           </el-form-item>
-        </div>
-        
-        <div class="hn-fitem-box">
-          <el-form-item label="客户性别">
-            <el-select v-model="editCustForm.gender" placeholder="请选择客户性别">
-              <el-option v-for="(item) in genderOption" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-          </el-form-item>
           <el-form-item label="客户等级">
             <el-select v-model="editCustForm.customLevel" placeholder="请选择客户等级">
               <el-option v-for="(item) in customLevelOp" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -92,11 +88,10 @@
         </div>
 
         <div class="hn-fitem-box">
-          <el-form-item label="客户电话(必填)" prop="phone" required>
-            <el-input v-model="editCustForm.phone" placeholder="请输入客户电话" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="客户电话(非必填)">
-            <el-input v-model="editCustForm.contactNumber" placeholder="请输入客户电话" autocomplete="off"></el-input>
+          <el-form-item label="客户性别">
+            <el-select v-model="editCustForm.gender" placeholder="请选择客户性别">
+              <el-option v-for="(item) in genderOption" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            </el-select>
           </el-form-item>
         </div>
         
@@ -115,7 +110,7 @@ import { Paging } from '@/util/paging'
 export default {
   data() {
     return {
-      tableData:new Paging('/custom/getCustomPage', { contactNumber:"", beLongUserName: '',phone: "",customName: "",order:"id DESC" },'post'),
+      tableData:new Paging('/custom/getCustomPage', { beLongUserName: '',phone: "",customName: "",order:"id DESC" },'post'),
       showEditCusDialog:false,//修改/添加弹窗
       editCustDiaTitle:"",//修改添加客户弹窗标题
       editCustForm:{
@@ -123,7 +118,6 @@ export default {
         "customLevel": "",
         "customName": "",
         "gender": 0,
-        "contactNumber":"",
         "phone": ""
       },
       editCustFormRules: {
@@ -178,7 +172,6 @@ export default {
         "customLevel": "",
         "customName": "",
         "gender": 0,
-        "contactNumber":"",
         "phone": ""
       }
     },
@@ -209,7 +202,6 @@ export default {
       this.tableData._params.phone = ''
       this.tableData._params.customName = ''
       this.tableData._params.beLongUserName = ''
-      this.tableData._params.contactNumber = ''
       this.getCustData()
     },
     // 修改/添加弹窗确定
@@ -222,7 +214,6 @@ export default {
               "customLevel": this.editCustForm.customLevel,
               "customName": this.editCustForm.customName,
               "gender": this.editCustForm.gender,
-              "contactNumber":this.editCustForm.contactNumber,
               "phone": this.editCustForm.phone,
             },'post').then(res=>{
               if(res.code==0){
@@ -236,7 +227,6 @@ export default {
               "customLevel": this.editCustForm.customLevel,
               "customName": this.editCustForm.customName,
               "gender": this.editCustForm.gender,
-              "contactNumber":this.editCustForm.contactNumber,
               "id": this.editCustForm.id
             },'put').then(res=>{
               if(res.code==0){
@@ -254,7 +244,7 @@ export default {
     },
     // 释放客户
     deleteCustomer(row){
-      this.hnMsgBox().then(()=>{
+      this.hnMsgBox('您确定要释放该客户吗？').then(()=>{
         this.request("/custom/freeCustom",{customId:row.id},'post','form').then(res=>{
           if(res.code==0){
             this.getCustData()

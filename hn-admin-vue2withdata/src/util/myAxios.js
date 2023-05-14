@@ -45,7 +45,8 @@ axiosInstance.interceptors.response.use((res) => {
     if (res.data.code == -1) {
       messageOnce.warning({
         message: res.data.data.errMsg,
-        type: 'warning'
+        type: 'warning',
+        duration:3000,
       })
       // methods.hnMsg(res.data.data.errMsg,'error')
       if(res.data.data.errCode==20001){
@@ -54,7 +55,6 @@ axiosInstance.interceptors.response.use((res) => {
         }, 2000);
       }
     }
-    
     
     return res.data //res.data是  axios 请求目标接口返回的数据
   } else {

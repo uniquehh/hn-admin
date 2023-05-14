@@ -2,8 +2,7 @@
   <div class="hn-myctomer-main">
     <div class="hn-mcust-shbox">
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户姓名" prefix-icon="el-icon-search" v-model="tableData._params.customName"></el-input>
-      <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户电话(必填)" prefix-icon="el-icon-search" v-model="tableData._params.phone"></el-input>
-      <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户电话(非必填)" prefix-icon="el-icon-search" v-model="tableData._params.contactNumber"></el-input>
+      <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户电话" prefix-icon="el-icon-search" v-model="tableData._params.phone"></el-input>
       <el-button @click="resetSearchForm">重置</el-button>
       <el-button icon="el-icon-search" @click="getCustData" type="primary">搜索</el-button>
     </div>
@@ -17,8 +16,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="phone" label="客户电话(必填)">
-      </el-table-column>
-      <el-table-column prop="contactNumber" label="客户电话(非必填)">
       </el-table-column>
       <el-table-column prop="customLevel" label="客户等级">
       </el-table-column>
@@ -43,7 +40,7 @@ import { Paging } from '@/util/paging'
 export default {
   data() {
     return {
-      tableData:new Paging('/custom/getCustomerSea', { contactNumber:"",phone: "",customName: "",order:"id DESC" },'post'),
+      tableData:new Paging('/custom/getCustomerSea', { phone: "",customName: "",order:"id DESC" },'post'),
 
     }
   },
@@ -75,7 +72,6 @@ export default {
     resetSearchForm(){
       this.tableData._params.phone = ''
       this.tableData._params.customName = ''
-      this.tableData._params.contactNumber = ''
       this.getCustData()
     },
     getCustData(){

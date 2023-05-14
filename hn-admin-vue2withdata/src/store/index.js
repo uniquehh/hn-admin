@@ -13,31 +13,34 @@ var asideMenus = [
     id: "1", name: "成单管理", path: '/cdAdmin',needPower:true,hasPower:false,sign:"ORDER_MANAGER",icon:"el-icon-s-claim",showAside:true,child: []
   },
   {
-    id: "2", name: "医院派单", path: '/yiYuanPaiDan',needPower:true,hasPower:false,sign:"HOSPITAL_DISPATCH_MANAGER",icon:"el-icon-yiyuan",showAside:true,child: []
+    id: "2", name: "客户海", path: '/customerRecb',needPower:true,hasPower:false,sign:"CUSTOM_SEA",icon:"el-icon-kehuguanli",showAside:true,child: []
   },
   {
-    id: "3", name: "我的客户", path: '/myCustomer',needPower:true,hasPower:false,sign:"CUSTOM_MANAGER",icon:"el-icon-kehu",showAside:true,child: []
+    id: "3", name: "医院派单", path: '/yiYuanPaiDan',needPower:true,hasPower:false,sign:"HOSPITAL_DISPATCH_MANAGER",icon:"el-icon-yiyuan",showAside:true,child: []
   },
   {
-    id: "4", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
+    id: "4", name: "我的客户", path: '/myCustomer',needPower:true,hasPower:false,sign:"CUSTOM_MANAGER",icon:"el-icon-kehu",showAside:true,child: []
   },
   {
-    id: "5", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
+    id: "5", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
   },
   {
-    id: "6", name: "客户详情", path: '/customerInfo',needPower:false,hasPower:true,sign:"CUSTOMERINFO",icon:"el-icon-kehu",showAside:false,child: []
+    id: "6", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
   },
   {
-    id: "7", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-s-order",showAside:false,child: []
+    id: "7", name: "客户详情", path: '/customerInfo',needPower:false,hasPower:true,sign:"CUSTOMERINFO",icon:"el-icon-kehu",showAside:false,child: []
   },
   {
-    id: "8", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools",showAside:true, child: [
-      { id: "8-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER",icon:"el-icon-yiyuan1",showAside:true, child: [] },
-      { id: "8-2", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER",icon:"el-icon-guanlikehu",showAside:true, child: [] },
-      { id: "8-3", name: "客户管理", path: '/system/customeAdmin',needPower:true,hasPower:false,sign:"ALL_CUSTOM_MANAGER",icon:"el-icon-navicon-grkh",showAside:true, child: [] },
-      { id: "8-4", name: "小组管理", path: '/system/groupAdmin',needPower:true,hasPower:false,sign:"GROUP_MANAGER",icon:"el-icon-s-management",showAside:true, child: [] },
-      { id: "8-5", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER",icon:"el-icon-shujuzidian-jianying", child: [] },
-      { id: "8-6", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian",showAside:true, child: [] },
+    id: "8", name: "接单中心", path: '/jieDanZhongXin',needPower:false,hasPower:true,sign:"JDZX",icon:"el-icon-s-order",showAside:false,child: []
+  },
+  {
+    id: "9", name: "系统管理", path: '/system/index',needPower:true,hasPower:false,sign:"SYSTEM_MANAGER",icon:"el-icon-s-tools",showAside:true, child: [
+      { id: "9-1", name: "医院管理", path: '/system/yiYuanUserAdmin',needPower:true,hasPower:false,sign:"HOSPITAL_MANAGER",icon:"el-icon-yiyuan1",showAside:true, child: [] },
+      { id: "9-2", name: "用户管理", path: '/system/staffAdmin',needPower:true,hasPower:false,sign:"USER_MANAGER",icon:"el-icon-guanlikehu",showAside:true, child: [] },
+      { id: "9-3", name: "客户管理", path: '/system/customeAdmin',needPower:true,hasPower:false,sign:"ALL_CUSTOM_MANAGER",icon:"el-icon-navicon-grkh",showAside:true, child: [] },
+      { id: "9-4", name: "小组管理", path: '/system/groupAdmin',needPower:true,hasPower:false,sign:"GROUP_MANAGER",icon:"el-icon-s-management",showAside:true, child: [] },
+      { id: "9-5", name: "数据字典", path: '/system/dataDict',needPower:true,hasPower:false,sign:"DICT_MANAGER",icon:"el-icon-shujuzidian-jianying", child: [] },
+      { id: "9-6", name: "权限管理", path: '/system/powerAdmin',needPower:true,hasPower:false,sign:"AUTHORITY_MANAGER",icon:"el-icon-quanxian",showAside:true, child: [] },
     ] 
   },
 ]

@@ -1,7 +1,7 @@
 <template>
   <div class="hn-myctomer-main">
-    <!-- v-if="!isChaoGuan()" -->
-    <div class="hn-mctm-head" v-if="!isChaoGuan()">
+    <!--  -->
+    <div class="hn-mctm-head" >
       <el-button class="hn-mctmhl-btn" icon="el-icon-plus" type="primary" @click="editChengDan('add')">新增成单</el-button>
     </div>
     <div class="hn-cdadmin-shbox hn-mrb20">
@@ -48,8 +48,8 @@
           <span>{{ scope.row.orderTime.split(" ")[0] }}</span>
         </template>
       </el-table-column>
-      <!-- v-if="!isChaoGuan()" -->
-      <el-table-column v-if="!isChaoGuan()" prop="edit" label="操作">
+      <!--  -->
+      <el-table-column  prop="edit" label="操作">
         <template slot-scope="scope">
           <el-button type="text" @click.stop="deleteChengDan(scope.row)">删除</el-button>
           <el-button type="text" @click.stop="editChengDan('edit',scope.row)">修改</el-button>

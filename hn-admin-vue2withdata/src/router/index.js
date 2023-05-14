@@ -125,7 +125,15 @@ const routes = [
           isPublic:false
         },
         component: () => import('../views/yiYuanPaiDan/yiYuanPaiDan.vue')
-      }
+      },
+      {
+        path: '/customerRecb',
+        name: 'customerRecb',
+        meta: {
+          isPublic:false
+        },
+        component: () => import('../views/customer/customerRecb.vue')
+      },
     ]
   },
   {

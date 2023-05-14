@@ -1,7 +1,7 @@
 <template>
   <div class="hn-dtdict-main">
 
-    <div class="hn-dict-search" v-if="!isChaoGuan()">
+    <div class="hn-dict-search" >
       <el-button type="primary" icon="el-icon-plus" @click="openADDialog">派单</el-button>
     </div>
     <div class="hn-dict-search">

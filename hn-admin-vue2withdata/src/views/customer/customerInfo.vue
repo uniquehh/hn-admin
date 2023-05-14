@@ -36,7 +36,7 @@
                 <el-option v-for="(item) in usStaff" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item v-if="!isChaoGuan()">
+            <el-form-item >
               <el-button type="primary" @click="mcDialogConfirm">提交</el-button>
             </el-form-item>
           </el-form>
@@ -51,7 +51,7 @@
             <i class="el-icon-document-checked"></i>
             <span class="hn-custimlth-text">跟进结果</span>
           </div>
-          <el-button v-if="!isChaoGuan()" @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
+          <el-button  @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
         </div>
         <div class="hn-custm-warp">
           <el-form :model="gjResultForm" :show-message="showGJRuleMsg" :rules="gjResultFormRules" ref="gjResultForm">
@@ -66,8 +66,8 @@
               ></el-input>
             </el-form-item>
           </el-form>
-          <!-- v-if="!isChaoGuan()" -->
-          <el-button v-if="!isChaoGuan()" @click="confirmGJJG" icon="el-icon-s-promotion" type="primary">提交跟进结果</el-button>
+          <!--  -->
+          <el-button  @click="confirmGJJG" icon="el-icon-s-promotion" type="primary">提交跟进结果</el-button>
         </div>
       </div>
       <div class="hn-custimc-center">
@@ -99,7 +99,7 @@
               </div>
             </el-form-item>
           </el-form>
-          <el-button v-if="!isChaoGuan()" @click="confirmGJJH" icon="el-icon-plus" type="primary">提交跟进计划</el-button>
+          <el-button  @click="confirmGJJH" icon="el-icon-plus" type="primary">提交跟进计划</el-button>
         </div>
       </div>
       <div class="hn-custimc-bottom">
@@ -125,7 +125,7 @@
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间">
             </el-table-column>
-            <el-table-column v-if="!isChaoGuan()" label="操作">
+            <el-table-column  label="操作">
               <template slot-scope="scope">
                 <el-button @click="deleteGJJH(scope.row)" type="text">删除</el-button>
               </template>
@@ -225,7 +225,7 @@
             <!-- <el-form-item label="备注：">
               <el-input type="textarea" placeholder="请输入备注" v-model="gjResult" maxlength="1024" show-word-limit></el-input>
             </el-form-item> -->
-            <el-form-item v-if="!isChaoGuan()">
+            <el-form-item >
               <el-button type="primary" @click="editCustConfirm" icon="el-icon-check">更新客户信息</el-button>
             </el-form-item>
           </el-form>

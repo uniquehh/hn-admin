@@ -48,7 +48,7 @@
       </el-table-column>
       <el-table-column prop="dispatchTime" label="派单时间">
       </el-table-column>
-      <el-table-column prop="edit" v-if="!isChaoGuan()" label="操作">
+      <el-table-column prop="edit"  label="操作">
         <template slot-scope="scope">
           <el-button type="text" @click.stop="editYiYuanPaiDan(scope.row)">处理</el-button>
         </template>

@@ -31,7 +31,7 @@
       <div class="hn-useri-tr">性别：{{ userInfo.sex==0?'女': userInfo.sex == 1 ?'男':'保密' }}</div>
       <div class="hn-useri-tr">年龄：{{ userInfo.age }}</div>
       <div class="hn-useri-tr">电话：{{ userInfo.phone }}</div>
-      <div class="hn-useri-tr">是否被禁止接单：{{ userInfo.whetherReceive?'是':'否' }}</div>
+      <!-- <div class="hn-useri-tr">是否被禁止接单：{{ userInfo.whetherReceive?'是':'否' }}</div> -->
     </div>
     <!-- 编辑用户资料 -->
     <el-dialog title="修改资料" width="600px" :visible.sync="showEUDialog">

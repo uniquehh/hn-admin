@@ -172,7 +172,7 @@ export default {
         "orderEndTime": "",
         "project": "",
         "userName": "",
-        time:"",
+        "time":"",
       },
       customers:[],// 客户数据
       // custPar:{ //客户数据分页触底获取新数据参数--暂时不用
@@ -206,8 +206,8 @@ export default {
     },
     // 筛选派单数据
     searchPDData(){
-      this.searchForm.orderBeginTime = this.searchForm.time[0]
-      this.searchForm.orderEndTime = this.searchForm.time[1]
+      this.searchForm.orderBeginTime = this.searchForm.time?this.searchForm.time[0]:''
+      this.searchForm.orderEndTime = this.searchForm.time?this.searchForm.time[1]:''
       this.tableData._params = Object.assign(this.tableData._params,this.searchForm)
       this.getCDData()
     },

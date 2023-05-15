@@ -32,6 +32,8 @@
     </div>
 
     <el-table :data="tableData._list" style="width: 100%">
+      <el-table-column prop="customName" label="成单客户">
+      </el-table-column>
       <el-table-column prop="hospitalName" label="成单医院">
       </el-table-column>
       <el-table-column prop="userName" label="成单用户">
@@ -66,8 +68,18 @@
     <el-dialog :title="editCDDiaTitle" width="600px" :visible.sync="showEditCDDialog">
       <el-form :model="editCDForm"  :rules="editCDFormRules" ref="editCDForm">
         <div class="hn-fitem-box">
-          <el-form-item label="成单金额" prop="amount" required>
-            <el-input v-model="editCDForm.amount" placeholder="请输入成单金额" autocomplete="off"></el-input>
+          <el-form-item label="成单客户" prop="customId" required>
+            <!-- v-infinite-scroll="getCustomers" 实现触底获取分页数据 -->
+            <el-select v-model="editCDForm.customId" placeholder="请选择成单客户">
+              <el-option
+                v-for="item in customers"
+                :key="item.customId"
+                :label="item.customName"
+                :value="item.customId"
+              ></el-option>
+              <!-- <p>加载中...</p>
+              <p v-if="custPar.noMore">没有更多了</p> -->
+            </el-select>
           </el-form-item>
           <el-form-item label="成单医院" prop="hospitalId" required>
             <el-cascader
@@ -80,11 +92,17 @@
               <!-- @change="editAreaChange" -->
           </el-form-item>
         </div>
-        
+
         <div class="hn-fitem-box">
+          <el-form-item label="成单金额" prop="amount" required>
+            <el-input v-model="editCDForm.amount" placeholder="请输入成单金额" autocomplete="off"></el-input>
+          </el-form-item>
           <el-form-item label="成单项目" prop="project" required>
             <el-input v-model="editCDForm.project" placeholder="请输入成单项目" autocomplete="off"></el-input>
           </el-form-item>
+        </div>
+        
+        <div class="hn-fitem-box">
           <el-form-item label="成单时间" prop="orderTime" required>
             <el-date-picker
               v-model="editCDForm.orderTime"
@@ -117,6 +135,7 @@ export default {
         "amount": "",
         "hospitalId": [],
         "orderTime": "",
+        "customId": "",
         "project": ""
       },
       editCDFormRules: {
@@ -128,6 +147,9 @@ export default {
         ],
         orderTime: [
           { required: true, message: '请选择成单时间', trigger: 'blur' },
+        ],
+        customId: [
+          { required: true, message: '请选择成单客户', trigger: 'blur' },
         ],
         project: [
           { required: true, message: '请输入成单项目', trigger: 'blur' },
@@ -152,13 +174,36 @@ export default {
         "userName": "",
         time:"",
       },
+      customers:[],// 客户数据
+      // custPar:{ //客户数据分页触底获取新数据参数--暂时不用
+      //   page:0,
+      //   limit:20,
+      //   order:'id DESC',
+      //   loading:false,
+      //   noMore:false,
+      // }
     }
   },
   created() {
     this.getCDData()
     this.getAreaData() //成单所在地区级联选择配置
+    this.getCustomers()
   },
   methods: {
+    // 获取客户数据
+    getCustomers(){
+      // this.custPar.page++
+      // this.request('/custom/getCustomPage',this.custPar,'post').then(res=>{
+      //   if(res.code==0){
+      //     this.customers.push(...res.data)
+      //   }
+      // })
+      this.request('/custom/getCustomSelectList',{},'get','form').then(res=>{
+        if(res.code==0){
+          this.customers = res.data
+        }
+      })
+    },
     // 筛选派单数据
     searchPDData(){
       this.searchForm.orderBeginTime = this.searchForm.time[0]
@@ -234,6 +279,7 @@ export default {
         "amount": "",
         "hospitalId": [],
         "orderTime": "",
+        "customId": "",
         "project": ""
       }
     },
@@ -300,6 +346,7 @@ export default {
               "amount": this.editCDForm.amount,
               "hospitalId": this.editCDForm.hospitalId[2],
               "orderTime": this.editCDForm.orderTime,
+              "customId": this.editCDForm.customId,
               "project": this.editCDForm.project
             },'post').then(res=>{
               if(res.code==0){
@@ -312,6 +359,7 @@ export default {
               "amount": this.editCDForm.amount,
               "hospitalId": this.editCDForm.hospitalId[2],
               "orderTime": this.editCDForm.orderTime,
+              "customId": this.editCDForm.customId,
               "project": this.editCDForm.project,
               "id": this.editCDForm.id
             },'put').then(res=>{

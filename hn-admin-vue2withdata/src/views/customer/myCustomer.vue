@@ -9,7 +9,7 @@
         <i class="hn-mctmhr-icon el-icon-s-operation"></i>
       </div> -->
     </div>
-    <div class="hn-mcust-shbox">
+    <div class="hn-mrb20">
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户姓名" prefix-icon="el-icon-search" v-model="tableData._params.customName"></el-input>
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户电话" prefix-icon="el-icon-search" v-model="tableData._params.phone"></el-input>
       <el-select class="hn-mcust-shinp hn-mrr10" clearable multiple v-model="tableData._params.userIdList" placeholder="请选择所属用户">
@@ -397,5 +397,8 @@ export default {
 <style scoped lang="scss">
 .el-date-editor.el-input{
   width: unset !important;
+}
+.hn-mcust-shinp{
+  width: 240px;
 }
 </style>

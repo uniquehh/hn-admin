@@ -3,32 +3,21 @@
     <el-dialog title="派单" width="600px" :visible.sync="showDIDialog">
       <el-form :model="addPaiDanForm"  :rules="addPaiDanFormRules" ref="addPaiDanForm">
 
-        <div class="hn-fitem-box">
-          <el-form-item label="客户姓名" required prop="customName">
-            <el-input disabled v-model="addPaiDanForm.customName" placeholder="请输入客户姓名" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="客户来源" required prop="dictId">
-            <el-select v-model="addPaiDanForm.dictId" placeholder="请选择客户来源">
-              <el-option v-for="(item) in khLaiYuan" :key="item.id" :disabled="item.dictBlock" :label="item.dictName" :value="item.id"></el-option>
-            </el-select>
-          </el-form-item>
+        <div class="hn-ypdyy-list">
+          <div class="hn-ypdyyl-head hn-mrb10">已派单医院</div>
+          <el-tag
+            v-for="item in ypdyyList"
+            :key="item.hospitalId"
+            :type="item.hospitalName"
+            effect="dark"
+            class="hn-mrr10 hn-mrb10"
+          >
+            {{ item.hospitalName }}
+          </el-tag>
+          <el-empty v-if="ypdyyList.length==0" description="暂无数据"></el-empty>
         </div>
-
         <div class="hn-fitem-box">
-          <el-form-item label="客户性别" required prop="gender">
-            <el-select disabled v-model="addPaiDanForm.gender" placeholder="请选择客户性别">
-              <el-option v-for="(item) in sexOption" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="跟进状态" required prop="followStatus">
-            <el-select v-model="addPaiDanForm.followStatus" placeholder="请选择跟进状态">
-              <el-option v-for="(item) in gjStatus" :key="item.value" :label="item.label" :value="item.label"></el-option>
-            </el-select>
-          </el-form-item>
-        </div>
-
-        <div class="hn-fitem-box">
-          <el-form-item label="医院" required prop="hospitalIdList">
+          <el-form-item label="未派单医院" required prop="hospitalIdList">
             <el-cascader
               clearable
               v-model="addPaiDanForm.hospitalIdList"
@@ -39,12 +28,6 @@
               @expand-change="getAreaByParent"
             ></el-cascader>
           </el-form-item>
-          <el-form-item label="客户电话" required prop="phone">
-            <el-input disabled v-model="addPaiDanForm.phone" placeholder="请输入客户电话" autocomplete="off"></el-input>
-          </el-form-item>
-        </div>
-
-        <div class="hn-fitem-box">
           <el-form-item label="项目" required prop="project">
             <el-input v-model="addPaiDanForm.project" placeholder="请输入项目" autocomplete="off"></el-input>
           </el-form-item>
@@ -66,7 +49,7 @@ export default {
     data:{
       type:Object,
       default:()=>{},
-    }
+    },
   },
   watch:{
     data:{
@@ -85,46 +68,17 @@ export default {
     return {
       showDIDialog:false,//是否显示派单管理弹窗
       addPaiDanForm: {
-        "customName": "",
-        "dictId": "",
-        "followStatus": "暂时不跟进",
-        "gender": 0,
         "hospitalIdList": [],
-        "phone": "",
         "project": ""
       },
       addPaiDanFormRules: {
-        customName: [
-          { required: true, message: '请输入客户姓名', trigger: 'blur' },
-        ],
-        dictId: [
-          { required: true, message: '请选择客户来源', trigger: 'blur' },
-        ],
-        followStatus: [
-          { required: true, message: '请选择跟进状态', trigger: 'blur' },
-        ],
-        gender: [
-          { required: true, message: '请选择客户性别', trigger: 'blur' },
-        ],
         hospitalIdList: [ // { validator: validateHospital, trigger: 'blur' },
-          {type: 'array', required: true, message: '请选择医院', trigger: 'change'}
-        ],
-        phone: [
-          { required: true, validator:this.validatePhone, trigger: 'blur' },
+          {type: 'array', required: true, message: '请选择医院', trigger: 'blur'}
         ],
         project: [
           { required: true, message: '请输入项目', trigger: 'blur' },
         ],
       },
-      sexOption:[
-        {value:0,label:'女'},
-        {value:1,label:'男'},
-        {value:2,label:'未知'}
-      ],
-      gjStatus:[
-        {value:0,label:'跟进'},
-        {value:1,label:'暂时不跟进'},
-      ],
       eYYFormProps:{
         value:'id',
         label:'name',
@@ -137,14 +91,31 @@ export default {
       currCityIndex:"",//当前操作得城市下标
       currCityCodeHistory:[],//当前已获取过得城市医院得citycode记录
       selectHospitalIds:[],//选中得医院id集合
-      khLaiYuan:[],//客户来源字典数据
+      currCustomId:"",
+      ypdyyList:[],
+      ypdyyIds:[],//已派单医院id
     }
   },
   created(){
+    this.currCustomId = localStorage.getItem('customId')
     this.getAreaData()
-    this.getKeHuLaiYuan()
+    this.getYPDYYList()
   },
   methods: {
+    // 获取已派单医院
+    getYPDYYList(){
+      this.request('/dispatch/getHospitalDisList',{
+        customId:this.currCustomId,
+      },'get','form').then(res=>{
+        if(res.code == 0){
+          this.ypdyyList = res.data
+          this.ypdyyIds = []
+          res.data.forEach(item=>{
+            this.ypdyyIds.push(item.hospitalId)
+          })
+        }
+      })
+    },
     open(){
       this.showDIDialog = true
       this.resetPaiDanForm()
@@ -153,8 +124,6 @@ export default {
       })
     },
     resetPaiDanForm(){
-      this.addPaiDanForm.dictId = ""
-      this.addPaiDanForm.followStatus = "暂时不跟进"
       this.addPaiDanForm.hospitalIdList = []
       this.addPaiDanForm.project = ""
     },
@@ -220,7 +189,8 @@ export default {
           limit:200,
           page:1,
           cityCode:this.currCityCode2,
-          order:'id DESC'
+          order:'id DESC',
+          hospitalIdList:this.ypdyyIds,
         },'post').then((res)=>{
           if(res.code==0){
             rs(res.data)
@@ -238,8 +208,11 @@ export default {
         if (valid) {
           let obj = JSON.parse(JSON.stringify(this.addPaiDanForm))
           obj.hospitalIdList = this.selectHospitalIds
+          obj.customId = this.currCustomId
           this.request("/dispatch/addDispatch",obj,'post').then((res)=>{
             if(res.code==0){
+              this.getYPDYYList()
+              this.$emit('addPaiDan')
               this.hnMsg()
               this.showDIDialog = false
             }

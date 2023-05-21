@@ -2,6 +2,49 @@
   <div class="hn-cusinfo-main">
     <div class="hn-custim-left">
       <div class="hn-custimc-top">
+        <div class="hn-custimcm-head hn-mrb10">
+          <div class="hn-custimcmh-left">
+            <i class="el-icon-date"></i>
+            <span class="hn-custimlth-text">新增派单</span>
+          </div>
+          <el-button @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
+        </div>
+        <el-table :data="pdList._list" style="width: 100%">
+          <el-table-column prop="hospitalName" label="医院名称">
+            <template slot-scope="scope">
+              <span>{{ scope.row.hospitalName}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="project" label="项目">
+          </el-table-column>
+          <el-table-column label="医院反馈">
+            <template slot-scope="scope">
+              <span :class="getPDStatusText(scope.row.status).label.class">{{ getPDStatusText(scope.row.status).label }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="message" label="留言">
+          </el-table-column>
+          <el-table-column prop="dispatchTime" label="派单时间">
+          </el-table-column>
+          <el-table-column  label="操作">
+            <template slot-scope="scope">
+              <el-button @click="" type="text">预约</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <pagination 
+          v-show="pdList._total > 0" 
+          :total="pdList._total" 
+          :page="pdList._page" 
+          :limit="pdList._limit"
+          layout='total, prev, pager, next'
+          @pagination="pdPageChange" 
+        />
+      </div>
+    </div>
+    <!-- 中间 -->
+    <div class="hn-custim-center">
+      <div class="hn-custimc-center">
         <div class="hn-custimcm-head">
           <div class="hn-custimcmh-left">
             <i class="el-icon-document-checked"></i>
@@ -26,7 +69,7 @@
         </div>
       </div>
       <div class="hn-custiml-telhis">
-        <div class="hn-custimlt-head">
+        <div class="hn-custimlt-head hn-mrb10">
           <i class="el-icon-tickets"></i>
           <span class="hn-custimlth-text">跟进记录</span>
         </div>
@@ -57,36 +100,31 @@
         </div> -->
       </div>
 
-    </div>
-    <!-- 中间派单、跟进 -->
-    <div class="hn-custim-center">
-      <div class="hn-custimc-center">
-        <div class="hn-custimcm-head">
-          <div class="hn-custimcmh-left">
-            <i class="el-icon-date"></i>
-            <span class="hn-custimlth-text">新增预约</span>
-          </div>
-          <el-button @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
+      <!-- <div class="hn-custimcm-head">
+        <div class="hn-custimcmh-left">
+          <i class="el-icon-date"></i>
+          <span class="hn-custimlth-text">新增预约</span>
         </div>
-        <div class="hn-custm-warp">
-          <el-form :model="yuYueForm" :show-message="showYYRuleMsg" :rules="yuYueFormRules" ref="yuYueForm">
-            <el-form-item prop="subDate" required>
-              <div>
-                <div class="hn-custimcct-text">预约日期</div>
-                <el-date-picker v-model="yuYueForm.subDate" @change="showYYRuleMsg = false" value-format="yyyy-MM-dd" type="date" placeholder="请选择预约日期"></el-date-picker>
-              </div>
-            </el-form-item>
-          </el-form>
-          <el-button  @click="confirmYY" icon="el-icon-plus" type="primary">提交预约</el-button>
-        </div>
+        <el-button @click="openPaiDan" icon="el-icon-plus" type="primary">派单</el-button>
       </div>
-      <div class="hn-custimc-bottom">
+      <div class="hn-custm-warp">
+        <el-form :model="yuYueForm" :show-message="showYYRuleMsg" :rules="yuYueFormRules" ref="yuYueForm">
+          <el-form-item prop="subDate" required>
+            <div>
+              <div class="hn-custimcct-text">预约日期</div>
+              <el-date-picker v-model="yuYueForm.subDate" @change="showYYRuleMsg = false" value-format="yyyy-MM-dd" type="date" placeholder="请选择预约日期"></el-date-picker>
+            </div>
+          </el-form-item>
+        </el-form>
+        <el-button  @click="confirmYY" icon="el-icon-plus" type="primary">提交预约</el-button>
+      </div> -->
+      <!-- <div class="hn-custimc-bottom">
         <div class="hn-custimcm-head">
           <div class="hn-custimcmh-left">
             <i class="el-icon-user-solid"></i>
             <span class="hn-custimlth-text">预约任务</span>
           </div>
-          <!-- <i @click="getGenJinJiHua" class="el-icon-dibudaohanglan-"></i> -->
+          <i @click="getGenJinJiHua" class="el-icon-dibudaohanglan-"></i>
         </div>
         <div class="hn-custm-warp">
           <el-table :data="yyList._list" style="width: 100%">
@@ -112,11 +150,11 @@
             @pagination="yyPageChange" 
           />
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- 右侧表单 -->
     <div class="hn-custim-right">
-      <div class="hn-custimr-main hn-mrb10">
+      <!-- <div class="hn-custimr-main hn-mrb10">
         <div class="hn-custimcm-head">
           <div class="hn-custimcmh-left">
             <i class="el-icon-user-solid"></i>
@@ -125,14 +163,14 @@
         </div>
         <div class="hn-custm-warp">
           <el-form :model="editCustForm" label-width="70px" :show-message="showCustRuleMsg" :rules="editCustFormRules" ref="editCustForm">
-            <!-- <div class="hn-fitem-box">
+            <div class="hn-fitem-box">
               <el-form-item label="编号：" style="width: 200px;">
                 <el-input style="width: 130px;" v-model="form.name"></el-input>
               </el-form-item>
               <el-form-item label="手机：" style="width: 200px;">
                 <el-input style="width: 145px;" v-model="form.name"></el-input>
               </el-form-item>
-            </div> -->
+            </div>
             <el-form-item required prop="customName" label="姓名：">
               <el-input class="hn-custmw-inp" @change="showCustRuleMsg = false" v-model="editCustForm.customName" placeholder="请输入客户姓名"></el-input>
             </el-form-item>
@@ -150,67 +188,13 @@
                 <el-option v-for="(item) in customLevelOp" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
-
-            <!-- <div class="hn-fitem-box">
-              <el-form-item label="微信：" style="width: 200px;">
-                <el-input style="width: 130px;" v-model="form.name" placeholder="请输入微信"></el-input>
-              </el-form-item>
-              <el-form-item label="QQ：" style="width: 200px;">
-                <el-input style="width: 145px;" v-model="form.name" placeholder="请输入QQ"></el-input>
-              </el-form-item>
-            </div> -->
-
-            <!-- <el-form-item label="计入系统日期：">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" ></el-date-picker>
-            </el-form-item> -->
-
-            <!-- <el-form-item label="是否联系上：">
-              <el-select v-model="form.region">
-                <el-option label="是" value="beijing"></el-option>
-                <el-option label="否" value="shanghai"></el-option>
-              </el-select>
-            </el-form-item> -->
-
-            <!-- <el-form-item label="来源：">
-              <el-select v-model="form.region" disabled>
-                <el-option label="是" value="beijing"></el-option>
-                <el-option label="否" value="shanghai"></el-option>
-              </el-select>
-            </el-form-item> -->
-
-            <!-- <el-form-item label="等级：">
-              <el-radio-group v-model="form.resource">
-                <el-radio label="A"></el-radio>
-                <el-radio label="B"></el-radio>
-              </el-radio-group>
-            </el-form-item> -->
-
-            <!-- <div class="hn-fitem-box">
-              <el-form-item label="地区：" style="width: 100%;">
-                <el-select style="width: 110px;margin-right: 10px;" v-model="form.region" placeholder="省">
-                  <el-option label="是" value="beijing"></el-option>
-                  <el-option label="否" value="shanghai"></el-option>
-                </el-select>
-                <el-select style="width: 110px;margin-right: 10px;" v-model="form.region" placeholder="市">
-                  <el-option label="是" value="beijing"></el-option>
-                  <el-option label="否" value="shanghai"></el-option>
-                </el-select>
-                <el-select style="width: 110px;" v-model="form.region" placeholder="区">
-                  <el-option label="是" value="beijing"></el-option>
-                  <el-option label="否" value="shanghai"></el-option>
-                </el-select>
-              </el-form-item>
-            </div> -->
             
-            <!-- <el-form-item label="备注：">
-              <el-input type="textarea" placeholder="请输入备注" v-model="gjResult" maxlength="1024" show-word-limit></el-input>
-            </el-form-item> -->
             <el-form-item >
               <el-button type="primary" @click="editCustConfirm" icon="el-icon-check">更新客户信息</el-button>
             </el-form-item>
           </el-form>
         </div>
-      </div>
+      </div> -->
 
       <div class="hn-custimc-center">
         <div class="hn-custimcm-head">
@@ -253,10 +237,6 @@
           <!-- <i @click="getGenJinJiHua" class="el-icon-dibudaohanglan-"></i> -->
         </div>
         <div class="hn-custm-warp">
-          <!-- <div class="hn-custimcc-th">
-            <span style="margin-right: 10px;">是否关闭此客户跟进计划</span>
-            <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-          </div> -->
           <el-table :data="gjjhTable._list" style="width: 100%">
             <el-table-column label="计划跟进日期">
               <template slot-scope="scope">
@@ -264,8 +244,6 @@
               </template>
             </el-table-column>
             <el-table-column prop="followInfo" label="计划跟进内容">
-            </el-table-column>
-            <el-table-column prop="createTime" label="创建时间">
             </el-table-column>
             <el-table-column  label="操作">
               <template slot-scope="scope">
@@ -285,7 +263,7 @@
       </div>
 
     </div>
-    <paiDanCom :data="pdDiData" ref="paiDanCom"></paiDanCom>
+    <paiDanCom @addPaiDan="getPDList" :data="pdDiData" ref="paiDanCom"></paiDanCom>
   </div>
 </template>
 
@@ -371,17 +349,43 @@ export default {
         "gender": 0,
         "phone": "",
       },
+
+      pdList:new Paging('/dispatch/getDispatchList', { customId: "",order:"id DESC" },'post'),
     }
   },
   async created() {
     this.currCustomId = localStorage.getItem('customId')
     // console.log(this.currCustomId)
-    this.getCustData()
+    // this.getCustData()
     this.getGenJinLog()
     this.getGenJinJiHua()
-    this.getYYList()
+    // this.getYuYueList()
+    this.getPDList()
+  },
+  beforeDestroy(){
   },
   methods: {
+    getPDStatusText(str){
+      let obj = [
+        {value:'NO_BACK',label:'未反馈',class:'noback'},
+        {value:'NO_REPEAT',label:'不重',class:'norepeat'},
+        {value:'REPEAT',label:'重单',class:'repeat'},
+        {value:'DEPTH',label:'深度',class:'depth'},
+      ]
+      let temp = obj.find(item=>item.value==str)
+      return temp?temp:{label:'',class:''}
+    },
+    // 获取派单列表
+    getPDList(){
+      this.pdList._params.customId = this.currCustomId
+      this.pdList.exec()
+    },
+    // 派单分页器
+    pdPageChange(e){
+      this.pdList._page = e.page
+      this.pdList._limit = e.limit
+      this.getPDList()
+    },
     // 跟进结果分页器
     gjlogPageChange(e){
       this.gjLog._page = e.page
@@ -392,7 +396,7 @@ export default {
     yyPageChange(e){
       this.yyList._page = e.page
       this.yyList._limit = e.limit
-      this.getYYList()
+      this.getYuYueList()
     },
     // 跟进计划分页器
     gjjhPageChange(e){
@@ -407,14 +411,14 @@ export default {
           subId:row.id
         },'delete','form').then(res=>{
           if(res.code==0){
-            this.getYYList()
+            this.getYuYueList()
             this.hnMsg()
           }
         })
       })
     },
     // 获取预约列表
-    getYYList(){
+    getYuYueList(){
       this.yyList._params.subCustomId = this.currCustomId
       this.yyList.exec()
     },
@@ -429,7 +433,7 @@ export default {
             "subDate": this.yuYueForm.subDate
           },'post').then(res=>{
             if(res.code==0){
-              this.getYYList()
+              this.getYuYueList()
               this.yuYueForm.subDate = ''
               this.$nextTick(()=>{
                 this.$refs.yuYueForm.clearValidate()
@@ -565,5 +569,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.norepeat{
+  color: blueviolet;
+}
+.repeat{
+  color: red;
+}
+.depth{
+  color: blueviolet;
+}
 </style>

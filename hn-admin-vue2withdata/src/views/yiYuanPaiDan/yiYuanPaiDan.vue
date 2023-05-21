@@ -84,7 +84,7 @@ import { Paging } from '@/util/paging'
 export default {
   data() {
     return {
-      tableData:new Paging('/hospitalDispatch/getReceiveDispatchPage', { },'post'),
+      tableData:new Paging('/hospitalDispatch/getReceiveDispatchPage', { order:"id DESC" },'post'),
       
       showEYYPDDialog:false,//处理医院派单弹窗
 

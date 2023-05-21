@@ -21,9 +21,9 @@ var asideMenus = [
   {
     id: "4", name: "我的客户", path: '/myCustomer',needPower:true,hasPower:false,sign:"CUSTOM_MANAGER",icon:"el-icon-kehu",showAside:true,child: []
   },
-  {
-    id: "5", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
-  },
+  // {
+  //   id: "5", name: "派单管理", path: '/paiDanAdmin',needPower:true,hasPower:false,sign:"DISPATCH_MANAGER",icon:"el-icon-yunliankeji-",showAside:true,child: []
+  // },
   {
     id: "6", name: "个人中心", path: '/personal',needPower:false,hasPower:true,sign:"PERSONAL",icon:"el-icon-user",showAside:false,child: []
   },

@@ -12,7 +12,9 @@
     <div class="hn-mcust-shbox">
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户姓名" prefix-icon="el-icon-search" v-model="tableData._params.customName"></el-input>
       <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入客户电话" prefix-icon="el-icon-search" v-model="tableData._params.phone"></el-input>
-      <el-input class="hn-mcust-shinp hn-mrr10" placeholder="请输入所属用户姓名" prefix-icon="el-icon-search" v-model="tableData._params.beLongUserName"></el-input>
+      <el-select class="hn-mcust-shinp hn-mrr10" clearable multiple v-model="tableData._params.userIdList" placeholder="请选择所属用户">
+        <el-option v-for="(item) in belongUsers" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
+      </el-select>
       <el-button @click="resetSearchForm">重置</el-button>
       <el-button icon="el-icon-search" @click="getCustData" type="primary">搜索</el-button>
     </div>
@@ -29,10 +31,9 @@
       </el-table-column>
       <el-table-column prop="beLongUserName" label="所属用户">
       </el-table-column>
-      <el-table-column prop="whetherTransfer" label="是否同事转移">
-        <template slot-scope="scope">
-          <span>{{ scope.row.whetherTransfer?'是':'否' }}</span>
-        </template>
+      <el-table-column prop="dictName" label="客户来源">
+      </el-table-column>
+      <el-table-column prop="followStatus" label="跟进状态">
       </el-table-column>
       <el-table-column prop="customLevel" label="客户等级">
       </el-table-column>
@@ -42,8 +43,9 @@
       </el-table-column>
       <el-table-column  prop="edit" label="操作">
         <template slot-scope="scope">
-          <el-button type="text" icon="el-icon-delete" @click.stop="deleteCustomer(scope.row)">释放客户</el-button>
+          <el-button type="text" @click.stop="deleteCustomer(scope.row)">释放客户</el-button>
           <el-button type="text" @click.stop="editCustome('edit',scope.row)">修改</el-button>
+          <el-button v-if="isChaoGuan()" type="text" @click.stop="moveCustomer(scope.row)">转移客户</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -63,7 +65,19 @@
           <el-form-item label="客户电话" prop="phone" required>
             <el-input :disabled="editCustDiaTitle=='编辑客户'" :maxlength="11" v-model="editCustForm.phone" placeholder="请输入客户电话" autocomplete="off"></el-input>
           </el-form-item>
-          
+        </div>
+
+        <div class="hn-fitem-box">
+          <el-form-item label="客户来源" required prop="dictId">
+            <el-select :disabled="editCustDiaTitle=='编辑客户'" v-model="editCustForm.dictId" placeholder="请选择客户来源">
+              <el-option v-for="(item) in khLaiYuan" :key="item.id" :disabled="item.dictBlock" :label="item.dictName" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="跟进状态" required prop="followStatus">
+            <el-select v-model="editCustForm.followStatus" placeholder="请选择跟进状态">
+              <el-option v-for="(item) in gjStatus" :key="item.value" :label="item.label" :value="item.label"></el-option>
+            </el-select>
+          </el-form-item>
         </div>
         
         <div class="hn-fitem-box">
@@ -101,6 +115,21 @@
         <el-button type="primary" @click="editCustConfirm">确 定</el-button>
       </div>
     </el-dialog>
+
+    <!-- 转移客户弹窗 -->
+    <el-dialog title="转移客户" width="400px" :visible.sync="showMCDialog">
+      <el-form :model="moveCustForm"  :rules="moveCustFormRules" ref="moveCustForm">
+        <el-form-item label="用户名称" prop="userId" required>
+          <el-select style="width: 100%;" v-model="moveCustForm.userId" placeholder="请选择同事">
+            <el-option v-for="(item) in belongUsers" :key="item.userId" :label="item.userName" :value="item.userId"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showMCDialog = false">取 消</el-button>
+        <el-button type="primary" @click="mcDialogConfirm">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -109,7 +138,7 @@ import { Paging } from '@/util/paging'
 export default {
   data() {
     return {
-      tableData:new Paging('/custom/getCustomPage', { beLongUserName: '',phone: "",customName: "",order:"id DESC" },'post'),
+      tableData:new Paging('/custom/getCustomPage', { userIdList:[],phone: "",customName: "",order:"id DESC" },'post'),
       showEditCusDialog:false,//修改/添加弹窗
       editCustDiaTitle:"",//修改添加客户弹窗标题
       editCustForm:{
@@ -117,7 +146,9 @@ export default {
         "customLevel": "",
         "customName": "",
         "gender": 0,
-        "phone": ""
+        "phone": "",
+        dictId:"",
+        followStatus:"暂时不跟进",
       },
       editCustFormRules: {
         // area: [
@@ -135,6 +166,12 @@ export default {
         phone: [
           { required: true, validator:this.validatePhone, trigger: 'blur' },
         ],
+        dictId: [
+          { required: true, message: '请选择客户来源', trigger: 'blur' },
+        ],
+        followStatus: [
+          { required: true, message: '请选择跟进状态', trigger: 'blur' },
+        ],
       },
       genderOption:[
         {value:0,label:'女'},
@@ -147,7 +184,22 @@ export default {
         {value:'C',label:'C'},
         {value:'D',label:'D'}
       ],
-
+      belongUsers:[],
+      moveCustForm: {
+        customId: "",
+        userId: "",
+      },
+      moveCustFormRules: {
+        userId: [
+          { required: true, message: '请选择同事', trigger: 'blur' },
+        ],
+      },
+      showMCDialog: false,//转移客户弹窗
+      gjStatus:[
+        {value:0,label:'跟进'},
+        {value:1,label:'暂时不跟进'},
+      ],
+      khLaiYuan:[],
 
 
       // 客户所在地区级联选择配置--暂时不用
@@ -162,8 +214,57 @@ export default {
   created() {
     this.getCustData()
     // this.getAreaData() //客户所在地区级联选择配置--暂时不用
+    this.getUserList()
+    this.getKeHuLaiYuan()
   },
   methods: {
+    // 获取客户来源
+    getKeHuLaiYuan(){
+      this.request("/dict/getDictPage",{
+        limit:200,
+        page:1,
+        order:"id DESC",
+        dictType: "CUSTOMER_SOURCE"
+      },'post').then((res)=>{
+        if(res.code==0){
+          this.khLaiYuan = res.data
+        }
+      })
+    },
+    // 打开转移客户弹窗
+    moveCustomer(row) { 
+      this.moveCustForm.customId = row.id
+      this.moveCustForm.userId = ''
+      this.showMCDialog = true
+      //userId 初始化会触发验证，所以打开弹窗时先清除验证
+      this.$nextTick(() => { 
+        this.$refs.moveCustForm.clearValidate()
+      })
+    },
+    // 转移客户弹窗确认
+    mcDialogConfirm() {
+      this.$refs.moveCustForm.validate((valid) => {
+        if (valid) {
+          this.request("/custom/transferCustom", this.moveCustForm, 'post', 'form').then((res) => {
+            if (res.code == 0) {
+              this.getCustData()
+              this.hnMsg()
+              this.showMCDialog = false
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    // 获取所有用户
+    getUserList(){
+      this.request('/custom/getUserSelectList').then(res=>{
+        if(res.code==0){
+          this.belongUsers = res.data
+        }
+      })
+    },
     // 重置添加编辑客户表单数据
     resetEditCustForm(){
       this.editCustForm = {
@@ -171,7 +272,9 @@ export default {
         "customLevel": "",
         "customName": "",
         "gender": 0,
-        "phone": ""
+        "phone": "",
+        dictId:"",
+        followStatus:"暂时不跟进",
       }
     },
     // 修改、添加客户
@@ -200,7 +303,7 @@ export default {
     resetSearchForm(){
       this.tableData._params.phone = ''
       this.tableData._params.customName = ''
-      this.tableData._params.beLongUserName = ''
+      this.tableData._params.userIdList = []
       this.getCustData()
     },
     // 修改/添加弹窗确定
@@ -214,6 +317,8 @@ export default {
               "customName": this.editCustForm.customName,
               "gender": this.editCustForm.gender,
               "phone": this.editCustForm.phone,
+              dictId:this.editCustForm.dictId,
+              followStatus:this.editCustForm.followStatus,
             },'post').then(res=>{
               if(res.code==0){
                 this.getCustData()
@@ -228,6 +333,8 @@ export default {
               "customName": this.editCustForm.customName,
               "gender": this.editCustForm.gender,
               "id": this.editCustForm.id,
+              dictId:this.editCustForm.dictId,
+              followStatus:this.editCustForm.followStatus,
             },'put').then(res=>{
               if(res.code==0){
                 this.getCustData()

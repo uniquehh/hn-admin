@@ -21,10 +21,10 @@
       <el-dropdown class="hn-avatar-box" trigger="click">
         <i class="el-icon-arrow-down hn-ava-icon" />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="hnRouterPush('/personal')">个人中心</el-dropdown-item>
-          <el-dropdown-item divided @click.native="stSetPsonDialog(true)" v-show="$route.name == 'personal'">
+          <el-dropdown-item v-if="userInfo.roleVo.roleLevel!=4" @click.native="hnRouterPush('/personal')">个人中心</el-dropdown-item>
+          <!-- <el-dropdown-item divided @click.native="stSetPsonDialog(true)" v-show="$route.name == 'personal'">
             修改密码
-          </el-dropdown-item>
+          </el-dropdown-item> -->
           <el-dropdown-item divided @click.native="loginOut">
             退出登录
           </el-dropdown-item>

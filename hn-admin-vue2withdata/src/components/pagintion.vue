@@ -1,16 +1,17 @@
 <template>
-  <div class="hn-pagin-main">
-    <el-pagination
-      :background="background"
-      :total="total"
-      :current-page="currentPage"
-      :page-sizes="pageSizes"
-      :page-size="pageSize"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :layout="layout"
-    >
-    </el-pagination>
+  <div class="hn-pagincom-box">
+    <div class="hn-pagin-main">
+      <el-pagination
+        :background="background"
+        :total="total"
+        :current-page="currentPage"
+        :page-sizes="pageSizes"
+        :page-size="pageSize"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :layout="layout"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -111,9 +112,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.hn-pagincom-box{
+  display: flex;
+  overflow-x: auto;
+}
 .hn-pagin-main{
   padding: 10px 0;
-  display: flex;
-  justify-content: flex-end;
+  margin-left: auto;
 }
 </style>

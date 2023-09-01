@@ -17,7 +17,7 @@
   background-color: white;
   padding: 10px;
   border-radius: 5px;
-  // flex: 1 1 auto;
+  flex: 1;
   // min-width: 800px;
 }
 .hn-powerr-head{
@@ -119,6 +119,7 @@
 }
 
 // 医院用户管理页面样式
+
 .hn-yiy-main{
   background-color: #f6f6f6;
   display: flex;
@@ -132,6 +133,9 @@
     box-sizing: border-box;
     padding: 15px 20px;
     width: 52%;
+  }
+  .hn-yygl-numinp{
+    width: 210px;
   }
 }
 .hn-yiyml-head{
@@ -199,6 +203,9 @@
 }
 .hn-mrr10{
   margin-right: 10px;
+}
+.hn-mrb10{
+  margin-bottom: 10px;
 }
 
 
@@ -305,8 +312,6 @@
 .hn-custiml-telhis{
   padding: 20px;
   background-color: white;
-  min-height: 400px;
-  margin-bottom: 10px;
 }
 .hn-gjlog-list{
   max-height: 480px;
@@ -364,17 +369,17 @@
 }
 
 .hn-custim-left {
-  width: 30%;
+  width: 42%;
   margin-right: 10px;
 }
 
 .hn-custim-center {
-  width: 32%;
+  width: 26%;
   margin-right: 10px;
 }
 
 .hn-custim-right {
-  width: 36%;
+  width: 30%;
 }
 
 
@@ -525,6 +530,9 @@
 .jdzxmdil-bg4{
   background-color: #E54859;
 }
+.jdzxmdil-bg5{
+  background-color: skyblue;
+}
 .hn-jdzxmdi-right{
   padding: 0px 60px;
   height: 54px;
@@ -547,15 +555,15 @@
 }
 
 .hn-jdzxmm-left{
-  width: 30%;
+  width: 25%;
   margin-right: 10px;
 }
 .hn-jdzxmm-center{
   margin-right: 10px;
-  width: 40%;
+  width: 28%;
 }
 .hn-jdzxmm-right{
-  width: 28%;
+  width: 22%;
 }
 
 .hn-custimlth-text2{
@@ -582,4 +590,8 @@
   margin-right: 10px;
   padding: 5px 0;
   flex-shrink: 0;
+}
+
+.hn-xzcy-main{
+  padding: 30px;
 }

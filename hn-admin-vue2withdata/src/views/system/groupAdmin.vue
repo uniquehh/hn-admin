@@ -15,7 +15,7 @@
         <el-button type="primary" icon="el-icon-plus" @click="openADDialog">添加小组</el-button>
       </div>
     </div>
-    <el-table :data="groupData._list" style="width: 100%">
+    <el-table :data="groupData._list" @row-click="clickRow" style="width: 100%">
       <el-table-column prop="id" label="id">
       </el-table-column>
       <el-table-column prop="groupName" label="小组名称">
@@ -24,8 +24,8 @@
       </el-table-column>
       <el-table-column prop="edit" label="操作">
         <template slot-scope="scope">
-          <el-button type="text" @click="editGroupRow(scope,'delete')">删除</el-button>
-          <el-button type="text" @click="editGroupRow(scope,'edit')">编辑</el-button>
+          <el-button type="text" @click.stop="editGroupRow(scope,'delete')">删除</el-button>
+          <el-button type="text" @click.stop="editGroupRow(scope,'edit')">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -43,16 +43,19 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button  @click="showDIDialog = false">取 消</el-button>
-        <el-button  type="primary" @click="groupDialogConfirm">确 定</el-button>
+        <el-button @click="showDIDialog = false">取 消</el-button>
+        <el-button type="primary" @click="groupDialogConfirm">确 定</el-button>
       </div>
     </el-dialog>
+    <groupStaffs :groupName="rowGroupName" :groupId="rowGroupId" ref="groupStaffs"></groupStaffs>
   </div>
 </template>
 
 <script>
 import { Paging } from '@/util/paging'
+import groupStaffs from '@/components/groupStaffs.vue'
 export default {
+  components:{groupStaffs},
   data() {
     return {
       groupData: new Paging('/group/getGroupPage', { groupName: "",order:"id DESC" },'post'),//小组数据
@@ -67,7 +70,9 @@ export default {
       },
       dicDilogTitle:"",//小组管理弹窗标题
       showDIDialog:false,//是否显示小组管理弹窗
-      currGroupId:"",//当前操作的小组id
+      currGroupId:"",//当前操作的小组id--点击删除或编辑
+      rowGroupId:0,//点击行的小组id
+      rowGroupName:"",
     }
   },
   computed: {
@@ -82,6 +87,13 @@ export default {
 
   },
   methods: {
+    // 行点击事件
+    clickRow(row){
+      // console.log(row)
+      this.rowGroupId = row.id
+      this.rowGroupName = row.groupName
+      this.$refs.groupStaffs.open()
+    },
     // 添加小组数据
     addGroup(){
       this.request('/group/saveGroup', this.addGroupForm, "post").then((res) => {

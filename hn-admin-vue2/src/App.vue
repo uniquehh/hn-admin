@@ -47,8 +47,9 @@ export default {
   },
   updated() {
     // console.log(this.$route)
-    this.stSetTopCurrent(this.$route.fullPath)
-    this.handleMianBao(this.$route.fullPath)
+    this.stSetTopCurrent(this.$route.path)
+    this.handleMianBao(this.$route.path)
+    handleAsideMenu(this.$route.path)
   },
   beforeDestroy() {
     // 关闭页面前清除顶部菜单缓存数据--下次进入页面自动跳转首页

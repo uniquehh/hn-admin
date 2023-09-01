@@ -32,6 +32,11 @@
             <div class="hn-jdzxmhri-text">近30日完成跟进</div>
             <div class="hn-jdzxmhri-num">{{ monthWCGJNum }}</div>
           </div>
+          <div class="hn-jdzxmhr-line"></div>
+          <div class="hn-jdzxmhr-item">
+            <div class="hn-jdzxmhri-text">近30日预约数量</div>
+            <div class="hn-jdzxmhri-num">{{ monthYYNum }}</div>
+          </div>
         </div>
       </div>
       <!-- 数据统计 -->
@@ -72,6 +77,15 @@
             <div class="hn-jdzxmdir-text">今日完成跟进</div>
           </div>
         </div>
+        <div class="hn-jdzxmd-item">
+          <div class="hn-jdzxmdi-left jdzxmdil-bg5">
+            <i class="el-icon-notebook-2"></i>
+          </div>
+          <div class="hn-jdzxmdi-right">
+            <div class="hn-jdzxmdir-num">{{ dayYYNum }}</div>
+            <div class="hn-jdzxmdir-text">今日预约数量</div>
+          </div>
+        </div>
       </div>
       <!-- 主要内容 -->
       <div class="hn-jdzxm-mwrap">
@@ -96,19 +110,6 @@
                 </el-table-column>
                 <el-table-column prop="phone" label="客户电话">
                 </el-table-column>
-                <!-- <el-table-column prop="beLongUserName" label="所属用户">
-                </el-table-column> -->
-                <el-table-column prop="whetherTransfer" label="是否同事转移">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.whetherTransfer?'是':'否' }}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="customLevel" label="客户等级">
-                </el-table-column>
-                <!-- <el-table-column prop="area" label="所在地区">
-                </el-table-column> -->
-                <!-- <el-table-column prop="gainDate" label="获取日期">
-                </el-table-column> -->
               </el-table>
             </div>
           </div>
@@ -138,22 +139,13 @@
                 </el-table-column>
                 <!-- <el-table-column prop="userName" label="派单人">
                 </el-table-column> -->
-                <el-table-column prop="dictName" label="客户来源">
-                </el-table-column>
-                <!-- <el-table-column prop="dispatchTime" label="派单时间">
+                <!-- <el-table-column prop="dictName" label="客户来源">
                 </el-table-column> -->
-                <el-table-column prop="followStatus" label="跟进状态">
-                </el-table-column>
-                <el-table-column prop="edit" label="操作">
-                  <template slot-scope="scope">
-                    <el-button type="text" @click="getPaiDanRow(scope)">详情</el-button>
-                  </template>
-                </el-table-column>
               </el-table>
             </div>
           </div>
         </div>
-        <div class="hn-jdzxmm-right">
+        <div class="hn-jdzxmm-right hn-mrr10">
           <div class="hn-custimc-bottom">
             <div class="hn-custimcm-head">
               <div class="hn-custimcmh-left">
@@ -172,7 +164,25 @@
                     <span>{{ scope.row.nextFollowDate.split(' ')[0] }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column prop="createTime" label="创建时间">
+              </el-table>
+            </div>
+          </div>
+        </div>
+        <div class="hn-jdzxmm-right">
+          <div class="hn-custimc-bottom">
+            <div class="hn-custimcm-head">
+              <div class="hn-custimcmh-left">
+                <i class="el-icon-user-solid"></i>
+                <span class="hn-custimlth-text">今日预约数量</span>
+                <!-- <span class="hn-custimlth-text2">-双击查看详情</span> -->
+              </div>
+              <!-- <i class="el-icon-dibudaohanglan-"></i> -->
+            </div>
+            <div class="hn-custm-warp">
+              <el-table :data="dayYYList" style="width: 100%">
+                <el-table-column prop="subDate" label="预约日期">
+                </el-table-column>
+                <el-table-column prop="subPhone" label="预约日期">
                 </el-table-column>
               </el-table>
             </div>
@@ -198,12 +208,15 @@ export default {
       dayPDNum: 0,//今日新增派单数量
       dayJHGJNum: 0,//今日新增计划跟进数量
       dayWCGJNum: 0,//今日完成跟进数量
+      dayYYNum: 0,//今日新增预约
       monthCustNum: 0,//近30日新增客户数量
       monthPDNum: 0,//近30日新增派单数量
-      monthWCGJNum: 0,//近30日完成跟进数量数量
+      monthWCGJNum: 0,//近30日完成跟进数量
+      monthYYNum: 0,//近30日新增预约数量
       dayCustList:[],//今日新增客户列表
       dayPDList:[],//今日新增派单列表
       dayJHGJList:[],//今日新增计划跟进列表
+      dayYYList:[],//今日新增预约列表
       currPaiDanId:0,
     }
   },
@@ -221,6 +234,9 @@ export default {
     this.getDayCustList()
     this.getDayPDList()
     this.getDayJHGJList()
+    this.getDayYYCont()
+    this.getMonthYYCont()
+    this.getDayYYList()
 
     this.getChinaAreaList()
   },
@@ -238,6 +254,15 @@ export default {
         loading.close();
         this.$refs.paiDanInfo.open()
       }, 500);
+    },
+
+    // 获取今日新增预约数量
+    getDayYYCont(){
+      this.request('/index/getTodaySubCount').then(res=>{
+        if(res.code==0){
+          this.dayYYNum = res.data
+        }
+      })
     },
     // 获取今日新增客户数量
     getDayCustCont(){
@@ -271,6 +296,14 @@ export default {
         }
       })
     },
+    // 近30日新增预约数量
+    getMonthYYCont(){
+      this.request('/index/getMonthSubCount').then(res=>{
+        if(res.code==0){
+          this.monthYYNum = res.data
+        }
+      })
+    },
     // 近30日新增客户数量
     getMonthCustCont(){
       this.request('/index/getMonthCustomCount').then(res=>{
@@ -292,6 +325,14 @@ export default {
       this.request('/index/getMonthFollowResultCount').then(res=>{
         if(res.code==0){
           this.monthWCGJNum = res.data
+        }
+      })
+    },
+    // 今日新增预约列表
+    getDayYYList(){
+      this.request('/index/getTodaySubList').then(res=>{
+        if(res.code==0){
+          this.dayYYList = res.data
         }
       })
     },

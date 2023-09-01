@@ -6,7 +6,7 @@
           <div class="hn-login-cont">
             <div class="hn-login-title">
               <h3 style="margin-bottom: 10px;">欢迎登录</h3>
-              <h3 style="margin-bottom: 30px;">无瑕科技有限公司信息化管理平台</h3>
+              <h3 style="margin-bottom: 30px;">无暇科技有限公司信息化管理平台</h3>
             </div>
             <el-form :model="loginForm" :rules="loginRules" ref="lgForm">
               <el-form-item prop="userName">

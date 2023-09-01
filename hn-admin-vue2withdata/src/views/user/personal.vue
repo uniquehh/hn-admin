@@ -31,7 +31,7 @@
       <div class="hn-useri-tr">性别：{{ userInfo.sex==0?'女': userInfo.sex == 1 ?'男':'保密' }}</div>
       <div class="hn-useri-tr">年龄：{{ userInfo.age }}</div>
       <div class="hn-useri-tr">电话：{{ userInfo.phone }}</div>
-      <div class="hn-useri-tr">是否被禁止接单：{{ userInfo.whetherReceive?'是':'否' }}</div>
+      <!-- <div class="hn-useri-tr">是否被禁止接单：{{ userInfo.whetherReceive?'是':'否' }}</div> -->
     </div>
     <!-- 编辑用户资料 -->
     <el-dialog title="修改资料" width="600px" :visible.sync="showEUDialog">
@@ -41,7 +41,7 @@
             <el-input v-model="editUserForm.realName" placeholder="请输入真实姓名" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="电话号码" prop="phone" required>
-            <el-input v-model="editUserForm.phone" placeholder="请输入电话号码" autocomplete="off"></el-input>
+            <el-input v-model="editUserForm.phone" :maxlength="11" placeholder="请输入电话号码" autocomplete="off"></el-input>
           </el-form-item>
         </div>
       
@@ -110,7 +110,7 @@ export default {
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
         ],
         phone: [
-          { required: true, message: '请输入电话号码', trigger: 'blur' },
+          { required: true, validator:this.validatePhone, trigger: 'blur' },
         ],
       },
       sexOption: [

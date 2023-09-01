@@ -71,11 +71,11 @@ export default {
   background-color: #F6F6F6;
 }
 .hn-cont-box{
-  padding: 17px;
+  padding: 20px;
   // padding-top: 15px;
 }
 .hn-cont-main{
-  height: calc(100vh - 108px);
+  height: calc(100vh - 120px);
   overflow: auto;
 }
 .hn-contm-bg{

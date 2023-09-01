@@ -52,44 +52,24 @@
       <div class="hn-yiymr-head">
         <div class="hn-yiymrh-text" v-if="yyList._list[currYYIndex]">{{ yyList._list[currYYIndex].name }}</div>
         <div class="hn-yiymrh-shbox"> 
-          <el-input v-model="yyUList._params.searchValue" @change="getUserListByYY(null)" prefix-icon="el-icon-search" placeholder="姓名，账号，联系方式" class="hn-yiymrh-search"></el-input>
           <el-button icon="el-icon-plus" type="primary" @click="opUserDialog('add')">新增用户</el-button>
         </div>
       </div>
       <div class="hn-yiymr-table">
         <el-table :data="yyUList._list" style="width: 100%">
-          <el-table-column prop="loginName" label="登录账号">
+          <el-table-column prop="realName" label="登录账号">
           </el-table-column>
-          <el-table-column prop="phone" label="手机号">
-          </el-table-column>
-          <el-table-column prop="realName" label="真实姓名">
-          </el-table-column>
-          <el-table-column label="性别">
-            <template slot-scope="scope">
-              <span>{{ scope.row.sex==0?'女':scope.row.sex==1?'男':'保密' }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="角色权限">
-            <template slot-scope="scope">
-              <span v-if="scope.row.roleVo">{{ scope.row.roleVo.roleAlias }}</span>
-            </template>
+          <el-table-column prop="roleName" label="角色权限">
           </el-table-column>
           <el-table-column label="禁止登录">
             <template slot-scope="scope">
               <el-switch :value="scope.row.userBlock" @change="handLoginStatus(scope.row)"></el-switch>
             </template>
           </el-table-column>
-          <el-table-column label="禁止接单">
-            <template slot-scope="scope">
-              <el-switch :value="scope.row.whetherReceive"></el-switch>
-            </template>
-          </el-table-column>
           <el-table-column label="操作" align="center" width="200">
             <template slot-scope="scope">
               <el-button style="color: red;" type="text" @click="deleteUser(scope.row.id)">删除</el-button>
               <el-button type="text" @click="opUserDialog('edit',scope.row)">修改</el-button>
-              <el-button type="text" @click="resetUserPass(scope.row)">重置密码</el-button>
-              <!-- <el-button type="text" >关联公司</el-button> -->
             </template>
           </el-table-column>
         </el-table>
@@ -128,13 +108,16 @@
             >
             </el-cascader>
           </el-form-item>
+          <el-form-item prop="hosOrder" label="医院排序">
+            <el-input-number class="hn-yygl-numinp" v-model="eYYForm.hosOrder" controls-position="right" :min="1"></el-input-number>
+          </el-form-item>
         </div>
 
         
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button  @click="showEYYDialog = false">取 消</el-button>
-        <el-button  type="primary" @click="eYYFormConfirm">确 定</el-button>
+        <el-button @click="showEYYDialog = false">取 消</el-button>
+        <el-button type="primary" @click="eYYFormConfirm">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -142,15 +125,15 @@
     <el-dialog :title="editDilogTitle" width="600px" :visible.sync="showEUDialog">
       <el-form :model="editUserForm" :rules="editUserFormRules" ref="editUserForm">
         <div class="hn-fitem-box">
-          <el-form-item label="真实姓名" prop="realName" required>
+          <el-form-item label="登录账号" prop="realName" required>
             <el-input v-model="editUserForm.realName" placeholder="请输入真实姓名" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="登录账号" prop="loginName" required>
-            <el-input v-model="editUserForm.loginName" placeholder="请输入登录账号" autocomplete="off"></el-input>
+          <el-form-item label="登录密码" prop="password" required>
+            <el-input placeholder="请输入密码" v-model="editUserForm.password" show-password type="password" />
           </el-form-item>
         </div>
         
-        <div class="hn-fitem-box">
+        <!-- <div class="hn-fitem-box">
           <el-form-item label="年龄" prop="age">
             <el-input v-model="editUserForm.age" type="number" placeholder="请输入年龄" autocomplete="off"></el-input>
           </el-form-item>
@@ -159,12 +142,9 @@
               <el-option v-for="(sex) in sexOption" :key="sex.value" :label="sex.label" :value="sex.value"></el-option>
             </el-select>
           </el-form-item>
-        </div>
+        </div> -->
         
         <div class="hn-fitem-box">
-          <el-form-item label="电话号码" prop="phone" required>
-            <el-input v-model="editUserForm.phone" placeholder="请输入电话号码" autocomplete="off"></el-input>
-          </el-form-item>
           <el-form-item label="所属角色" prop="roleId" required>
             <el-select v-model="editUserForm.roleId" placeholder="请选择所属角色">
               <el-option v-for="(item) in roles" :key="item.id" :label="item.roleAlias" :value="item.id"></el-option>
@@ -173,8 +153,8 @@
         </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button  @click="showEUDialog = false">取 消</el-button>
-        <el-button  type="primary" @click="eUserFormConfirm">确 定</el-button>
+        <el-button @click="showEUDialog = false">取 消</el-button>
+        <el-button type="primary" @click="eUserFormConfirm">确 定</el-button>
       </div>
     </el-dialog>
     
@@ -202,7 +182,7 @@ export default {
       chinaArea: [],//有懒加载的区域级联选择
       chinaArea2:[],//无懒加载的区域级联选择--用于弹窗，方便回显
       yyList:new Paging("/hospital/getHospitalPage",{name:'',order:"id DESC"},'post'),
-      yyUList:new Paging("/hospital/getUserByHospital",{hospitalId:'',searchValue:'',order:"id DESC"},'post'),
+      yyUList:new Paging("/hospital/getUserByHospital",{hospitalId:'',order:"id DESC"},'post'),
 
       currUserId:"",//当前操作的用户id
       currYYId:"",//当前操作的医院id
@@ -214,7 +194,8 @@ export default {
         "cityCode": "",
         "name": "",
         "province": "",
-        "type":""
+        "type":"",
+        "hosOrder":1
       },
       eYYFormRules: {
         name: [
@@ -223,28 +204,25 @@ export default {
         cityCode: [
           { required: true, message: '请选择行政区域', trigger: 'blur' },
         ],
+        hosOrder: [
+          { required: true, message: '请输入医院排序', trigger: 'blur' },
+        ],
       },
 
       editUserForm:{ //新增修改用户的表单
-        "age": "",
-        "loginName": "",
-        "phone": "",
+        "password": "",
         "realName": "",
         "roleId": "",
-        "sex": 0
       },
       editUserFormRules: {
         realName: [
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
         ],
-        loginName: [
-          { required: true, message: '请选择登录账号', trigger: 'blur' },
-        ],
         roleId: [
           { required: true, message: '请选择所属角色', trigger: 'blur' },
         ],
-        phone: [
-          { required: true, message: '请输入电话号码', trigger: 'blur' },
+        password: [
+          { required: true, message: '请输入登录密码', trigger: 'blur' },
         ],
       },
       sexOption:[
@@ -317,51 +295,42 @@ export default {
         })
       })
     },
-    // 重置用户密码
-    resetUserPass(row){
-      this.currUserId = row.id
-      this.hnMsgBox("您确定要执行此操作吗？").then(()=>{
-        this.request("/user/resetPassword",{
-          userId:row.id
-        },'put','form').then((res)=>{
-          if(res.code==0){
-            this.hnMsg()
-          }
-        })
-      })
-    },
     // 重置弹窗表单
     resetUserForm(){
       this.editUserForm = {
-        "age": "",
-        "loginName": "",
-        "phone": "",
+        "password": "",
         "realName": "",
         "roleId": "",
-        "sex": 0
       }
     },
     // 新增用户
     addUser(){
+      let par = this.toJSON(this.editUserForm)
+      par.password = this.$md5(par.password)
       this.request("/hospital/saveHospitalUser",{
-        ...this.editUserForm,
-        hospitalId:this.currYYId
+        ...par,
+        hospitalId:this.currYYId,
       },"post").then((res)=>{
         if(res.code==0){
           this.getUserListByYY()
           this.hnMsg()
+          this.showEUDialog = false
         }
       })
     },
     // 修改用户
     editUser(){
-      this.request("/user/updateUser",{
-        ...this.editUserForm,
-        id:this.currUserId
+      let par = this.toJSON(this.editUserForm)
+      par.password = this.$md5(par.password)
+      this.request("/hospital/updateHospitalUser",{
+        ...par,
+        id:this.currUserId,
+        hospitalId:this.currYYId,
       },"put").then((res)=>{
         if(res.code==0){
           this.getUserListByYY()
           this.hnMsg()
+          this.showEUDialog = false
         }
       })
     },
@@ -370,7 +339,6 @@ export default {
       this.$refs.editUserForm.validate((valid) => {
         if (valid) {
           this.editDilogTitle == "新增用户"?this.addUser():this.editUser()
-          this.showEUDialog = false
         } else {
           return false;
         }
@@ -387,9 +355,8 @@ export default {
         this.currUserId = row.id
         this.editDilogTitle = "修改用户"
         // console.log(row)
-        let nroleId = row.roleVo?row.roleVo.id:''
         this.editUserForm = JSON.parse(JSON.stringify(row))
-        this.editUserForm.roleId = nroleId
+        this.editUserForm.roleId = row.roleId
       }else{ // 新增
         this.editDilogTitle = "新增用户"
         this.resetUserForm()
@@ -403,7 +370,8 @@ export default {
         "cityCode": "",
         "name": "",
         "province": "",
-        "type":""
+        "type":"",
+        "hosOrder":1
       }
     },
     // 新增医院
@@ -413,7 +381,8 @@ export default {
         "name": this.eYYForm.name,
         "province": this.eYYForm.province,
         "city": this.eYYForm.city,
-        "type": this.eYYForm.type
+        "type": this.eYYForm.type,
+        "hosOrder": this.eYYForm.hosOrder,
       },'post').then((res)=>{
         if(res.code==0){
           this.getYYTableData()
@@ -459,7 +428,8 @@ export default {
         "id": this.currYYId,
         "province": this.eYYForm.province,
         "city": this.eYYForm.city,
-        "type": this.eYYForm.type
+        "type": this.eYYForm.type,
+        "hosOrder": this.eYYForm.hosOrder,
       },'put').then((res)=>{
         if(res.code==0){
           this.getYYTableData()

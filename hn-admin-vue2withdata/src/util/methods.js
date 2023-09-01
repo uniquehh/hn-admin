@@ -299,6 +299,18 @@ const methods = {
   toJSON(obj){
     return JSON.parse(JSON.stringify(obj))
   },
+  // 表单校验手机号
+  validatePhone(rule, value, callback) {
+    let zzrule = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+    // !zzrule.test(value)
+    if (value === '') {
+      callback(new Error('请输入电话号码'));
+    } else if (value.length!=11) {
+      callback(new Error('手机号必须为11位'));
+    } else {
+      callback();
+    }
+  },
 
 
   

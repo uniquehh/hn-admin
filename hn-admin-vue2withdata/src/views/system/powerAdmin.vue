@@ -94,6 +94,7 @@ export default {
         { value: 2, label: "小组负责人", roleName: "ROLE_GROUP" },
         { value: 3, label: "普通员工", roleName: "ROLE_EMPLOYEE" },
         { value: 4, label: "医院用户", roleName: "ROLE_HOSPITAL" },
+        { value: 5, label: "咨询师", roleName: "ROLE_CONSULTANT" },
       ],
       checkedRoleLevel:0,//当前选中的角色等级 0为超管
     }
